@@ -1,11 +1,11 @@
 /**
  * @author WMXPY
- * @namespace Structure_Resolver
- * @description Resolver
+ * @namespace Renderer
+ * @description Declare
  */
 
-import { MiphaBlock } from "../block/block";
-import { MIPHA_BLOCK_DIVERSE_TYPE } from "../block/diverse-type";
+import { MiphaBlock } from "../structure/block/block";
+import { MIPHA_BLOCK_DIVERSE_TYPE } from "../structure/block/diverse-type";
 
 export type MiphaRendererResolver<Type extends MIPHA_BLOCK_DIVERSE_TYPE, Result> = (
     block: MiphaBlock<Type>,
