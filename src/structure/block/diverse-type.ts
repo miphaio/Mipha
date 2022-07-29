@@ -7,4 +7,6 @@
 export enum MIPHA_BLOCK_DIVERSE_TYPE {
 
     MARKDOWN = 'MARKDOWN',
+
+    UNKNOWN = 'UNKNOWN',
 }
