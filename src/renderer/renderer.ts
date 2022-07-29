@@ -27,9 +27,9 @@ export class MiphaRenderer<Result> {
         this._resolvers = resolverMap;
     }
 
-    public render<Type extends MIPHA_BLOCK_DIVERSE_TYPE = any>(
+    public async render<Type extends MIPHA_BLOCK_DIVERSE_TYPE = MIPHA_BLOCK_DIVERSE_TYPE>(
         block: MiphaBlock<Type>,
-    ) {
+    ): Promise<Result> {
 
         const type: MIPHA_BLOCK_DIVERSE_TYPE = block.type;
 
@@ -40,6 +40,18 @@ export class MiphaRenderer<Result> {
         const resolver: MiphaRendererResolver<Type, Result> =
             this._resolvers.get(type) as MiphaRendererResolver<Type, Result>;
 
-        return resolver(block);
+        return await Promise.resolve(resolver(block));
+    }
+
+    public async renderList(
+        blocks: Array<MiphaBlock<any>>,
+    ): Promise<Result[]> {
+
+        const results: Array<Promise<Result>> = blocks.map(
+            async (block: MiphaBlock<any>): Promise<Result> => {
+                return await this.render(block);
+            }
+        );
+        return Promise.all(results);
     }
 }
