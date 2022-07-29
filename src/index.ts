@@ -5,5 +5,5 @@
  */
 
 export * from "./renderer/export";
-export * from "./structure/block/export";
+export * from "./structure/export";
 
