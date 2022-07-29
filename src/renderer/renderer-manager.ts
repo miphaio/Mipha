@@ -6,7 +6,7 @@
 
 import { MIPHA_BLOCK_DIVERSE_TYPE } from "../structure/block/diverse-type";
 import { ERROR_CODE, panic } from "../util/error";
-import { MiphaRendererResolver, MiphaRendererResolverMap } from "./declare";
+import { DefaultMiphaRendererOptions, MiphaRendererOptions, MiphaRendererResolver, MiphaRendererResolverMap } from "./declare";
 import { MiphaRenderer } from "./renderer";
 
 export class MiphaRendererBuilder<Result> {
@@ -17,10 +17,12 @@ export class MiphaRendererBuilder<Result> {
     }
 
     private readonly _resolvers: MiphaRendererResolverMap<Result>;
+    private readonly _options: MiphaRendererOptions;
 
     private constructor() {
 
         this._resolvers = new Map();
+        this._options = DefaultMiphaRendererOptions;
     }
 
     public mountResolver<Type extends MIPHA_BLOCK_DIVERSE_TYPE>(
@@ -38,6 +40,9 @@ export class MiphaRendererBuilder<Result> {
 
     public build(): MiphaRenderer<Result> {
 
-        return MiphaRenderer.fromResolverMap<Result>(this._resolvers);
+        return MiphaRenderer.fromResolverMap<Result>(
+            this._resolvers,
+            this._options,
+        );
     }
 }

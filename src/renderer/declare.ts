@@ -15,3 +15,13 @@ export type MiphaRendererResolverMap<Result> = Map<
     MIPHA_BLOCK_DIVERSE_TYPE,
     MiphaRendererResolver<any, Result>
 >;
+
+export type MiphaRendererOptions = {
+
+    readonly parallel: boolean;
+};
+
+export const DefaultMiphaRendererOptions: MiphaRendererOptions = {
+
+    parallel: true,
+};
