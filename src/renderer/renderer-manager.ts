@@ -4,7 +4,9 @@
  * @description Renderer Manager
  */
 
-import { MiphaRendererResolverMap } from "../structure/renderer/resolver";
+import { MIPHA_BLOCK_DIVERSE_TYPE } from "../structure/block/diverse-type";
+import { MiphaRendererResolver, MiphaRendererResolverMap } from "../structure/renderer/resolver";
+import { ERROR_CODE, panic } from "../util/error";
 
 export class MiphaRendererBuilder<Result> {
 
@@ -18,5 +20,18 @@ export class MiphaRendererBuilder<Result> {
     private constructor() {
 
         this._resolvers = new Map();
+    }
+
+    public mountResolver<Type extends MIPHA_BLOCK_DIVERSE_TYPE>(
+        type: Type,
+        resolver: MiphaRendererResolver<Type, Result>,
+    ): this {
+
+        if (this._resolvers.has(type)) {
+            throw panic.code(ERROR_CODE.RESOLVER_ALREADY_MOUNTED_1, type);
+        }
+
+        this._resolvers.set(type, resolver);
+        return this;
     }
 }
