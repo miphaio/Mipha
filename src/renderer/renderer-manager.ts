@@ -7,10 +7,11 @@
 import { MIPHA_BLOCK_DIVERSE_TYPE } from "../structure/block/diverse-type";
 import { MiphaRendererResolver, MiphaRendererResolverMap } from "../structure/renderer/resolver";
 import { ERROR_CODE, panic } from "../util/error";
+import { MiphaRenderer } from "./renderer";
 
 export class MiphaRendererBuilder<Result> {
 
-    public static create<Result>(): MiphaRendererBuilder<Result> {
+    public static fromScratch<Result>(): MiphaRendererBuilder<Result> {
 
         return new MiphaRendererBuilder<Result>();
     }
@@ -33,5 +34,10 @@ export class MiphaRendererBuilder<Result> {
 
         this._resolvers.set(type, resolver);
         return this;
+    }
+
+    public build(): MiphaRenderer<Result> {
+
+        return MiphaRenderer.fromResolverMap<Result>(this._resolvers);
     }
 }
