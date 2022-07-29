@@ -1,0 +1,37 @@
+{
+  "name": "@mipha/core",
+  "version": "1.0.0",
+  "description": "Mipha Is Powerful and Highly Accessible",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MiphaIO/Mipha.git"
+  },
+  "keywords": [
+    "RPC"
+  ],
+  "author": "WMXPY",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MiphaIO/Mipha/issues"
+  },
+  "homepage": "https://mipha.io",
+  "dependencies": {},
+  "devDependencies": {
+    "@sudoo/triforce": "^3.7.0"
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "include": [
+      "src/**/*.ts"
+    ],
+    "instrument": true,
+    "reporter": [
+      "json",
+      "text-summary"
+    ],
+    "report-dir": "coverage",
+    "sourceMap": true
+  }
+}
