@@ -6,23 +6,28 @@
 
 import { MIPHA_BLOCK_DIVERSE_TYPE } from "../structure/block/diverse-type";
 import { ERROR_CODE, panic } from "../util/error";
+import { Writeable } from "../util/writeable";
 import { DefaultMiphaRendererOptions, MiphaRendererOptions, MiphaRendererResolver, MiphaRendererResolverMap } from "./declare";
 import { MiphaRenderer } from "./renderer";
 
 export class MiphaRendererBuilder<Result> {
 
-    public static fromScratch<Result>(): MiphaRendererBuilder<Result> {
+    public static fromScratch<Result>(
+        options: MiphaRendererOptions = DefaultMiphaRendererOptions,
+    ): MiphaRendererBuilder<Result> {
 
-        return new MiphaRendererBuilder<Result>();
+        return new MiphaRendererBuilder<Result>(options);
     }
 
     private readonly _resolvers: MiphaRendererResolverMap<Result>;
-    private readonly _options: MiphaRendererOptions;
+    private readonly _options: Writeable<MiphaRendererOptions>;
 
-    private constructor() {
+    private constructor(
+        options: MiphaRendererOptions,
+    ) {
 
         this._resolvers = new Map();
-        this._options = DefaultMiphaRendererOptions;
+        this._options = options;
     }
 
     public mountResolver<Type extends MIPHA_BLOCK_DIVERSE_TYPE>(
@@ -35,6 +40,15 @@ export class MiphaRendererBuilder<Result> {
         }
 
         this._resolvers.set(type, resolver);
+        return this;
+    }
+
+    public withOption<Key extends keyof MiphaRendererOptions>(
+        key: Key,
+        value: MiphaRendererOptions[Key],
+    ): this {
+
+        this._options[key] = value;
         return this;
     }
 
