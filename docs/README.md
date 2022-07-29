@@ -1,3 +1,3 @@
 # Mipha
 
-Mipha Is Powerful and Highly Accessable
+Mipha Is Powerful and Highly Accessible
