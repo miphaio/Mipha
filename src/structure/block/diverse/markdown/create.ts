@@ -4,6 +4,7 @@
  * @description Markdown
  */
 
+import { MiphaBlock } from "../../block";
 import { MIPHA_BLOCK_DIVERSE_TYPE } from "../../diverse-type";
 import { createMiphaBlock } from "../../util/create";
 import { MiphaBlockDiverseMarkdown } from "./declare";
@@ -18,7 +19,7 @@ const createBlock = (content: string): MiphaBlockDiverseMarkdown => {
 export const createPreciseMiphaMarkdownBlock = (
     identifier: string,
     content: string,
-): MiphaBlockDiverseMarkdown => {
+): MiphaBlock<MIPHA_BLOCK_DIVERSE_TYPE.MARKDOWN> => {
 
     return createMiphaBlock({
         identifier,
@@ -29,7 +30,7 @@ export const createPreciseMiphaMarkdownBlock = (
 
 export const createMiphaMarkdownBlock = (
     content: string,
-): MiphaBlockDiverseMarkdown => {
+): MiphaBlock<MIPHA_BLOCK_DIVERSE_TYPE.MARKDOWN> => {
 
     return createMiphaBlock({
         type: MIPHA_BLOCK_DIVERSE_TYPE.MARKDOWN,

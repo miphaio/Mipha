@@ -26,6 +26,7 @@ export const createMiphaBlock = <Type extends MIPHA_BLOCK_DIVERSE_TYPE>(
 
     return {
         identifier,
+        histories: [],
         type: options.type,
         ...options.diverse,
     };

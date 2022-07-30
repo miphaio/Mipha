@@ -28,6 +28,7 @@ describe('Given {MiphaStorageEngine} Class', (): void => {
         expect(storageEngine.blocks).to.be.deep.equal({
             [identifier]: {
                 identifier,
+                histories: [],
                 type: MIPHA_BLOCK_DIVERSE_TYPE.MARKDOWN,
                 content,
             },
