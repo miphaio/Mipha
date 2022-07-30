@@ -4,7 +4,7 @@
  * @description LRU Cache
  */
 
-import { MiphaDoubleLinkedNode, MiphaDoubleLinkedNodeEmptySymbol } from "./double-linked-node";
+export const MiphaLRUCacheEmptySymbol = Symbol('MiphaLRUCacheEmpty');
 
 export class MiphaLRUCache<T> {
 
@@ -14,64 +14,44 @@ export class MiphaLRUCache<T> {
     }
 
     private readonly _maxSize: number;
-    private readonly _map: Map<string, MiphaDoubleLinkedNode<T>>;
-
-    private readonly _head: MiphaDoubleLinkedNode<T>;
-    private readonly _tail: MiphaDoubleLinkedNode<T>;
+    private readonly _map: Map<string, T>;
 
     private constructor(maxSize: number) {
 
         this._maxSize = maxSize;
-        this._map = new Map<string, MiphaDoubleLinkedNode<T>>();
-
-        this._head = MiphaDoubleLinkedNode.createEmpty();
-        this._tail = MiphaDoubleLinkedNode.createEmpty();
+        this._map = new Map<string, T>();
     }
 
-    public get(key: string): T | null {
+    public getOrNull(key: string): T | null {
+
+        const result: T | typeof MiphaLRUCacheEmptySymbol = this.getOrEmpty(key);
+        if (result === MiphaLRUCacheEmptySymbol) {
+            return null;
+        }
+        return result;
+    }
+
+    public getOrEmpty(key: string): T | typeof MiphaLRUCacheEmptySymbol {
 
         if (!this._map.has(key)) {
-            return null;
+            return MiphaLRUCacheEmptySymbol;
         }
 
-        const node: MiphaDoubleLinkedNode<T> = this._map.get(key)!;
-
-        if (node.value === MiphaDoubleLinkedNodeEmptySymbol) {
-            return null;
-        }
-
-        node.previous?.setNext(node.next);
-        node.next?.setPrevious(node.previous);
-
-        this._tail.previous?.setNext(node);
-        node.setPrevious(this._tail?.previous);
-        node.setNext(this._tail);
-        this._tail.setPrevious(node);
-
-        return node.value;
+        const result: T = this._map.get(key)!;
+        this._map.delete(key);
+        this._map.set(key, result);
+        return result;
     }
 
     public put(key: string, value: T): this {
 
-        if (this.get(key) !== null) {
-            return this;
-        }
-
         if (this._map.size >= this._maxSize) {
 
-            this._map.delete(this._head.next!.key);
-            this._head.setNext(this._head.next!.next);
-            this._head.next!.setPrevious(this._head);
+            const first: string = this._map.keys().next().value;
+            this._map.delete(first);
         }
 
-        const newNode: MiphaDoubleLinkedNode<T> = MiphaDoubleLinkedNode.create(key, value);
-
-        this._map.set(key, newNode);
-        this._tail.previous?.setNext(newNode);
-        newNode.setPrevious(this._tail.previous);
-        newNode.setNext(this._tail);
-        this._tail.setPrevious(newNode);
-
+        this._map.set(key, value);
         return this;
     }
 }
