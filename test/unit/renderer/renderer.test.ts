@@ -50,7 +50,7 @@ describe('Given {MiphaRenderer} Class', (): void => {
         expect(result).to.be.deep.equal(
             [firstContent, secondContent, thirdContent],
         );
-        expect(endTime - startTime).to.be.greaterThan(25);
+        expect(endTime - startTime).to.be.greaterThanOrEqual(25);
         expect(endTime - startTime).to.be.lessThan(40);
     });
 
@@ -76,7 +76,7 @@ describe('Given {MiphaRenderer} Class', (): void => {
         expect(result).to.be.deep.equal(
             [firstContent, secondContent, thirdContent],
         );
-        expect(endTime - startTime).to.be.greaterThan(75);
+        expect(endTime - startTime).to.be.greaterThanOrEqual(75);
         expect(endTime - startTime).to.be.lessThan(90);
     });
 });

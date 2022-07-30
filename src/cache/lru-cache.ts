@@ -4,6 +4,8 @@
  * @description LRU Cache
  */
 
+import { ERROR_CODE, panic } from "../util/error";
+
 export const MiphaLRUCacheEmptySymbol = Symbol('MiphaLRUCacheEmpty');
 
 export class MiphaLRUCache<T> {
@@ -22,11 +24,42 @@ export class MiphaLRUCache<T> {
         this._map = new Map<string, T>();
     }
 
+    public get size(): number {
+        return this._map.size;
+    }
+
     public getOrNull(key: string): T | null {
 
         const result: T | typeof MiphaLRUCacheEmptySymbol = this.getOrEmpty(key);
         if (result === MiphaLRUCacheEmptySymbol) {
             return null;
+        }
+        return result;
+    }
+
+    public getOrUndefined(key: string): T | undefined {
+
+        const result: T | typeof MiphaLRUCacheEmptySymbol = this.getOrEmpty(key);
+        if (result === MiphaLRUCacheEmptySymbol) {
+            return undefined;
+        }
+        return result;
+    }
+
+    public getOrThrow(key: string): T {
+
+        const result: T | typeof MiphaLRUCacheEmptySymbol = this.getOrEmpty(key);
+        if (result === MiphaLRUCacheEmptySymbol) {
+            throw panic.code(ERROR_CODE.LRU_CACHE_NOT_FOUND_1, key);
+        }
+        return result;
+    }
+
+    public getOrDefault(key: string, defaultValue: T): T {
+
+        const result: T | typeof MiphaLRUCacheEmptySymbol = this.getOrEmpty(key);
+        if (result === MiphaLRUCacheEmptySymbol) {
+            return defaultValue;
         }
         return result;
     }
@@ -52,6 +85,17 @@ export class MiphaLRUCache<T> {
         }
 
         this._map.set(key, value);
+        return this;
+    }
+
+    public has(key: string): boolean {
+
+        return this._map.has(key);
+    }
+
+    public delete(key: string): this {
+
+        this._map.delete(key);
         return this;
     }
 }
