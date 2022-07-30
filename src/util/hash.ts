@@ -4,7 +4,7 @@
  * @description Hash
  */
 
-import MD5 from "md5";
+import * as MD5 from "md5";
 
 export const hashString = (target: string): string => {
 

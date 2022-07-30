@@ -8,6 +8,7 @@
 import { expect } from "chai";
 import * as Chance from "chance";
 import { createPreciseMiphaMarkdownBlock, MIPHA_BLOCK_DIVERSE_TYPE } from "../../../../src";
+import { hashString } from "../../../../src/util/hash";
 import { MockStorageEngine } from "../../../mock/storage-engine/mock-storage-engine";
 
 describe('Given {MiphaStorageEngine} Class', (): void => {
@@ -25,10 +26,12 @@ describe('Given {MiphaStorageEngine} Class', (): void => {
             createPreciseMiphaMarkdownBlock(identifier, content),
         );
 
+        const hashedContent: string = hashString(content);
+
         expect(storageEngine.blocks).to.be.deep.equal({
             [identifier]: {
                 identifier,
-                histories: [],
+                histories: [hashedContent],
                 type: MIPHA_BLOCK_DIVERSE_TYPE.MARKDOWN,
                 content,
             },

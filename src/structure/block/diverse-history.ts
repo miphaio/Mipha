@@ -5,19 +5,20 @@
  */
 
 import { ERROR_CODE, panic } from "../../util/error";
-import { MiphaBlock } from "./block";
+import { MiphaBlockDiverse } from "./block";
 import { MIPHA_BLOCK_DIVERSE_TYPE } from "./diverse-type";
 import { generateMiphaMarkdownBlockHistory } from "./diverse/markdown/history";
 
-export const generateMiphaBlockHistory = (
-    block: MiphaBlock<MIPHA_BLOCK_DIVERSE_TYPE>,
+export const generateMiphaBlockHistory = <Type extends MIPHA_BLOCK_DIVERSE_TYPE>(
+    type: Type,
+    block: MiphaBlockDiverse<Type>,
 ): string => {
 
-    switch (block.type) {
+    switch (type) {
 
         case MIPHA_BLOCK_DIVERSE_TYPE.MARKDOWN:
             return generateMiphaMarkdownBlockHistory(block);
     }
 
-    throw panic.code(ERROR_CODE.INVALID_BLOCK_DIVERSE_TYPE_1, block.type);
+    throw panic.code(ERROR_CODE.INVALID_BLOCK_DIVERSE_TYPE_1, type);
 };
