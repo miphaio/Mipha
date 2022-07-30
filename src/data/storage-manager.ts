@@ -4,6 +4,7 @@
  * @description Storage Manager
  */
 
+// Export
 export class MiphaStorageManager {
 
 }
