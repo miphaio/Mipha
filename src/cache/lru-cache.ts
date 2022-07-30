@@ -30,7 +30,7 @@ export class MiphaLRUCache<T> {
 
     public getOrNull(key: string): T | null {
 
-        const result: T | typeof MiphaLRUCacheEmptySymbol = this.getOrEmpty(key);
+        const result: T | typeof MiphaLRUCacheEmptySymbol = this.getOrEmptySymbol(key);
         if (result === MiphaLRUCacheEmptySymbol) {
             return null;
         }
@@ -39,7 +39,7 @@ export class MiphaLRUCache<T> {
 
     public getOrUndefined(key: string): T | undefined {
 
-        const result: T | typeof MiphaLRUCacheEmptySymbol = this.getOrEmpty(key);
+        const result: T | typeof MiphaLRUCacheEmptySymbol = this.getOrEmptySymbol(key);
         if (result === MiphaLRUCacheEmptySymbol) {
             return undefined;
         }
@@ -48,7 +48,7 @@ export class MiphaLRUCache<T> {
 
     public getOrThrow(key: string): T {
 
-        const result: T | typeof MiphaLRUCacheEmptySymbol = this.getOrEmpty(key);
+        const result: T | typeof MiphaLRUCacheEmptySymbol = this.getOrEmptySymbol(key);
         if (result === MiphaLRUCacheEmptySymbol) {
             throw panic.code(ERROR_CODE.LRU_CACHE_NOT_FOUND_1, key);
         }
@@ -57,14 +57,14 @@ export class MiphaLRUCache<T> {
 
     public getOrDefault(key: string, defaultValue: T): T {
 
-        const result: T | typeof MiphaLRUCacheEmptySymbol = this.getOrEmpty(key);
+        const result: T | typeof MiphaLRUCacheEmptySymbol = this.getOrEmptySymbol(key);
         if (result === MiphaLRUCacheEmptySymbol) {
             return defaultValue;
         }
         return result;
     }
 
-    public getOrEmpty(key: string): T | typeof MiphaLRUCacheEmptySymbol {
+    public getOrEmptySymbol(key: string): T | typeof MiphaLRUCacheEmptySymbol {
 
         if (!this._map.has(key)) {
             return MiphaLRUCacheEmptySymbol;

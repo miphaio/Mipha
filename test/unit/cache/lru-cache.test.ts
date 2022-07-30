@@ -69,7 +69,7 @@ describe('Given {MiphaLRUCache} Class', (): void => {
         cache.put(second, second);
         cache.put(third, third);
 
-        cache.getOrEmpty(first);
+        cache.getOrEmptySymbol(first);
 
         cache.put(forth, forth);
         cache.put(fifth, fifth);
