@@ -11,9 +11,14 @@ export type MiphaBlock<Type extends MIPHA_BLOCK_DIVERSE_TYPE> =
     & MiphaBlockDiverse<Type>
     & MiphaBlockBase;
 
+export type MiphaBlockDiverseMap = {
+
+    [MIPHA_BLOCK_DIVERSE_TYPE.MARKDOWN]: MiphaBlockDiverseMarkdown;
+    [MIPHA_BLOCK_DIVERSE_TYPE.UNKNOWN]: any;
+};
+
 export type MiphaBlockDiverse<Type extends MIPHA_BLOCK_DIVERSE_TYPE> =
-    Type extends MIPHA_BLOCK_DIVERSE_TYPE.MARKDOWN ? MiphaBlockDiverseMarkdown :
-    never;
+    MiphaBlockDiverseMap[Type];
 
 export type MiphaBlockBase = {
 
