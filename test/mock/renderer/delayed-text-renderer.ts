@@ -5,15 +5,23 @@
  * @override Mock
  */
 
-import { MiphaRenderer, MiphaRendererBuilder, MIPHA_BLOCK_DIVERSE_TYPE } from "../../../src";
+import { MiphaBlock, MiphaRenderer, MiphaRendererBuilder, MIPHA_BLOCK_DIVERSE_TYPE } from "../../../src";
 import { mockSleep } from "../util/time";
 
-const DELAY: number = 50;
+const DELAY: number = 25;
 
-export const mockDelayedTextRenderer: MiphaRenderer<string> =
-    MiphaRendererBuilder.fromScratch<string>()
-        .mountResolver(MIPHA_BLOCK_DIVERSE_TYPE.MARKDOWN, async (block) => {
-            await mockSleep(DELAY);
-            return block.content;
-        })
+export const createMockDelayedTextRenderer = (
+    parallel: boolean,
+): MiphaRenderer<string> => {
+
+    return MiphaRendererBuilder.fromScratch<string>()
+        .mountResolver(
+            MIPHA_BLOCK_DIVERSE_TYPE.MARKDOWN,
+            async (block: MiphaBlock<MIPHA_BLOCK_DIVERSE_TYPE.MARKDOWN>) => {
+                await mockSleep(DELAY);
+                return block.content;
+            },
+        )
+        .withOption('parallel', parallel)
         .build();
+};
