@@ -7,8 +7,8 @@
 
 import { expect } from "chai";
 import * as Chance from "chance";
-import { createPreciseMiphaMarkdownBlock, MIPHA_BLOCK_DIVERSE_TYPE } from "../../../src";
-import { MockStorageEngine } from "../../mock/storage-engine/mock-storage-engine";
+import { createPreciseMiphaMarkdownBlock, MIPHA_BLOCK_DIVERSE_TYPE } from "../../../../src";
+import { MockStorageEngine } from "../../../mock/storage-engine/mock-storage-engine";
 
 describe('Given {MiphaStorageEngine} Class', (): void => {
 

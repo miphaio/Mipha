@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace SearchEngine
+ * @namespace Engine_Search
  * @description Search Engine
  */
 

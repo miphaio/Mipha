@@ -1,11 +1,11 @@
 /**
  * @author WMXPY
- * @namespace StorageEngine
+ * @namespace Engine_Storage
  * @description Storage Engine
  */
 
-import { MiphaBlock } from "../structure/block/block";
-import { MIPHA_BLOCK_DIVERSE_TYPE } from "../structure/block/diverse-type";
+import { MiphaBlock } from "../../structure/block/block";
+import { MIPHA_BLOCK_DIVERSE_TYPE } from "../../structure/block/diverse-type";
 
 export abstract class MiphaStorageEngine {
 
