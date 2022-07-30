@@ -6,6 +6,6 @@
 
 export * from "./block";
 export * from "./diverse-type";
-export * from "./diverse/markdown";
+export * from "./diverse/export";
 export * from "./util/create";
 
