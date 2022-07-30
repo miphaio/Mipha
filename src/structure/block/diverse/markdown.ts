@@ -39,4 +39,4 @@ export const createMiphaMarkdownBlock = (
         type: MIPHA_BLOCK_DIVERSE_TYPE.MARKDOWN,
         diverse: createBlock(content),
     });
-}
+};

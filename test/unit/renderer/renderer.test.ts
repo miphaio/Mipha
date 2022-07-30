@@ -50,7 +50,9 @@ describe('Given {MiphaRenderer} Class', (): void => {
         expect(result).to.be.deep.equal(
             [firstContent, secondContent, thirdContent],
         );
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         expect(endTime - startTime).to.be.greaterThanOrEqual(25);
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         expect(endTime - startTime).to.be.lessThan(40);
     });
 
@@ -76,7 +78,9 @@ describe('Given {MiphaRenderer} Class', (): void => {
         expect(result).to.be.deep.equal(
             [firstContent, secondContent, thirdContent],
         );
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         expect(endTime - startTime).to.be.greaterThanOrEqual(75);
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         expect(endTime - startTime).to.be.lessThan(90);
     });
 });

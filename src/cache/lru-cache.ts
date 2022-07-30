@@ -70,7 +70,7 @@ export class MiphaLRUCache<T> {
             return MiphaLRUCacheEmptySymbol;
         }
 
-        const result: T = this._map.get(key)!;
+        const result: T = this._map.get(key) as T;
         this._map.delete(key);
         this._map.set(key, result);
         return result;
