@@ -100,4 +100,79 @@ describe('Given {MiphaLRUCache} Class', (): void => {
         expect(cache.getOrNull(second)).to.be.null;
         expect(cache.getOrNull(third)).to.be.equal(third);
     });
+
+    it('should be able to find existence of items', async (): Promise<void> => {
+
+        const first: string = chance.string();
+
+        const cache: MiphaLRUCache<string> = MiphaLRUCache.create(1);
+
+        cache.put(first, first);
+
+        expect(cache.has(first)).to.be.true;
+    });
+
+    it('should be able to execute get item or null', async (): Promise<void> => {
+
+        const first: string = chance.string();
+
+        const cache: MiphaLRUCache<string> = MiphaLRUCache.create(1);
+
+        cache.put(first, first);
+
+        expect(cache.getOrNull(first)).to.be.equal(first);
+        expect(cache.getOrNull(chance.string())).to.be.null;
+    });
+
+    it('should be able to execute get item or undefined', async (): Promise<void> => {
+
+        const first: string = chance.string();
+
+        const cache: MiphaLRUCache<string> = MiphaLRUCache.create(1);
+
+        cache.put(first, first);
+
+        expect(cache.getOrUndefined(first)).to.be.equal(first);
+        expect(cache.getOrUndefined(chance.string())).to.be.undefined;
+    });
+
+    it('should be able to execute get item or throw', async (): Promise<void> => {
+
+        const first: string = chance.string();
+
+        const cache: MiphaLRUCache<string> = MiphaLRUCache.create(1);
+
+        cache.put(first, first);
+
+        expect(cache.getOrThrow(first)).to.be.equal(first);
+
+        expect(() => {
+            cache.getOrThrow(chance.string());
+        }).to.be.throw;
+    });
+
+    it('should be able to execute get item or default', async (): Promise<void> => {
+
+        const first: string = chance.string();
+        const defaultValue: string = chance.string();
+
+        const cache: MiphaLRUCache<string> = MiphaLRUCache.create(1);
+
+        cache.put(first, first);
+
+        expect(cache.getOrDefault(first, defaultValue)).to.be.equal(first);
+        expect(cache.getOrDefault(chance.string(), defaultValue)).to.be.equal(defaultValue);
+    });
+
+    it('should be able to execute get item or empty symbol', async (): Promise<void> => {
+
+        const first: string = chance.string();
+
+        const cache: MiphaLRUCache<string> = MiphaLRUCache.create(1);
+
+        cache.put(first, first);
+
+        expect(cache.getOrEmptySymbol(first)).to.be.equal(first);
+        expect(cache.getOrEmptySymbol(chance.string())).to.be.equal(MiphaLRUCache.EmptySymbol);
+    });
 });

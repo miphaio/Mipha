@@ -10,6 +10,10 @@ export const MiphaLRUCacheEmptySymbol = Symbol('MiphaLRUCacheEmpty');
 
 export class MiphaLRUCache<T> {
 
+    public static get EmptySymbol(): typeof MiphaLRUCacheEmptySymbol {
+        return MiphaLRUCacheEmptySymbol;
+    }
+
     public static create<T>(maxSize: number): MiphaLRUCache<T> {
 
         return new MiphaLRUCache<T>(maxSize);
