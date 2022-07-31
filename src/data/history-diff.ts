@@ -4,10 +4,10 @@
  * @description History Diff
  */
 
-import { MiphaBlockBaseHistories } from "../structure/block/block";
+import { MiphaBlockBase } from "../structure/block/block";
 
 // Internal
-export const calculateHistoryDiff = <T extends MiphaBlockBaseHistories>(blocks: T[]): T[] => {
+export const calculateHistoryDiff = <T extends MiphaBlockBase>(blocks: T[]): T[] => {
 
     return blocks;
 };
