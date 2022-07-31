@@ -16,6 +16,7 @@ const createBlock = (content: string): MiphaBlockDiverseMarkdown => {
     };
 };
 
+// Public
 export const createPreciseMiphaMarkdownBlock = (
     identifier: string,
     content: string,
@@ -28,6 +29,7 @@ export const createPreciseMiphaMarkdownBlock = (
     });
 };
 
+// Public
 export const createMiphaMarkdownBlock = (
     content: string,
 ): MiphaBlock<MIPHA_BLOCK_DIVERSE_TYPE.MARKDOWN> => {

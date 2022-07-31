@@ -4,6 +4,7 @@
  * @description Markdown
  */
 
+// Public
 export type MiphaBlockDiverseMarkdown = {
 
     readonly content: string;
