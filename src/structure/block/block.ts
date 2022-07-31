@@ -4,21 +4,12 @@
  * @description Block
  */
 
+import { MiphaBlockDiverse } from "../diverse/declare";
 import { MIPHA_BLOCK_DIVERSE_TYPE } from "../diverse/diverse-type";
-import { MiphaBlockDiverseMarkdown } from "../diverse/markdown/declare";
 
 export type MiphaBlock<Type extends MIPHA_BLOCK_DIVERSE_TYPE> =
     & MiphaBlockDiverse<Type>
     & MiphaBlockBase;
-
-export type MiphaBlockDiverseMap = {
-
-    [MIPHA_BLOCK_DIVERSE_TYPE.MARKDOWN]: MiphaBlockDiverseMarkdown;
-    [MIPHA_BLOCK_DIVERSE_TYPE.UNKNOWN]: never;
-};
-
-export type MiphaBlockDiverse<Type extends MIPHA_BLOCK_DIVERSE_TYPE> =
-    MiphaBlockDiverseMap[Type];
 
 export type MiphaBlockBaseIdentifier = {
 

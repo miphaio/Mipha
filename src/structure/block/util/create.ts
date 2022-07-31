@@ -5,9 +5,10 @@
  */
 
 import { UUIDVersion1 } from "@sudoo/uuid";
-import { MiphaBlock, MiphaBlockDiverse } from "../block";
+import { MiphaBlockDiverse } from "../../diverse/declare";
 import { generateMiphaBlockHistory } from "../../diverse/diverse-history";
 import { MIPHA_BLOCK_DIVERSE_TYPE } from "../../diverse/diverse-type";
+import { MiphaBlock } from "../block";
 
 export type CreateMiphaBlockOptions<Type extends MIPHA_BLOCK_DIVERSE_TYPE> = {
 

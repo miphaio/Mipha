@@ -5,7 +5,7 @@
  */
 
 import { ERROR_CODE, panic } from "../../util/error";
-import { MiphaBlockDiverse } from "../block/block";
+import { MiphaBlockDiverse } from "./declare";
 import { MIPHA_BLOCK_DIVERSE_TYPE } from "./diverse-type";
 import { generateMiphaMarkdownBlockHistory } from "./markdown/history";
 
