@@ -4,9 +4,9 @@
  * @description Markdown
  */
 
-import { MiphaBlock } from "../../block";
-import { MIPHA_BLOCK_DIVERSE_TYPE } from "../../diverse-type";
-import { createMiphaBlock } from "../../util/create";
+import { MiphaBlock } from "../../block/block";
+import { MIPHA_BLOCK_DIVERSE_TYPE } from "../diverse-type";
+import { createMiphaBlock } from "../../block/util/create";
 import { MiphaBlockDiverseMarkdown } from "./declare";
 
 const createBlock = (content: string): MiphaBlockDiverseMarkdown => {

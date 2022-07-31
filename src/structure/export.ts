@@ -5,4 +5,5 @@
  */
 
 export * from "./block/export";
+export * from "./diverse/export";
 

@@ -5,9 +5,9 @@
  */
 
 import { ERROR_CODE, panic } from "../../util/error";
-import { MiphaBlockDiverse } from "./block";
+import { MiphaBlockDiverse } from "../block/block";
 import { MIPHA_BLOCK_DIVERSE_TYPE } from "./diverse-type";
-import { generateMiphaMarkdownBlockHistory } from "./diverse/markdown/history";
+import { generateMiphaMarkdownBlockHistory } from "./markdown/history";
 
 export const generateMiphaBlockHistory = <Type extends MIPHA_BLOCK_DIVERSE_TYPE>(
     type: Type,

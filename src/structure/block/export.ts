@@ -5,8 +5,7 @@
  */
 
 export * from "./block";
-export * from "./diverse-history";
-export * from "./diverse-type";
-export * from "./diverse/export";
+export * from "../diverse/diverse-history";
+export * from "../diverse/diverse-type";
 export * from "./util/create";
 

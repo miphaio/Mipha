@@ -5,7 +5,7 @@
  */
 
 import { MiphaBlock } from "../structure/block/block";
-import { MIPHA_BLOCK_DIVERSE_TYPE } from "../structure/block/diverse-type";
+import { MIPHA_BLOCK_DIVERSE_TYPE } from "../structure/diverse/diverse-type";
 
 export type MiphaRendererResolver<Type extends MIPHA_BLOCK_DIVERSE_TYPE, Result> = (
     block: MiphaBlock<Type>,

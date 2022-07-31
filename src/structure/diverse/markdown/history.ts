@@ -4,7 +4,7 @@
  * @description History
  */
 
-import { hashString } from "../../../../util/hash";
+import { hashString } from "../../../util/hash";
 import { MiphaBlockDiverseMarkdown } from "./declare";
 
 // Internal

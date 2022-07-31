@@ -6,7 +6,7 @@
 
 import { UUIDVersion1 } from "@sudoo/uuid";
 import { MiphaBlock } from "../../structure/block/block";
-import { MIPHA_BLOCK_DIVERSE_TYPE } from "../../structure/block/diverse-type";
+import { MIPHA_BLOCK_DIVERSE_TYPE } from "../../structure/diverse/diverse-type";
 
 export abstract class MiphaStorageEngine {
 
