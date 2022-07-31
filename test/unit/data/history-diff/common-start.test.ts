@@ -23,6 +23,8 @@ describe('Given [CommonStart] Methods', (): void => {
             firstBlock,
         ]);
 
-        expect(result).to.be.null;
+        console.log(result);
+
+        expect(result).to.be.exist;
     });
 });
