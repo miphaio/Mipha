@@ -1,10 +1,10 @@
 /**
  * @author WMXPY
- * @namespace Data
+ * @namespace Data_HistoryDiff
  * @description History Diff
  */
 
-import { MiphaBlockBase } from "../structure/block/block";
+import { MiphaBlockBase } from "../../structure/block/block";
 
 // Internal
 export const calculateHistoryDiff = <T extends MiphaBlockBase>(blocks: T[]): T[] => {

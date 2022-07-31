@@ -1,14 +1,14 @@
 /**
  * @author WMXPY
- * @namespace Data
+ * @namespace Data_HistoryDiff
  * @description History Diff
  * @override Unit Test
  */
 
 import { expect } from "chai";
 import * as Chance from "chance";
-import { createMiphaMarkdownBlock } from "../../../src";
-import { calculateHistoryDiff } from "../../../src/data/history-diff";
+import { createMiphaMarkdownBlock } from "../../../../src";
+import { calculateHistoryDiff } from "../../../../src/data/history-diff/history-diff";
 
 describe('Given [HistoryDiff] Methods', (): void => {
 
