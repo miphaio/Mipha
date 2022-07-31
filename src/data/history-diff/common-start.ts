@@ -30,7 +30,7 @@ export const findHistoryBlockCommonStart = <T extends MiphaBlockBase>(blocks: T[
             continue outer;
         }
 
-        const appliedBlocks: T[] = [];
+        const appliedBlocks: T[] = [outerBlock];
         const unappliedBlocks: T[] = [];
 
         let bestLength: number = 0;
