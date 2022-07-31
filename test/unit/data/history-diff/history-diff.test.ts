@@ -30,5 +30,19 @@ describe('Given [HistoryDiff] Methods', (): void => {
 
     it('should be able to diff two blocks with same start', async (): Promise<void> => {
 
+        const first: string = chance.string();
+        const second: string = chance.string();
+        const firstBlock = createMiphaMarkdownBlock(first);
+        const secondBlock = createMiphaMarkdownBlock(second);
+
+        const result = calculateHistoryDiff([
+            firstBlock,
+            secondBlock,
+        ]);
+
+        expect(result).to.be.deep.equal([
+            firstBlock,
+            secondBlock,
+        ]);
     });
 });

@@ -67,7 +67,7 @@ export const findHistoryBlockCommonStart = <T extends MiphaBlockBase>(blocks: T[
         });
     }
 
-    let bestResult: FindHistoryBlockCommonStartResult<T> = results[0]!;
+    let bestResult: FindHistoryBlockCommonStartResult<T> = results[0];
     let bestResultLength: number = bestResult.appliedBlocks.length;
 
     for (let i = 1; i < results.length; i++) {

@@ -13,6 +13,7 @@ export const calculateHistoryDiff = <T extends MiphaBlockBase>(blocks: T[]): T[]
         return blocks;
     }
 
+    // TODO
 
     return blocks;
 };
