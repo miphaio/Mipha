@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace Structure_Block
+ * @namespace Structure_Diverse
  * @description Diverse History
  */
 
@@ -9,6 +9,7 @@ import { MiphaBlockDiverse } from "./declare";
 import { MIPHA_BLOCK_DIVERSE_TYPE } from "./diverse-type";
 import { generateMiphaMarkdownBlockHistory } from "./markdown/history";
 
+// Export
 export const generateMiphaBlockHistory = <Type extends MIPHA_BLOCK_DIVERSE_TYPE>(
     type: Type,
     block: MiphaBlockDiverse<Type>,

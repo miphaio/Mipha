@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace Structure_Block
+ * @namespace Structure_Diverse
  * @description Diverse Type
  */
 

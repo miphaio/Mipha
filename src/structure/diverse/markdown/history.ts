@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace Structure_Block_Diverse
+ * @namespace Structure_Diverse_Markdown
  * @description History
  */
 

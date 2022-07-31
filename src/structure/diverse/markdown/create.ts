@@ -1,7 +1,7 @@
 /**
  * @author WMXPY
- * @namespace Structure_Block_Diverse
- * @description Markdown
+ * @namespace Structure_Diverse_Markdown
+ * @description Create
  */
 
 import { MiphaBlock } from "../../block/block";
