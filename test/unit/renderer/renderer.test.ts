@@ -7,7 +7,7 @@
 
 import { expect } from "chai";
 import * as Chance from "chance";
-import { createMiphaMarkdownBlock } from "../../../src";
+import { MiphaBlockDiverse } from "../../../src";
 import { createMockDelayedTextRenderer } from "../../mock/renderer/delayed-text-renderer";
 import { createMockTextRenderer } from "../../mock/renderer/text-renderer";
 
@@ -22,7 +22,9 @@ describe('Given {MiphaRenderer} Class', (): void => {
         const content: string = chance.string();
 
         const result = await renderer.render(
-            createMiphaMarkdownBlock(content),
+            MiphaBlockDiverse.markdownHelper.create({
+                content,
+            }),
         );
 
         expect(result).to.be.equal(content);
@@ -40,9 +42,15 @@ describe('Given {MiphaRenderer} Class', (): void => {
 
         const result = await renderer.renderList([
 
-            createMiphaMarkdownBlock(firstContent),
-            createMiphaMarkdownBlock(secondContent),
-            createMiphaMarkdownBlock(thirdContent),
+            MiphaBlockDiverse.markdownHelper.create({
+                content: firstContent,
+            }),
+            MiphaBlockDiverse.markdownHelper.create({
+                content: secondContent,
+            }),
+            MiphaBlockDiverse.markdownHelper.create({
+                content: thirdContent,
+            }),
         ]);
 
         const endTime: number = Date.now();
@@ -68,9 +76,15 @@ describe('Given {MiphaRenderer} Class', (): void => {
 
         const result = await renderer.renderList([
 
-            createMiphaMarkdownBlock(firstContent),
-            createMiphaMarkdownBlock(secondContent),
-            createMiphaMarkdownBlock(thirdContent),
+            MiphaBlockDiverse.markdownHelper.create({
+                content: firstContent,
+            }),
+            MiphaBlockDiverse.markdownHelper.create({
+                content: secondContent,
+            }),
+            MiphaBlockDiverse.markdownHelper.create({
+                content: thirdContent,
+            }),
         ]);
 
         const endTime: number = Date.now();

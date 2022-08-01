@@ -7,7 +7,7 @@
 
 import { expect } from "chai";
 import * as Chance from "chance";
-import { createMiphaMarkdownBlock, createPreciseMiphaMarkdownBlock } from "../../../../src";
+import { MiphaBlockDiverse, MIPHA_BLOCK_DIVERSE_TYPE } from "../../../../src";
 import { findHistoryBlockCommonStart } from "../../../../src/data/history-diff/common-start";
 
 describe('Given [CommonStart] Methods', (): void => {
@@ -18,7 +18,9 @@ describe('Given [CommonStart] Methods', (): void => {
 
         const first: string = chance.string();
 
-        const firstBlock = createMiphaMarkdownBlock(first);
+        const firstBlock = MiphaBlockDiverse.markdownHelper.create({
+            content: first,
+        });
 
         const firstHistory = firstBlock.histories[0];
 
@@ -38,8 +40,12 @@ describe('Given [CommonStart] Methods', (): void => {
 
         const content: string = chance.string();
 
-        const firstBlock = createMiphaMarkdownBlock(content);
-        const secondBlock = createPreciseMiphaMarkdownBlock(firstBlock.identifier, content);
+        const firstBlock = MiphaBlockDiverse.markdownHelper.create({
+            content,
+        });
+        const secondBlock = MiphaBlockDiverse.markdownHelper.createPrecise(firstBlock.identifier, {
+            content,
+        });
 
         const firstHistory = firstBlock.histories[0];
 
@@ -60,7 +66,9 @@ describe('Given [CommonStart] Methods', (): void => {
 
         const first: string = chance.string();
 
-        const firstBlock = createMiphaMarkdownBlock(first);
+        const firstBlock = MiphaBlockDiverse.markdownHelper.create({
+            content: first,
+        });
 
         const firstHistory = firstBlock.histories[0];
 

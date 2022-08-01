@@ -7,7 +7,7 @@
 
 import { expect } from "chai";
 import * as Chance from "chance";
-import { createPreciseMiphaMarkdownBlock, MIPHA_BLOCK_DIVERSE_TYPE } from "../../../../src";
+import { MiphaBlockDiverse, MIPHA_BLOCK_DIVERSE_TYPE } from "../../../../src";
 import { hashString } from "../../../../src/util/hash";
 import { MockStorageEngine } from "../../../mock/storage-engine/mock-storage-engine";
 
@@ -23,7 +23,9 @@ describe('Given {MiphaStorageEngine} Class', (): void => {
         const content: string = chance.string();
 
         await storageEngine.saveBlock(
-            createPreciseMiphaMarkdownBlock(identifier, content),
+            MiphaBlockDiverse.markdownHelper.createPrecise(identifier, {
+                content,
+            }),
         );
 
         const hashedContent: string = hashString(content);

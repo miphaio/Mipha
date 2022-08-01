@@ -7,7 +7,7 @@
 
 import { expect } from "chai";
 import * as Chance from "chance";
-import { createMiphaMarkdownBlock } from "../../../../src";
+import { MiphaBlockDiverse } from "../../../../src";
 import { calculateHistoryDiff } from "../../../../src/data/history-diff/history-diff";
 
 describe('Given [HistoryDiff] Methods', (): void => {
@@ -17,7 +17,9 @@ describe('Given [HistoryDiff] Methods', (): void => {
     it('should be able to compare single block', async (): Promise<void> => {
 
         const first: string = chance.string();
-        const firstBlock = createMiphaMarkdownBlock(first);
+        const firstBlock = MiphaBlockDiverse.markdownHelper.create({
+            content: first,
+        });
 
         const result = calculateHistoryDiff([
             firstBlock,
@@ -32,8 +34,12 @@ describe('Given [HistoryDiff] Methods', (): void => {
 
         const first: string = chance.string();
         const second: string = chance.string();
-        const firstBlock = createMiphaMarkdownBlock(first);
-        const secondBlock = createMiphaMarkdownBlock(second);
+        const firstBlock = MiphaBlockDiverse.markdownHelper.create({
+            content: first,
+        });
+        const secondBlock = MiphaBlockDiverse.markdownHelper.create({
+            content: second,
+        });
 
         const result = calculateHistoryDiff([
             firstBlock,
