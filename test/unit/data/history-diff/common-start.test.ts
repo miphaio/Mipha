@@ -26,12 +26,12 @@ describe('Given [CommonStart] Methods', (): void => {
             firstBlock,
         ]);
 
-        expect(result).to.be.deep.equal({
+        expect(result).to.be.deep.equal([{
             commonStart: firstHistory,
             bestBlock: firstBlock,
             appliedBlocks: [firstBlock],
             unappliedBlocks: [],
-        });
+        }]);
     });
 
     it('should be able to find common start for double same block', async (): Promise<void> => {
@@ -48,11 +48,11 @@ describe('Given [CommonStart] Methods', (): void => {
             secondBlock,
         ]);
 
-        expect(result).to.be.deep.equal({
+        expect(result).to.be.deep.equal([{
             commonStart: firstHistory,
             bestBlock: firstBlock,
             appliedBlocks: [firstBlock, secondBlock],
             unappliedBlocks: [],
-        });
+        }]);
     });
 });
