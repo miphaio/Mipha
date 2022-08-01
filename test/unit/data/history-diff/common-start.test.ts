@@ -30,7 +30,7 @@ describe('Given [CommonStart] Methods', (): void => {
 
         expect(result).to.be.deep.equal([{
             commonStart: firstHistory,
-            bestBlock: firstBlock,
+            latestBlock: firstBlock,
             appliedBlocks: [firstBlock],
             unappliedBlocks: [],
         }]);
@@ -56,7 +56,7 @@ describe('Given [CommonStart] Methods', (): void => {
 
         expect(result).to.be.deep.equal([{
             commonStart: firstHistory,
-            bestBlock: firstBlock,
+            latestBlock: firstBlock,
             appliedBlocks: [firstBlock, secondBlock],
             unappliedBlocks: [],
         }]);
@@ -64,22 +64,26 @@ describe('Given [CommonStart] Methods', (): void => {
 
     it('should be able to find common start for single block chain', async (): Promise<void> => {
 
-        const first: string = chance.string();
+        const content: string = chance.string();
 
         const firstBlock = MiphaBlockDiverse.markdownHelper.create({
-            content: first,
+            content,
+        });
+        const secondBlock = MiphaBlockDiverse.markdownHelper.update(firstBlock, {
+            content: chance.string(),
         });
 
         const firstHistory = firstBlock.histories[0];
 
         const result = findHistoryBlockCommonStart([
             firstBlock,
+            secondBlock,
         ]);
 
         expect(result).to.be.deep.equal([{
             commonStart: firstHistory,
-            bestBlock: firstBlock,
-            appliedBlocks: [firstBlock],
+            latestBlock: secondBlock,
+            appliedBlocks: [firstBlock, secondBlock],
             unappliedBlocks: [],
         }]);
     });

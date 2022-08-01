@@ -34,4 +34,18 @@ export abstract class MiphaBlockDiverseHelper<Type extends MIPHA_BLOCK_DIVERSE_T
             ...diverse,
         };
     }
+
+    public update(block: MiphaBlock<Type>, diverse: MiphaBlockDiverseStructure<Type>): MiphaBlock<Type> {
+
+        const history: string = this.generateHistoryHash(diverse);
+
+        return {
+            ...block,
+            histories: [
+                ...block.histories,
+                history,
+            ],
+            ...diverse,
+        };
+    }
 }

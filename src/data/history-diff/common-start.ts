@@ -10,7 +10,7 @@ import { MiphaBlockBase } from "../../structure/block/block";
 export type FindHistoryBlockCommonStartResult<T extends MiphaBlockBase> = {
 
     readonly commonStart: string;
-    readonly bestBlock: T;
+    readonly latestBlock: T;
 
     readonly appliedBlocks: T[];
     readonly unappliedBlocks: T[];
@@ -34,7 +34,7 @@ export const findHistoryBlockCommonStart = <T extends MiphaBlockBase>(blocks: T[
         const unappliedBlocks: T[] = [];
 
         let bestLength: number = 0;
-        let bestBlock: T = outerBlock;
+        let latestBlock: T = outerBlock;
 
         inner: for (let j = 0; j < blocks.length; j++) {
 
@@ -55,13 +55,13 @@ export const findHistoryBlockCommonStart = <T extends MiphaBlockBase>(blocks: T[
             const length: number = innerBlock.histories.length - blockIndex;
             if (length > bestLength) {
                 bestLength = length;
-                bestBlock = innerBlock;
+                latestBlock = innerBlock;
             }
         }
 
         results.push({
             commonStart: blockStart,
-            bestBlock,
+            latestBlock,
             appliedBlocks,
             unappliedBlocks,
         });
