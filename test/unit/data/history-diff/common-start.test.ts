@@ -126,9 +126,9 @@ describe('Given [CommonStart] Methods', (): void => {
 
     it('should be able to find common start for double block chain with variant', async (): Promise<void> => {
 
-        const first: string = 'first';
-        const second: string = 'second';
-        const third: string = 'third';
+        const first: string = chance.string();
+        const second: string = chance.string();
+        const third: string = chance.string();
 
         const firstBlock = MiphaBlockDiverse.markdownHelper.create({
             content: first,

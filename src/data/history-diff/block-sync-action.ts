@@ -43,7 +43,8 @@ export const calculateBlockSyncAction = <T extends MiphaBlockBase>(blocks: T[]):
         }];
     }
 
-    const commonStarts: Array<FindHistoryBlockCommonStartResult<T>> = findHistoryBlockCommonStart(blocks);
+    const commonStarts: Array<FindHistoryBlockCommonStartResult<T>> =
+        findHistoryBlockCommonStart(blocks);
 
     if (commonStarts.length === 0) {
         throw panic.code(ERROR_CODE.FAILED_CALCULATE_COMMON_START);
@@ -53,7 +54,10 @@ export const calculateBlockSyncAction = <T extends MiphaBlockBase>(blocks: T[]):
     const results: Array<CalculateBlockSyncActionResult<T>> =
         firstCommonStart.appliedBlocks.map((block: T) => {
 
-            if (block.histories[block.histories.length - 1] === firstCommonStart.commonStart) {
+            const bestLatestHistory: string = firstCommonStart.latestBlock.histories[firstCommonStart.latestBlock.histories.length - 1];
+            const blockLatestHistory: string = block.histories[block.histories.length - 1];
+
+            if (blockLatestHistory === bestLatestHistory) {
                 return {
                     block,
                     type: CalculateBlockSyncActionType.PERSIST,
