@@ -55,4 +55,24 @@ describe('Given [CommonStart] Methods', (): void => {
             unappliedBlocks: [],
         }]);
     });
+
+    it('should be able to find common start for single block chain', async (): Promise<void> => {
+
+        const first: string = chance.string();
+
+        const firstBlock = createMiphaMarkdownBlock(first);
+
+        const firstHistory = firstBlock.histories[0];
+
+        const result = findHistoryBlockCommonStart([
+            firstBlock,
+        ]);
+
+        expect(result).to.be.deep.equal([{
+            commonStart: firstHistory,
+            bestBlock: firstBlock,
+            appliedBlocks: [firstBlock],
+            unappliedBlocks: [],
+        }]);
+    });
 });
