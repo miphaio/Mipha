@@ -123,4 +123,61 @@ describe('Given [CommonStart] Methods', (): void => {
             },
         ]);
     });
+
+    it('should be able to find common start for triple block chain', async (): Promise<void> => {
+
+        const firstChainFirstBlock = MiphaBlockDiverse.markdownHelper.create({
+            content: chance.string(),
+        });
+        const firstChainSecondBlock = MiphaBlockDiverse.markdownHelper.update(
+            firstChainFirstBlock,
+            {
+                content: chance.string(),
+            },
+        );
+
+        const secondChainFirstBlock = MiphaBlockDiverse.markdownHelper.create({
+            content: chance.string(),
+        });
+
+        const thirdChainFirstBlock = MiphaBlockDiverse.markdownHelper.create({
+            content: chance.string(),
+        });
+        const thirdChainSecondBlock = MiphaBlockDiverse.markdownHelper.update(
+            thirdChainFirstBlock,
+            {
+                content: chance.string(),
+            },
+        );
+
+        const firstHistory = firstChainFirstBlock.histories[0];
+        const secondHistory = secondChainFirstBlock.histories[0];
+        const thirdHistory = thirdChainFirstBlock.histories[0];
+
+        const result = findHistoryBlockCommonStart([
+            firstChainFirstBlock,
+            firstChainSecondBlock,
+            secondChainFirstBlock,
+            thirdChainFirstBlock,
+            thirdChainSecondBlock,
+        ]);
+
+        expect(result).to.be.deep.equal([
+            {
+                commonStart: firstHistory,
+                latestBlock: firstChainSecondBlock,
+                appliedBlocks: [firstChainFirstBlock, firstChainSecondBlock],
+            },
+            {
+                commonStart: thirdHistory,
+                latestBlock: thirdChainSecondBlock,
+                appliedBlocks: [thirdChainFirstBlock, thirdChainSecondBlock],
+            },
+            {
+                commonStart: secondHistory,
+                latestBlock: secondChainFirstBlock,
+                appliedBlocks: [secondChainFirstBlock],
+            },
+        ]);
+    });
 });

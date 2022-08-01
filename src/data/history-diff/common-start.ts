@@ -23,6 +23,20 @@ type FindHistoryBlockCommonStartTempResult<T extends MiphaBlockBase> = {
 // Internal
 export const findHistoryBlockCommonStart = <T extends MiphaBlockBase>(blocks: T[]): Array<FindHistoryBlockCommonStartResult<T>> => {
 
+    if (blocks.length === 0) {
+        return [];
+    }
+
+    if (blocks.length === 1) {
+
+        const block: T = blocks[0];
+        return [{
+            commonStart: block.histories[block.histories.length - 1],
+            latestBlock: block,
+            appliedBlocks: [block],
+        }];
+    }
+
     const results: Array<FindHistoryBlockCommonStartTempResult<T>> = [];
 
     outer: for (let i = 0; i < blocks.length; i++) {
