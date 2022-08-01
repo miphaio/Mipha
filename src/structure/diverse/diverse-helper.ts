@@ -14,8 +14,6 @@ export abstract class MiphaBlockDiverseHelper<Type extends MIPHA_BLOCK_DIVERSE_T
 
     public abstract readonly type: Type;
 
-    public abstract generateHistoryHash(diverse: MiphaBlockDiverseStructure<Type>): string;
-
     public create(diverse: MiphaBlockDiverseStructure<Type>): MiphaBlock<Type> {
 
         const identifier: string = UUIDVersion1.generate().toString();
@@ -48,4 +46,6 @@ export abstract class MiphaBlockDiverseHelper<Type extends MIPHA_BLOCK_DIVERSE_T
             ...diverse,
         };
     }
+
+    public abstract generateHistoryHash(diverse: MiphaBlockDiverseStructure<Type>): string;
 }

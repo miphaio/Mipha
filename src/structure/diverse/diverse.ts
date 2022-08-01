@@ -12,6 +12,9 @@ import { MiphaMarkdownBlockDiverseHelper } from "./markdown/diverse-helper";
 // Public
 export class MiphaBlockDiverse {
 
+    public static markdownHelper: MiphaBlockDiverseHelper<MIPHA_BLOCK_DIVERSE_TYPE.MARKDOWN> =
+        this.helperOf(MIPHA_BLOCK_DIVERSE_TYPE.MARKDOWN);
+
     public static helperOf<Type extends MIPHA_BLOCK_DIVERSE_TYPE>(type: Type): MiphaBlockDiverseHelper<Type> {
 
         switch (type) {
@@ -21,7 +24,4 @@ export class MiphaBlockDiverse {
         }
         throw panic.code(ERROR_CODE.INVALID_BLOCK_DIVERSE_TYPE_1, type);
     }
-
-    public static markdownHelper: MiphaBlockDiverseHelper<MIPHA_BLOCK_DIVERSE_TYPE.MARKDOWN> =
-        this.helperOf(MIPHA_BLOCK_DIVERSE_TYPE.MARKDOWN);
 }

@@ -7,7 +7,7 @@
 
 import { expect } from "chai";
 import * as Chance from "chance";
-import { MiphaBlockDiverse, MIPHA_BLOCK_DIVERSE_TYPE } from "../../../../src";
+import { MiphaBlockDiverse } from "../../../../src";
 import { findHistoryBlockCommonStart } from "../../../../src/data/history-diff/common-start";
 
 describe('Given [CommonStart] Methods', (): void => {
