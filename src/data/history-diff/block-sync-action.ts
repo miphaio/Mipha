@@ -52,6 +52,7 @@ export const calculateBlockSyncAction = <T extends MiphaBlockBase>(blocks: T[]):
     const firstCommonStart: FindHistoryBlockCommonStartResult<T> = commonStarts[0];
     const results: Array<CalculateBlockSyncActionResult<T>> =
         firstCommonStart.appliedBlocks.map((block: T) => {
+
             if (block.histories[block.histories.length - 1] === firstCommonStart.commonStart) {
                 return {
                     block,

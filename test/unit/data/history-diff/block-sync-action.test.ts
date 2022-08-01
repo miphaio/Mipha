@@ -17,6 +17,7 @@ describe('Given [CalculateBlockSyncAction] Methods', (): void => {
     it('should be able to compare single block', async (): Promise<void> => {
 
         const first: string = chance.string();
+
         const firstBlock = MiphaBlockDiverse.markdownHelper.create({
             content: first,
         });
@@ -33,9 +34,10 @@ describe('Given [CalculateBlockSyncAction] Methods', (): void => {
         ]);
     });
 
-    it('should be able to diff two blocks with same start', async (): Promise<void> => {
+    it('should be able to diff two same blocks', async (): Promise<void> => {
 
         const content: string = chance.string();
+
         const firstBlock = MiphaBlockDiverse.markdownHelper.create({
             content,
         });
