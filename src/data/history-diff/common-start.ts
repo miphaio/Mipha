@@ -5,6 +5,7 @@
  */
 
 import { MiphaBlockBase } from "../../structure/block/block";
+import { calculateIsSameChain } from "./is-same-chain";
 
 // Internal
 export type FindHistoryBlockCommonStartResult<T extends MiphaBlockBase> = {
@@ -42,13 +43,13 @@ export const findHistoryBlockCommonStart = <T extends MiphaBlockBase>(blocks: T[
     outer: for (let i = 0; i < blocks.length; i++) {
 
         const outerBlock: T = blocks[i];
-        const blockStart: string | undefined = outerBlock.histories[0];
+        const blockStart: string | undefined = outerBlock.histories[outerBlock.histories.length - 1];
 
         if (typeof blockStart === 'undefined') {
             continue outer;
         }
 
-        const appliedBlocks: T[] = [outerBlock];
+        const appliedBlocks: T[] = [];
         const unappliedBlocks: T[] = [];
 
         let bestLength: number = 0;
@@ -68,6 +69,13 @@ export const findHistoryBlockCommonStart = <T extends MiphaBlockBase>(blocks: T[
                 continue inner;
             }
 
+            for (const appliedBlock of appliedBlocks) {
+                if (!calculateIsSameChain(blockStart, innerBlock, appliedBlock)) {
+                    unappliedBlocks.push(innerBlock);
+                    continue inner;
+                }
+            }
+
             appliedBlocks.push(innerBlock);
 
             const length: number = innerBlock.histories.length - blockIndex;
@@ -80,7 +88,10 @@ export const findHistoryBlockCommonStart = <T extends MiphaBlockBase>(blocks: T[
         results.push({
             commonStart: blockStart,
             latestBlock,
-            appliedBlocks,
+            appliedBlocks: [
+                outerBlock,
+                ...appliedBlocks,
+            ],
             unappliedBlocks,
         });
     }

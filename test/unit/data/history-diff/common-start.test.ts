@@ -124,6 +124,42 @@ describe('Given [CommonStart] Methods', (): void => {
         ]);
     });
 
+    it('should be able to find common start for double block chain with variant', async (): Promise<void> => {
+
+        const first: string = 'first';
+        const second: string = 'second';
+        const third: string = 'third';
+
+        const firstBlock = MiphaBlockDiverse.markdownHelper.create({
+            content: first,
+        });
+        const secondBlock = MiphaBlockDiverse.markdownHelper.update(firstBlock, {
+            content: second,
+        });
+        const thirdBlock = MiphaBlockDiverse.markdownHelper.update(firstBlock, {
+            content: third,
+        });
+
+        const firstHistory = firstBlock.histories[0];
+        const thirdHistory = thirdBlock.histories[1];
+
+        const result = findHistoryBlockCommonStart([
+            firstBlock,
+            secondBlock,
+            thirdBlock,
+        ]);
+
+        expect(result).to.be.deep.equal([{
+            commonStart: firstHistory,
+            latestBlock: secondBlock,
+            appliedBlocks: [firstBlock, secondBlock],
+        }, {
+            commonStart: thirdHistory,
+            latestBlock: thirdBlock,
+            appliedBlocks: [thirdBlock],
+        }]);
+    });
+
     it('should be able to find common start for triple block chain', async (): Promise<void> => {
 
         const firstChainFirstBlock = MiphaBlockDiverse.markdownHelper.create({
