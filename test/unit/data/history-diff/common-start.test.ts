@@ -32,7 +32,6 @@ describe('Given [CommonStart] Methods', (): void => {
             commonStart: firstHistory,
             latestBlock: firstBlock,
             appliedBlocks: [firstBlock],
-            unappliedBlocks: [],
         }]);
     });
 
@@ -58,7 +57,6 @@ describe('Given [CommonStart] Methods', (): void => {
             commonStart: firstHistory,
             latestBlock: firstBlock,
             appliedBlocks: [firstBlock, secondBlock],
-            unappliedBlocks: [],
         }]);
     });
 
@@ -84,7 +82,45 @@ describe('Given [CommonStart] Methods', (): void => {
             commonStart: firstHistory,
             latestBlock: secondBlock,
             appliedBlocks: [firstBlock, secondBlock],
-            unappliedBlocks: [],
         }]);
+    });
+
+    it('should be able to find common start for double block chain', async (): Promise<void> => {
+
+        const firstChainFirstBlock = MiphaBlockDiverse.markdownHelper.create({
+            content: chance.string(),
+        });
+        const firstChainSecondBlock = MiphaBlockDiverse.markdownHelper.update(
+            firstChainFirstBlock,
+            {
+                content: chance.string(),
+            },
+        );
+
+        const secondChainFirstBlock = MiphaBlockDiverse.markdownHelper.create({
+            content: chance.string(),
+        });
+
+        const firstHistory = firstChainFirstBlock.histories[0];
+        const secondHistory = secondChainFirstBlock.histories[0];
+
+        const result = findHistoryBlockCommonStart([
+            firstChainFirstBlock,
+            firstChainSecondBlock,
+            secondChainFirstBlock,
+        ]);
+
+        expect(result).to.be.deep.equal([
+            {
+                commonStart: firstHistory,
+                latestBlock: firstChainSecondBlock,
+                appliedBlocks: [firstChainFirstBlock, firstChainSecondBlock],
+            },
+            {
+                commonStart: secondHistory,
+                latestBlock: secondChainFirstBlock,
+                appliedBlocks: [secondChainFirstBlock],
+            },
+        ]);
     });
 });

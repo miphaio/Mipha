@@ -13,13 +13,17 @@ export type FindHistoryBlockCommonStartResult<T extends MiphaBlockBase> = {
     readonly latestBlock: T;
 
     readonly appliedBlocks: T[];
-    readonly unappliedBlocks: T[];
 };
+
+type FindHistoryBlockCommonStartTempResult<T extends MiphaBlockBase> = {
+
+    readonly unappliedBlocks: T[];
+} & FindHistoryBlockCommonStartResult<T>;
 
 // Internal
 export const findHistoryBlockCommonStart = <T extends MiphaBlockBase>(blocks: T[]): Array<FindHistoryBlockCommonStartResult<T>> => {
 
-    const results: Array<FindHistoryBlockCommonStartResult<T>> = [];
+    const results: Array<FindHistoryBlockCommonStartTempResult<T>> = [];
 
     outer: for (let i = 0; i < blocks.length; i++) {
 
@@ -67,12 +71,12 @@ export const findHistoryBlockCommonStart = <T extends MiphaBlockBase>(blocks: T[
         });
     }
 
-    let bestResult: FindHistoryBlockCommonStartResult<T> = results[0];
+    let bestResult: FindHistoryBlockCommonStartTempResult<T> = results[0];
     let bestResultLength: number = bestResult.appliedBlocks.length;
 
     for (let i = 1; i < results.length; i++) {
 
-        const result: FindHistoryBlockCommonStartResult<T> = results[i];
+        const result: FindHistoryBlockCommonStartTempResult<T> = results[i];
         const length: number = result.appliedBlocks.length;
 
         if (length > bestResultLength) {
@@ -82,7 +86,11 @@ export const findHistoryBlockCommonStart = <T extends MiphaBlockBase>(blocks: T[
     }
 
     const finalResult: Array<FindHistoryBlockCommonStartResult<T>> = [
-        bestResult,
+        {
+            commonStart: bestResult.commonStart,
+            latestBlock: bestResult.latestBlock,
+            appliedBlocks: bestResult.appliedBlocks,
+        },
     ];
 
     if (bestResult.unappliedBlocks.length > 0) {
