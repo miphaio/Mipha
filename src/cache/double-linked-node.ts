@@ -4,11 +4,11 @@
  * @description Double Linked Node
  */
 
-const MiphaDoubleLinkedNodeEmptyKeySymbol =
-    Symbol('MiphaDoubleLinkedNodeEmptyKeySymbol');
-export const MiphaDoubleLinkedNodeEmptySymbol =
-    Symbol('MiphaDoubleLinkedNodeEmpty');
+const MiphaDoubleLinkedNodeEmptyKeySymbol = Symbol('MiphaDoubleLinkedNodeEmptyKeySymbol');
+// Internal
+export const MiphaDoubleLinkedNodeEmptySymbol = Symbol('MiphaDoubleLinkedNodeEmpty');
 
+// Internal
 export class MiphaDoubleLinkedNode<T> {
 
     public static create<T>(key: string, value: T): MiphaDoubleLinkedNode<T> {

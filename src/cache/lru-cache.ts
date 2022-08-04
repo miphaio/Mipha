@@ -6,8 +6,10 @@
 
 import { ERROR_CODE, panic } from "../util/error";
 
+// Internal
 export const MiphaLRUCacheEmptySymbol = Symbol('MiphaLRUCacheEmpty');
 
+// Internal
 export class MiphaLRUCache<T> {
 
     public static get EmptySymbol(): typeof MiphaLRUCacheEmptySymbol {
