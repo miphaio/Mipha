@@ -7,18 +7,20 @@
 
 import { expect } from "chai";
 import * as Chance from "chance";
-import { MiphaBlockDiverse } from "../../../../src";
+import { MiphaBlockDiverse, MiphaDataSource } from "../../../../src";
 import { calculateBlockSyncAction, CalculateBlockSyncActionType } from "../../../../src/data/history-diff/block-sync-action";
 
 describe('Given [CalculateBlockSyncAction] Methods', (): void => {
 
     const chance: Chance.Chance = new Chance('data-history-diff-block-sync-action');
 
+    const dataSource: MiphaDataSource = MiphaDataSource.fromScratch();
+
     it('should be able to compare single block', async (): Promise<void> => {
 
         const first: string = chance.string();
 
-        const firstBlock = MiphaBlockDiverse.markdownHelper.create({
+        const firstBlock = MiphaBlockDiverse.markdownHelper.create(dataSource, {
             content: first,
         });
 
@@ -28,8 +30,13 @@ describe('Given [CalculateBlockSyncAction] Methods', (): void => {
 
         expect(result).to.be.deep.equal([
             {
-                block: firstBlock,
-                type: CalculateBlockSyncActionType.PERSIST,
+                variantBlocks: [
+                    {
+                        block: firstBlock,
+                        type: CalculateBlockSyncActionType.PERSIST,
+                    },
+                ],
+                isBestVariant: true,
             },
         ]);
     });
@@ -38,7 +45,7 @@ describe('Given [CalculateBlockSyncAction] Methods', (): void => {
 
         const content: string = chance.string();
 
-        const firstBlock = MiphaBlockDiverse.markdownHelper.create({
+        const firstBlock = MiphaBlockDiverse.markdownHelper.create(dataSource, {
             content,
         });
 
@@ -49,12 +56,17 @@ describe('Given [CalculateBlockSyncAction] Methods', (): void => {
 
         expect(result).to.be.deep.equal([
             {
-                block: firstBlock,
-                type: CalculateBlockSyncActionType.PERSIST,
-            },
-            {
-                block: firstBlock,
-                type: CalculateBlockSyncActionType.PERSIST,
+                variantBlocks: [
+                    {
+                        block: firstBlock,
+                        type: CalculateBlockSyncActionType.PERSIST,
+                    },
+                    {
+                        block: firstBlock,
+                        type: CalculateBlockSyncActionType.PERSIST,
+                    },
+                ],
+                isBestVariant: true,
             },
         ]);
     });
@@ -65,7 +77,7 @@ describe('Given [CalculateBlockSyncAction] Methods', (): void => {
         const second: string = chance.string();
         const third: string = chance.string();
 
-        const firstBlock = MiphaBlockDiverse.markdownHelper.create({
+        const firstBlock = MiphaBlockDiverse.markdownHelper.create(dataSource, {
             content: first,
         });
         const secondBlock = MiphaBlockDiverse.markdownHelper.update(firstBlock, {
@@ -83,18 +95,23 @@ describe('Given [CalculateBlockSyncAction] Methods', (): void => {
 
         expect(result).to.be.deep.equal([
             {
-                block: firstBlock,
-                type: CalculateBlockSyncActionType.FAST_FORWARD,
-                latestBlock: thirdBlock,
-            },
-            {
-                block: secondBlock,
-                type: CalculateBlockSyncActionType.FAST_FORWARD,
-                latestBlock: thirdBlock,
-            },
-            {
-                block: thirdBlock,
-                type: CalculateBlockSyncActionType.PERSIST,
+                variantBlocks: [
+                    {
+                        block: firstBlock,
+                        type: CalculateBlockSyncActionType.FAST_FORWARD,
+                        latestBlock: thirdBlock,
+                    },
+                    {
+                        block: secondBlock,
+                        type: CalculateBlockSyncActionType.FAST_FORWARD,
+                        latestBlock: thirdBlock,
+                    },
+                    {
+                        block: thirdBlock,
+                        type: CalculateBlockSyncActionType.PERSIST,
+                    },
+                ],
+                isBestVariant: true,
             },
         ]);
     });
@@ -105,7 +122,7 @@ describe('Given [CalculateBlockSyncAction] Methods', (): void => {
         const second: string = chance.string();
         const third: string = chance.string();
 
-        const firstBlock = MiphaBlockDiverse.markdownHelper.create({
+        const firstBlock = MiphaBlockDiverse.markdownHelper.create(dataSource, {
             content: first,
         });
         const secondBlock = MiphaBlockDiverse.markdownHelper.update(firstBlock, {
@@ -123,17 +140,27 @@ describe('Given [CalculateBlockSyncAction] Methods', (): void => {
 
         expect(result).to.be.deep.equal([
             {
-                block: firstBlock,
-                type: CalculateBlockSyncActionType.FAST_FORWARD,
-                latestBlock: secondBlock,
+                variantBlocks: [
+                    {
+                        block: firstBlock,
+                        type: CalculateBlockSyncActionType.FAST_FORWARD,
+                        latestBlock: secondBlock,
+                    },
+                    {
+                        block: secondBlock,
+                        type: CalculateBlockSyncActionType.PERSIST,
+                    },
+                ],
+                isBestVariant: true,
             },
             {
-                block: secondBlock,
-                type: CalculateBlockSyncActionType.PERSIST,
-            },
-            {
-                block: thirdBlock,
-                type: CalculateBlockSyncActionType.CONFLICT,
+                variantBlocks: [
+                    {
+                        block: thirdBlock,
+                        type: CalculateBlockSyncActionType.PERSIST,
+                    },
+                ],
+                isBestVariant: false,
             },
         ]);
     });

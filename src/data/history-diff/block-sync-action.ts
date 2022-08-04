@@ -8,15 +8,15 @@ import { MiphaBlockBase } from "../../structure/block/block";
 import { ERROR_CODE, panic } from "../../util/error";
 import { findHistoryBlockCommonStart, FindHistoryBlockCommonStartResult } from "./common-start";
 
+// Internal
 export enum CalculateBlockSyncActionType {
 
     PERSIST = 'PERSIST',
     FAST_FORWARD = 'FAST_FORWARD',
-    CONFLICT = 'CONFLICT',
 }
 
 // Internal
-export type CalculateBlockSyncActionResult<T extends MiphaBlockBase> =
+export type CalculateBlockSyncActionVariantBlock<T extends MiphaBlockBase> =
     & {
         readonly block: T;
     }
@@ -28,18 +28,26 @@ export type CalculateBlockSyncActionResult<T extends MiphaBlockBase> =
             readonly type: CalculateBlockSyncActionType.FAST_FORWARD;
             readonly latestBlock: T;
         }
-        | {
-            readonly type: CalculateBlockSyncActionType.CONFLICT;
-        }
     );
 
 // Internal
-export const calculateBlockSyncAction = <T extends MiphaBlockBase>(blocks: T[]): Array<CalculateBlockSyncActionResult<T>> => {
+export type CalculateBlockSyncActionResultVariant<T extends MiphaBlockBase> = {
+
+    readonly variantBlocks: Array<CalculateBlockSyncActionVariantBlock<T>>;
+    readonly isBestVariant: boolean;
+};
+
+// Internal
+export const calculateBlockSyncAction = <T extends MiphaBlockBase>(blocks: T[]): Array<CalculateBlockSyncActionResultVariant<T>> => {
 
     if (blocks.length === 1) {
+
         return [{
-            block: blocks[0],
-            type: CalculateBlockSyncActionType.PERSIST,
+            variantBlocks: [{
+                block: blocks[0],
+                type: CalculateBlockSyncActionType.PERSIST,
+            }],
+            isBestVariant: true,
         }];
     }
 
@@ -50,11 +58,11 @@ export const calculateBlockSyncAction = <T extends MiphaBlockBase>(blocks: T[]):
         throw panic.code(ERROR_CODE.FAILED_CALCULATE_COMMON_START);
     }
 
-    const firstCommonStart: FindHistoryBlockCommonStartResult<T> = commonStarts[0];
-    const results: Array<CalculateBlockSyncActionResult<T>> =
-        firstCommonStart.appliedBlocks.map((block: T) => {
+    return commonStarts.map((commonStart: FindHistoryBlockCommonStartResult<T>, index: number) => {
 
-            const bestLatestHistory: string = firstCommonStart.latestBlock.histories[firstCommonStart.latestBlock.histories.length - 1];
+        const variantBlocks: Array<CalculateBlockSyncActionVariantBlock<T>> = commonStart.appliedBlocks.map((block: T) => {
+
+            const bestLatestHistory: string = commonStart.latestBlock.histories[commonStart.latestBlock.histories.length - 1];
             const blockLatestHistory: string = block.histories[block.histories.length - 1];
 
             if (blockLatestHistory === bestLatestHistory) {
@@ -67,17 +75,13 @@ export const calculateBlockSyncAction = <T extends MiphaBlockBase>(blocks: T[]):
             return {
                 block,
                 type: CalculateBlockSyncActionType.FAST_FORWARD,
-                latestBlock: firstCommonStart.latestBlock,
+                latestBlock: commonStart.latestBlock,
             };
         });
 
-    for (let i = 1; i < commonStarts.length; i++) {
-        const commonStart: FindHistoryBlockCommonStartResult<T> = commonStarts[i];
-        results.push({
-            block: commonStart.latestBlock,
-            type: CalculateBlockSyncActionType.CONFLICT,
-        });
-    }
-
-    return results;
+        return {
+            variantBlocks,
+            isBestVariant: index === 0,
+        };
+    });
 };

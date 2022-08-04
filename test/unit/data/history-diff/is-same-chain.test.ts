@@ -7,19 +7,21 @@
 
 import { expect } from "chai";
 import * as Chance from "chance";
-import { MiphaBlockDiverse } from "../../../../src";
+import { MiphaBlockDiverse, MiphaDataSource } from "../../../../src";
 import { calculateIsSameChain } from "../../../../src/data/history-diff/is-same-chain";
 
 describe('Given [CalculateIsSameChain] Methods', (): void => {
 
     const chance: Chance.Chance = new Chance('data-history-diff-is-same-chain');
 
+    const dataSource: MiphaDataSource = MiphaDataSource.fromScratch();
+
     it('should be able to confirm if its the same chain', async (): Promise<void> => {
 
         const initial: string = chance.string();
         const first: string = chance.string();
 
-        const initialBlock = MiphaBlockDiverse.markdownHelper.create({
+        const initialBlock = MiphaBlockDiverse.markdownHelper.create(dataSource, {
             content: initial,
         });
         const firstBlock = MiphaBlockDiverse.markdownHelper.update(initialBlock, {
@@ -37,7 +39,7 @@ describe('Given [CalculateIsSameChain] Methods', (): void => {
         const first: string = chance.string();
         const second: string = chance.string();
 
-        const initialBlock = MiphaBlockDiverse.markdownHelper.create({
+        const initialBlock = MiphaBlockDiverse.markdownHelper.create(dataSource, {
             content: initial,
         });
         const firstBlock = MiphaBlockDiverse.markdownHelper.update(initialBlock, {

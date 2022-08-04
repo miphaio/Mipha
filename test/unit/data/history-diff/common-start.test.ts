@@ -7,18 +7,20 @@
 
 import { expect } from "chai";
 import * as Chance from "chance";
-import { MiphaBlockDiverse } from "../../../../src";
+import { MiphaBlockDiverse, MiphaDataSource } from "../../../../src";
 import { findHistoryBlockCommonStart } from "../../../../src/data/history-diff/common-start";
 
 describe('Given [CommonStart] Methods', (): void => {
 
     const chance: Chance.Chance = new Chance('data-common-start');
 
+    const dataSource: MiphaDataSource = MiphaDataSource.fromScratch();
+
     it('should be able to find common start for single block', async (): Promise<void> => {
 
         const first: string = chance.string();
 
-        const firstBlock = MiphaBlockDiverse.markdownHelper.create({
+        const firstBlock = MiphaBlockDiverse.markdownHelper.create(dataSource, {
             content: first,
         });
 
@@ -39,10 +41,12 @@ describe('Given [CommonStart] Methods', (): void => {
 
         const content: string = chance.string();
 
-        const firstBlock = MiphaBlockDiverse.markdownHelper.create({
+        const firstBlock = MiphaBlockDiverse.markdownHelper.create(dataSource, {
             content,
         });
-        const secondBlock = MiphaBlockDiverse.markdownHelper.createPrecise(firstBlock.identifier, {
+        const secondBlock = MiphaBlockDiverse.markdownHelper.createPrecise(
+            dataSource,
+            firstBlock.identifier, {
             content,
         });
 
@@ -64,7 +68,7 @@ describe('Given [CommonStart] Methods', (): void => {
 
         const content: string = chance.string();
 
-        const firstBlock = MiphaBlockDiverse.markdownHelper.create({
+        const firstBlock = MiphaBlockDiverse.markdownHelper.create(dataSource, {
             content,
         });
         const secondBlock = MiphaBlockDiverse.markdownHelper.update(firstBlock, {
@@ -87,7 +91,7 @@ describe('Given [CommonStart] Methods', (): void => {
 
     it('should be able to find common start for double block chain', async (): Promise<void> => {
 
-        const firstChainFirstBlock = MiphaBlockDiverse.markdownHelper.create({
+        const firstChainFirstBlock = MiphaBlockDiverse.markdownHelper.create(dataSource, {
             content: chance.string(),
         });
         const firstChainSecondBlock = MiphaBlockDiverse.markdownHelper.update(
@@ -97,7 +101,7 @@ describe('Given [CommonStart] Methods', (): void => {
             },
         );
 
-        const secondChainFirstBlock = MiphaBlockDiverse.markdownHelper.create({
+        const secondChainFirstBlock = MiphaBlockDiverse.markdownHelper.create(dataSource, {
             content: chance.string(),
         });
 
@@ -130,7 +134,7 @@ describe('Given [CommonStart] Methods', (): void => {
         const second: string = chance.string();
         const third: string = chance.string();
 
-        const firstBlock = MiphaBlockDiverse.markdownHelper.create({
+        const firstBlock = MiphaBlockDiverse.markdownHelper.create(dataSource, {
             content: first,
         });
         const secondBlock = MiphaBlockDiverse.markdownHelper.update(firstBlock, {
@@ -162,7 +166,7 @@ describe('Given [CommonStart] Methods', (): void => {
 
     it('should be able to find common start for triple block chain', async (): Promise<void> => {
 
-        const firstChainFirstBlock = MiphaBlockDiverse.markdownHelper.create({
+        const firstChainFirstBlock = MiphaBlockDiverse.markdownHelper.create(dataSource, {
             content: chance.string(),
         });
         const firstChainSecondBlock = MiphaBlockDiverse.markdownHelper.update(
@@ -172,11 +176,11 @@ describe('Given [CommonStart] Methods', (): void => {
             },
         );
 
-        const secondChainFirstBlock = MiphaBlockDiverse.markdownHelper.create({
+        const secondChainFirstBlock = MiphaBlockDiverse.markdownHelper.create(dataSource, {
             content: chance.string(),
         });
 
-        const thirdChainFirstBlock = MiphaBlockDiverse.markdownHelper.create({
+        const thirdChainFirstBlock = MiphaBlockDiverse.markdownHelper.create(dataSource, {
             content: chance.string(),
         });
         const thirdChainSecondBlock = MiphaBlockDiverse.markdownHelper.update(

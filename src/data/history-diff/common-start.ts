@@ -25,6 +25,7 @@ type FindHistoryBlockCommonStartTempResult<T extends MiphaBlockBase> = {
 export const findHistoryBlockCommonStart = <T extends MiphaBlockBase>(blocks: T[]): Array<FindHistoryBlockCommonStartResult<T>> => {
 
     if (blocks.length === 0) {
+
         return [];
     }
 
@@ -70,7 +71,9 @@ export const findHistoryBlockCommonStart = <T extends MiphaBlockBase>(blocks: T[
             }
 
             for (const appliedBlock of appliedBlocks) {
-                if (!calculateIsSameChain(blockStart, innerBlock, appliedBlock)) {
+                const isSameChain: boolean = calculateIsSameChain(blockStart, innerBlock, appliedBlock);
+
+                if (!isSameChain) {
                     unappliedBlocks.push(innerBlock);
                     continue inner;
                 }
