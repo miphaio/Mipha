@@ -1,13 +1,13 @@
 /**
  * @author WMXPY
- * @namespace Data
- * @description Storage Manager
+ * @namespace Data_Storage
+ * @description Storage
  * @override Unit Test
  */
 
 import { expect } from "chai";
 import * as Chance from "chance";
-import { MiphaStorageManager } from "../../../src";
+import { MiphaStorageManager } from "../../../../src";
 
 describe('Given {MiphaStorageManager} Class', (): void => {
 
@@ -16,7 +16,7 @@ describe('Given {MiphaStorageManager} Class', (): void => {
 
     it('should be able to construct', async (): Promise<void> => {
 
-        const manager: MiphaStorageManager = MiphaStorageManager.create();
+        const manager: MiphaStorageManager = MiphaStorageManager.fromScratch();
 
         expect(manager).to.be.instanceOf(MiphaStorageManager);
     });

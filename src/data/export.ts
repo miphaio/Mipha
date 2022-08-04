@@ -4,4 +4,4 @@
  * @description Export
  */
 
-export * from "./storage-manager";
+export * from "./storage/export";
