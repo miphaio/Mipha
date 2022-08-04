@@ -17,6 +17,10 @@ export abstract class MiphaStorageEngine {
         this._engineIdentifier = UUIDVersion1.generate().toString();
     }
 
+    public get engineIdentifier(): string {
+        return this._engineIdentifier;
+    }
+
     public abstract loadBlock<Type extends MIPHA_BLOCK_DIVERSE_TYPE = MIPHA_BLOCK_DIVERSE_TYPE>(
         identifier: string,
     ): Promise<MiphaBlock<Type>>;
