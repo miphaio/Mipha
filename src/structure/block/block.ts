@@ -14,6 +14,7 @@ export type MiphaBlock<Type extends MIPHA_BLOCK_DIVERSE_TYPE> =
 export type MiphaBlockBaseIdentifier = {
 
     readonly identifier: string;
+    readonly dataSourceIdentifier: string;
 };
 
 export type MiphaBlockBaseHistories = {

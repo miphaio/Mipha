@@ -6,6 +6,7 @@
 
 import { UUIDVersion1 } from "@sudoo/uuid";
 import { MiphaBlock } from "../block/block";
+import { MiphaDataSource } from "../data-source/data-source";
 import { MiphaBlockDiverseStructure } from "./declare";
 import { MIPHA_BLOCK_DIVERSE_TYPE } from "./diverse-type";
 
@@ -14,19 +15,28 @@ export abstract class MiphaBlockDiverseHelper<Type extends MIPHA_BLOCK_DIVERSE_T
 
     public abstract readonly type: Type;
 
-    public create(diverse: MiphaBlockDiverseStructure<Type>): MiphaBlock<Type> {
+    public create(
+        dataSource: MiphaDataSource,
+        diverse: MiphaBlockDiverseStructure<Type>,
+    ): MiphaBlock<Type> {
 
         const identifier: string = UUIDVersion1.generate().toString();
 
-        return this.createPrecise(identifier, diverse);
+        return this.createPrecise(dataSource, identifier, diverse);
     }
 
-    public createPrecise(identifier: string, diverse: MiphaBlockDiverseStructure<Type>): MiphaBlock<Type> {
+    public createPrecise(
+        dataSource: MiphaDataSource,
+        identifier: string,
+        diverse: MiphaBlockDiverseStructure<Type>,
+    ): MiphaBlock<Type> {
 
         const initialHistory: string = this.generateHistoryHash(diverse);
 
         return {
+
             identifier,
+            dataSourceIdentifier: dataSource.identifier,
             histories: [initialHistory],
             type: this.type,
             ...diverse,
