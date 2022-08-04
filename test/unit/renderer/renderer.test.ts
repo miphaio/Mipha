@@ -7,13 +7,15 @@
 
 import { expect } from "chai";
 import * as Chance from "chance";
-import { MiphaBlockDiverse } from "../../../src";
+import { MiphaBlockDiverse, MiphaDataSource } from "../../../src";
 import { createMockDelayedTextRenderer } from "../../mock/renderer/delayed-text-renderer";
 import { createMockTextRenderer } from "../../mock/renderer/text-renderer";
 
 describe('Given {MiphaRenderer} Class', (): void => {
 
     const chance: Chance.Chance = new Chance('renderer-renderer');
+
+    const dataSource: MiphaDataSource = MiphaDataSource.fromScratch();
 
     it('should be able to render single block', async (): Promise<void> => {
 
@@ -22,7 +24,7 @@ describe('Given {MiphaRenderer} Class', (): void => {
         const content: string = chance.string();
 
         const result = await renderer.render(
-            MiphaBlockDiverse.markdownHelper.create({
+            MiphaBlockDiverse.markdownHelper.create(dataSource, {
                 content,
             }),
         );
@@ -42,13 +44,13 @@ describe('Given {MiphaRenderer} Class', (): void => {
 
         const result = await renderer.renderList([
 
-            MiphaBlockDiverse.markdownHelper.create({
+            MiphaBlockDiverse.markdownHelper.create(dataSource, {
                 content: firstContent,
             }),
-            MiphaBlockDiverse.markdownHelper.create({
+            MiphaBlockDiverse.markdownHelper.create(dataSource, {
                 content: secondContent,
             }),
-            MiphaBlockDiverse.markdownHelper.create({
+            MiphaBlockDiverse.markdownHelper.create(dataSource, {
                 content: thirdContent,
             }),
         ]);
@@ -76,13 +78,13 @@ describe('Given {MiphaRenderer} Class', (): void => {
 
         const result = await renderer.renderList([
 
-            MiphaBlockDiverse.markdownHelper.create({
+            MiphaBlockDiverse.markdownHelper.create(dataSource, {
                 content: firstContent,
             }),
-            MiphaBlockDiverse.markdownHelper.create({
+            MiphaBlockDiverse.markdownHelper.create(dataSource, {
                 content: secondContent,
             }),
-            MiphaBlockDiverse.markdownHelper.create({
+            MiphaBlockDiverse.markdownHelper.create(dataSource, {
                 content: thirdContent,
             }),
         ]);
