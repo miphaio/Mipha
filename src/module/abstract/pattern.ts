@@ -4,6 +4,7 @@
  * @description Abstract
  */
 
+// Public
 export abstract class MiphaModuleAbstract {
 
 }
