@@ -1,11 +1,11 @@
 /**
  * @author WMXPY
- * @namespace Engine_SearchEngine
+ * @namespace Block_Engine_SearchEngine
  * @description Mock Search Engine
  * @override Mock
  */
 
-import { MiphaSearchEngine } from "../../../src";
+import { MiphaSearchEngine } from "../../../src/block/export";
 
 export class MockSearchEngine extends MiphaSearchEngine {
 

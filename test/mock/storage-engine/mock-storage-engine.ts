@@ -1,11 +1,11 @@
 /**
  * @author WMXPY
- * @namespace Engine_StorageEngine
+ * @namespace Block_Engine_StorageEngine
  * @description Mock Storage Engine
  * @override Mock
  */
 
-import { MiphaBlock, MiphaStorageEngine, MIPHA_BLOCK_DIVERSE_TYPE } from "../../../src";
+import { MiphaBlock, MiphaStorageEngine, MIPHA_BLOCK_DIVERSE_TYPE } from "../../../src/block/export";
 
 export class MockStorageEngine extends MiphaStorageEngine {
 

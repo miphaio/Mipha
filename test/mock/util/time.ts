@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace Util
+ * @namespace Block_Util
  * @description Time
  * @override Mock
  */

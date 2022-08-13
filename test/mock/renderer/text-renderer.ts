@@ -1,11 +1,11 @@
 /**
  * @author WMXPY
- * @namespace Renderer
+ * @namespace Block_Renderer
  * @description Text Renderer
  * @override Mock
  */
 
-import { MiphaBlock, MiphaRenderer, MiphaRendererBuilder, MIPHA_BLOCK_DIVERSE_TYPE } from "../../../src";
+import { MiphaBlock, MiphaRenderer, MiphaRendererBuilder, MIPHA_BLOCK_DIVERSE_TYPE } from "../../../src/block/export";
 
 export const createMockTextRenderer = (): MiphaRenderer<string> => {
 
