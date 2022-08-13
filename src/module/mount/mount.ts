@@ -5,7 +5,7 @@
  */
 
 // Public
-export const miphaMountModule = () => {
+export const miphaMountModule = (): void => {
 
     return;
 };
