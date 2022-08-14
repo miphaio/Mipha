@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace AddOn_Abstract
+ * @namespace Script_Abstract
  * @description Export
  */
 

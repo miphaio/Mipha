@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace AddOn_Module
+ * @namespace Script_Module
  * @description Module
  */
 
@@ -8,11 +8,11 @@ import { MiphaModuleBase } from "../base";
 import { IMiphaModule } from "../interface";
 
 // Public
-export class MiphaAddOnModule extends MiphaModuleBase implements IMiphaModule {
+export class MiphaScriptModule extends MiphaModuleBase implements IMiphaModule {
 
-    public static fromScratch(identifier: string): MiphaAddOnModule {
+    public static fromScratch(identifier: string): MiphaScriptModule {
 
-        return new MiphaAddOnModule(identifier);
+        return new MiphaScriptModule(identifier);
     }
 
     private constructor(identifier: string) {
