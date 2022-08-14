@@ -6,6 +6,7 @@
 
 import { IMiphaModule } from "../../module/interface";
 
+// Internal
 export type SummarizedMiphaModules = {
 
     readonly provides: Record<string, Record<string, any>>;
