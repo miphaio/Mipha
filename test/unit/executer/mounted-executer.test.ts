@@ -23,7 +23,7 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
         expect(mountedExecuter).to.be.instanceOf(MiphaMountedExecuter);
     });
 
-    it('should be able to execute basic script', async (): Promise<void> => {
+    it('should be able to execute module import script', async (): Promise<void> => {
 
         const triggerModule = createMockTriggerModule();
 
@@ -36,6 +36,21 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
         );
 
         expect(triggerModule.payload).to.be.true;
+    });
+
+    it('should be able to execute dynamic import script', async (): Promise<void> => {
+
+        const mountedExecuter = MiphaMountedExecuter.mount(new Set());
+
+        const result: MarkedResult = await mountedExecuter.execute(
+            'import {number} from "dynamic.number"; export default number;',
+        );
+
+        if (result.signal !== END_SIGNAL.SUCCEED) {
+            throw new Error('Execution failed');
+        }
+
+        expect(result.exports.default).to.be.equal(10);
     });
 
     it('should be able to execute basic script', async (): Promise<void> => {
