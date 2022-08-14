@@ -1,17 +1,19 @@
 /**
  * @author WMXPY
- * @namespace Executer
+ * @namespace Executer_Mount
  * @description Mount
  */
 
 import { Sandbox } from "@sudoo/marked";
-import { IMiphaModule } from "../../module/interface";
+import { SummarizedMiphaModules } from "./summarize";
 
 // Internal
-export const mountMiphaModule = (sandbox: Sandbox, module: IMiphaModule): void => {
+export const mountMiphaSummarizedModules = (sandbox: Sandbox, summarizedModules: SummarizedMiphaModules): void => {
 
-    const provides: Map<string, any> = module.provides;
+    const provideKeys: string[] = Object.keys(summarizedModules.provides);
+    for (const provideKey of provideKeys) {
+        sandbox.provide(provideKey, summarizedModules.provides[provideKey]);
+    }
 
-    sandbox.provide(module.identifier, provides);
     return;
 };

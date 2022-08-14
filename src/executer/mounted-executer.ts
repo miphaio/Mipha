@@ -6,7 +6,8 @@
 
 import { Sandbox } from "@sudoo/marked";
 import { IMiphaModule } from "../module/interface";
-import { mountMiphaModule } from "./mount/mount";
+import { mountMiphaSummarizedModules } from "./mount/mount";
+import { SummarizedMiphaModules, summarizeMiphaModules } from "./mount/summarize";
 
 // Public
 export class MiphaMountedExecuter {
@@ -15,9 +16,8 @@ export class MiphaMountedExecuter {
 
         const sandbox: Sandbox = Sandbox.create();
 
-        for (const module of modules) {
-            mountMiphaModule(sandbox, module);
-        }
+        const summarizedModules: SummarizedMiphaModules = summarizeMiphaModules(modules);
+        mountMiphaSummarizedModules(sandbox, summarizedModules);
 
         return new MiphaMountedExecuter(sandbox);
     }
