@@ -28,6 +28,7 @@ export class MiphaModule implements IMiphaModule {
     public get identifier(): string {
         return this._identifier;
     }
+
     public get provides(): Record<string, any> {
 
         const result: Record<string, any> = {};
