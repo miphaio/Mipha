@@ -5,6 +5,7 @@
  * @override Unit Test
  */
 
+import { END_SIGNAL, MarkedResult } from "@sudoo/marked";
 import { expect } from "chai";
 import * as Chance from "chance";
 import { MiphaMountedExecuter } from "../../../src";
@@ -35,5 +36,20 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
         );
 
         expect(triggerModule.payload).to.be.true;
+    });
+
+    it('should be able to execute basic script', async (): Promise<void> => {
+
+        const mountedExecuter = MiphaMountedExecuter.mount(new Set());
+
+        const result: MarkedResult = await mountedExecuter.execute(
+            'export default 10;',
+        );
+
+        if (result.signal !== END_SIGNAL.SUCCEED) {
+            throw new Error('Execution failed');
+        }
+
+        expect(result.exports.default).to.be.equal(10);
     });
 });
