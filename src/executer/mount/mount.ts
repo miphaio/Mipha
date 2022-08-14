@@ -4,7 +4,8 @@
  * @description Mount
  */
 
-import { Sandbox } from "@sudoo/marked";
+import { ITrace, ModuleResolveResult, Sandbox, ScriptLocation } from "@sudoo/marked";
+import { MiphaRecipeLoader } from "../../recipe/loader";
 import { SummarizedMiphaModules } from "./summarize";
 
 // Internal
@@ -16,4 +17,25 @@ export const mountMiphaSummarizedModules = (sandbox: Sandbox, summarizedModules:
     }
 
     return;
+};
+
+export const mountMiphaRecipeLoaders = (sandbox: Sandbox, recipeLoaders: Set<MiphaRecipeLoader>): void => {
+
+    sandbox.resolver(async (source: string, _trace: ITrace): Promise<ModuleResolveResult | null> => {
+
+        for (const recipeLoader of recipeLoaders) {
+
+            const result: string | null = await recipeLoader.load(source);
+
+            if (typeof result === 'string') {
+
+                return {
+                    script: result,
+                    scriptLocation: ScriptLocation.create('recipe', `${recipeLoader.sourceName}/${source}`),
+                };
+            }
+        }
+
+        return null;
+    });
 };

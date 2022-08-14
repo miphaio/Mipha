@@ -4,11 +4,10 @@
  * @description Mounted Executer
  */
 
-import { MarkedResult, Sandbox, ScriptLocation, useEverything } from "@sudoo/marked";
-import { ModuleResolveResult } from "@sudoo/marked/declare/sandbox";
-import { ITrace } from "@sudoo/marked/declare/variable";
+import { MarkedResult, Sandbox, useEverything } from "@sudoo/marked";
 import { IMiphaModule } from "../module/interface";
-import { mountMiphaSummarizedModules } from "./mount/mount";
+import { MiphaRecipeLoader } from "../recipe/loader";
+import { mountMiphaRecipeLoaders, mountMiphaSummarizedModules } from "./mount/mount";
 import { SummarizedMiphaModules, summarizeMiphaModules } from "./mount/summarize";
 
 // Public
@@ -16,6 +15,7 @@ export class MiphaMountedExecuter {
 
     public static mount(
         modules: Set<IMiphaModule>,
+        recipeLoaders: Set<MiphaRecipeLoader>,
     ): MiphaMountedExecuter {
 
         const sandbox: Sandbox = Sandbox.create();
@@ -23,14 +23,7 @@ export class MiphaMountedExecuter {
 
         const summarizedModules: SummarizedMiphaModules = summarizeMiphaModules(modules);
         mountMiphaSummarizedModules(sandbox, summarizedModules);
-
-        sandbox.resolver(async (source: string, _trace: ITrace): Promise<ModuleResolveResult | null> => {
-
-            return {
-                script: 'export const number = 10;',
-                scriptLocation: ScriptLocation.create('common-recipe', source),
-            };
-        });
+        mountMiphaRecipeLoaders(sandbox, recipeLoaders);
 
         return new MiphaMountedExecuter(sandbox);
     }
