@@ -8,17 +8,16 @@
 import { END_SIGNAL, MarkedResult } from "@sudoo/marked";
 import { expect } from "chai";
 import * as Chance from "chance";
-import { MiphaMountedExecuter } from "../../../src";
+import { MiphaMountedExecuter, MiphaRecipeLoader } from "../../../src";
 import { createMockTriggerModule } from "../../mock/module/trigger";
 
 describe('Given {MiphaMountedExecuter} Class', (): void => {
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const chance: Chance.Chance = new Chance('executer-mounted-executer');
 
     it('should be able to construct', async (): Promise<void> => {
 
-        const mountedExecuter = MiphaMountedExecuter.mount(new Set());
+        const mountedExecuter = MiphaMountedExecuter.fromScratch();
 
         expect(mountedExecuter).to.be.instanceOf(MiphaMountedExecuter);
     });
@@ -27,9 +26,9 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
 
         const triggerModule = createMockTriggerModule();
 
-        const mountedExecuter = MiphaMountedExecuter.mount(new Set([
+        const mountedExecuter = MiphaMountedExecuter.fromModules(
             triggerModule.module,
-        ]));
+        );
 
         await mountedExecuter.execute(
             'import {trigger} from "mock.trigger"; trigger();',
@@ -40,7 +39,14 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
 
     it('should be able to execute dynamic import script', async (): Promise<void> => {
 
-        const mountedExecuter = MiphaMountedExecuter.mount(new Set());
+        const numberValue: number = chance.natural();
+
+        const recipeLoader: MiphaRecipeLoader = MiphaRecipeLoader.fromLoadMethod(chance.string(), (_identifier: string) => {
+
+            return `export const number = ${numberValue};`;
+        });
+
+        const mountedExecuter = MiphaMountedExecuter.fromRecipeLoaders(recipeLoader);
 
         const result: MarkedResult = await mountedExecuter.execute(
             'import {number} from "dynamic.number"; export default number;',
@@ -50,21 +56,23 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
             throw new Error('Execution failed');
         }
 
-        expect(result.exports.default).to.be.equal(10);
+        expect(result.exports.default).to.be.equal(numberValue);
     });
 
     it('should be able to execute basic script', async (): Promise<void> => {
 
-        const mountedExecuter = MiphaMountedExecuter.mount(new Set());
+        const numberValue: number = chance.natural();
+
+        const mountedExecuter = MiphaMountedExecuter.fromScratch();
 
         const result: MarkedResult = await mountedExecuter.execute(
-            'export default 10;',
+            `export default ${numberValue};`,
         );
 
         if (result.signal !== END_SIGNAL.SUCCEED) {
             throw new Error('Execution failed');
         }
 
-        expect(result.exports.default).to.be.equal(10);
+        expect(result.exports.default).to.be.equal(numberValue);
     });
 });

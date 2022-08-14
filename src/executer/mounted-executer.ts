@@ -13,7 +13,41 @@ import { SummarizedMiphaModules, summarizeMiphaModules } from "./mount/summarize
 // Public
 export class MiphaMountedExecuter {
 
-    public static mount(
+    public static fromScratch(): MiphaMountedExecuter {
+
+        return this.fromModuleAndRecipeLoaderSet(
+            new Set<IMiphaModule>(),
+            new Set<MiphaRecipeLoader>(),
+        );
+    }
+
+    public static fromModules(...modules: IMiphaModule[]): MiphaMountedExecuter {
+
+        return this.fromModuleSet(new Set<IMiphaModule>(modules));
+    }
+
+    public static fromModuleSet(modules: Set<IMiphaModule>): MiphaMountedExecuter {
+
+        return this.fromModuleAndRecipeLoaderSet(
+            modules,
+            new Set<MiphaRecipeLoader>(),
+        );
+    }
+
+    public static fromRecipeLoaders(...recipeLoaders: MiphaRecipeLoader[]): MiphaMountedExecuter {
+
+        return this.fromRecipeLoaderSet(new Set<MiphaRecipeLoader>(recipeLoaders));
+    }
+
+    public static fromRecipeLoaderSet(recipeLoaders: Set<MiphaRecipeLoader>): MiphaMountedExecuter {
+
+        return this.fromModuleAndRecipeLoaderSet(
+            new Set<IMiphaModule>(),
+            recipeLoaders,
+        );
+    }
+
+    public static fromModuleAndRecipeLoaderSet(
         modules: Set<IMiphaModule>,
         recipeLoaders: Set<MiphaRecipeLoader>,
     ): MiphaMountedExecuter {

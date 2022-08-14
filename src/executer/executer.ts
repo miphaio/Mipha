@@ -55,7 +55,7 @@ export class MiphaExecuter implements IMiphaExecuter {
 
     public mount(): MiphaMountedExecuter {
 
-        return MiphaMountedExecuter.mount(
+        return MiphaMountedExecuter.fromModuleAndRecipeLoaderSet(
             this._modules,
             this._recipeLoaders,
         );
