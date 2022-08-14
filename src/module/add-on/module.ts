@@ -4,15 +4,19 @@
  * @description Module
  */
 
+import { MiphaModuleBase } from "../base";
 import { IMiphaModule } from "../interface";
 
 // Public
-export class MiphaAddOnModule implements IMiphaModule {
+export class MiphaAddOnModule extends MiphaModuleBase implements IMiphaModule {
 
-    public readonly identifier: string;
+    public static fromScratch(identifier: string): MiphaAddOnModule {
 
-    public constructor(identifier: string) {
+        return new MiphaAddOnModule(identifier);
+    }
 
-        this.identifier = identifier;
+    private constructor(identifier: string) {
+
+        super(identifier);
     }
 }
