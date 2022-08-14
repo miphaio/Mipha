@@ -19,6 +19,7 @@ export const mountMiphaSummarizedModules = (sandbox: Sandbox, summarizedModules:
     return;
 };
 
+// Internal
 export const mountMiphaRecipeLoaders = (sandbox: Sandbox, recipeLoaders: Set<MiphaRecipeLoader>): void => {
 
     sandbox.resolver(async (source: string, _trace: ITrace): Promise<ModuleResolveResult | null> => {

@@ -37,6 +37,17 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
         expect(triggerModule.payload).to.be.true;
     });
 
+    it('should be able to execute module import script - not found', async (): Promise<void> => {
+
+        const mountedExecuter = MiphaMountedExecuter.fromScratch();
+
+        const result: MarkedResult = await mountedExecuter.execute(
+            'import {trigger} from "mock.trigger"; trigger();',
+        );
+
+        expect(result.signal).to.be.equal(END_SIGNAL.FAILED);
+    });
+
     it('should be able to execute dynamic import script', async (): Promise<void> => {
 
         const numberValue: number = chance.natural();
@@ -57,6 +68,39 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
         }
 
         expect(result.exports.default).to.be.equal(numberValue);
+    });
+
+    it('should be able to execute dynamic import script - module not found', async (): Promise<void> => {
+
+        const numberValue: number = chance.natural();
+
+        const recipeLoader: MiphaRecipeLoader = MiphaRecipeLoader.fromLoadMethod(chance.string(), (identifier: string) => {
+
+            if (identifier !== chance.string()) {
+                return null;
+            }
+
+            return `export const number = ${numberValue};`;
+        });
+
+        const mountedExecuter = MiphaMountedExecuter.fromRecipeLoaders(recipeLoader);
+
+        const result: MarkedResult = await mountedExecuter.execute(
+            'import {number} from "dynamic.number"; export default number;',
+        );
+
+        expect(result.signal).to.be.equal(END_SIGNAL.FAILED);
+    });
+
+    it('should be able to execute dynamic import script - module not declared', async (): Promise<void> => {
+
+        const mountedExecuter = MiphaMountedExecuter.fromScratch();
+
+        const result: MarkedResult = await mountedExecuter.execute(
+            'import {number} from "dynamic.number"; export default number;',
+        );
+
+        expect(result.signal).to.be.equal(END_SIGNAL.FAILED);
     });
 
     it('should be able to execute basic script', async (): Promise<void> => {
