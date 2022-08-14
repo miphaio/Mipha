@@ -5,7 +5,7 @@
  * @override Mock
  */
 
-import { MiphaBlock, MiphaRenderer, MiphaRendererBuilder, MIPHA_BLOCK_DIVERSE_TYPE } from "../../../src/block/export";
+import { MiphaBlock, MiphaRenderer, MiphaRendererBuilder, MIPHA_BLOCK_DIVERSE_TYPE } from "../../../../src/block/export";
 import { mockSleep } from "../util/time";
 
 const DELAY: number = 25;

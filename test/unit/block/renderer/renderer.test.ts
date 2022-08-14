@@ -8,8 +8,8 @@
 import { expect } from "chai";
 import * as Chance from "chance";
 import { MiphaBlockDiverse, MiphaDataSource } from "../../../../src/block/export";
-import { createMockDelayedTextRenderer } from "../../../mock/renderer/delayed-text-renderer";
-import { createMockTextRenderer } from "../../../mock/renderer/text-renderer";
+import { createMockDelayedTextRenderer } from "../../../mock/block/renderer/delayed-text-renderer";
+import { createMockTextRenderer } from "../../../mock/block/renderer/text-renderer";
 
 describe('Given {MiphaRenderer} Class', (): void => {
 

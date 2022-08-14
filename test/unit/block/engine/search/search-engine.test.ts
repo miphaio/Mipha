@@ -8,7 +8,7 @@
 import { expect } from "chai";
 import * as Chance from "chance";
 import { MiphaSearchEngine } from "../../../../../src/block/export";
-import { MockSearchEngine } from "../../../../mock/search-engine/mock-search-engine";
+import { MockSearchEngine } from "../../../../mock/block/search-engine/mock-search-engine";
 
 describe('Given {MiphaSearchEngine} Class', (): void => {
 

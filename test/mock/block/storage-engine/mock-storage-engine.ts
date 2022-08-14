@@ -5,7 +5,7 @@
  * @override Mock
  */
 
-import { MiphaBlock, MiphaStorageEngine, MIPHA_BLOCK_DIVERSE_TYPE } from "../../../src/block/export";
+import { MiphaBlock, MiphaStorageEngine, MIPHA_BLOCK_DIVERSE_TYPE } from "../../../../src/block/export";
 
 export class MockStorageEngine extends MiphaStorageEngine {
 

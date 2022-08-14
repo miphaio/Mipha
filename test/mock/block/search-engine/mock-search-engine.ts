@@ -5,7 +5,7 @@
  * @override Mock
  */
 
-import { MiphaSearchEngine } from "../../../src/block/export";
+import { MiphaSearchEngine } from "../../../../src/block/export";
 
 export class MockSearchEngine extends MiphaSearchEngine {
 
