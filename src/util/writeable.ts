@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace Block_Util
+ * @namespace Util
  * @description Writeable
  */
 

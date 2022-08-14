@@ -4,7 +4,7 @@
  * @description Mounted Executer
  */
 
-import { Sandbox } from "@sudoo/marked";
+import { END_SIGNAL, MarkedResult, Sandbox, useEverything } from "@sudoo/marked";
 import { IMiphaModule } from "../module/interface";
 import { mountMiphaSummarizedModules } from "./mount/mount";
 import { SummarizedMiphaModules, summarizeMiphaModules } from "./mount/summarize";
@@ -15,6 +15,7 @@ export class MiphaMountedExecuter {
     public static mount(modules: Set<IMiphaModule>): MiphaMountedExecuter {
 
         const sandbox: Sandbox = Sandbox.create();
+        useEverything(sandbox);
 
         const summarizedModules: SummarizedMiphaModules = summarizeMiphaModules(modules);
         mountMiphaSummarizedModules(sandbox, summarizedModules);
@@ -31,5 +32,14 @@ export class MiphaMountedExecuter {
 
     public get sandbox(): Sandbox {
         return this._sandbox;
+    }
+
+    public async execute(script: string): Promise<any> {
+
+        const result: MarkedResult = await this._sandbox.evaluate(script);
+
+        if (result.signal === END_SIGNAL.SUCCEED) {
+            return result.exports.default;
+        }
     }
 }

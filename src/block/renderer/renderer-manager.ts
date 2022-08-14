@@ -6,7 +6,7 @@
 
 import { MIPHA_BLOCK_DIVERSE_TYPE } from "../structure/diverse/diverse-type";
 import { ERROR_CODE, panic } from "../util/error";
-import { Writeable } from "../util/writeable";
+import { Writeable } from "../../util/writeable";
 import { DefaultMiphaRendererOptions, MiphaRendererOptions, MiphaRendererResolver, MiphaRendererResolverMap } from "./declare";
 import { MiphaRenderer } from "./renderer";
 

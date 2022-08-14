@@ -28,8 +28,13 @@ export class MiphaModule implements IMiphaModule {
     public get identifier(): string {
         return this._identifier;
     }
-    public get provides(): Map<string, any> {
-        return this._provides;
+    public get provides(): Record<string, any> {
+
+        const result: Record<string, any> = {};
+        for (const [key, value] of this._provides) {
+            result[key] = value;
+        }
+        return result;
     }
 
     public provide<T>(symbol: string, object: T): this {
