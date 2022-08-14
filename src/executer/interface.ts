@@ -6,7 +6,7 @@
 
 import { IMiphaModule } from "../module/interface";
 
-// Private
+// Internal
 export interface IMiphaExecuter {
 
     readonly modules: Set<IMiphaModule>;

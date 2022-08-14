@@ -4,12 +4,14 @@
  * @description Mount
  */
 
+import { Sandbox } from "@sudoo/marked";
 import { IMiphaModule } from "../module/interface";
-import { IMiphaExecuter } from "./interface";
 
-// Private
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const mountMiphaModule = (executer: IMiphaExecuter, module: IMiphaModule): void => {
+// Internal
+export const mountMiphaModule = (sandbox: Sandbox, module: IMiphaModule): void => {
 
+    const provides: Map<string, any> = module.provides;
+
+    sandbox.provide(module.identifier, provides);
     return;
 };
