@@ -11,21 +11,35 @@ import { IMiphaExecuter } from "./interface";
 // Public
 export class MiphaExecuter implements IMiphaExecuter {
 
-    public static fromScratch(): MiphaExecuter {
+    public static fromModules(modules: Set<IMiphaModule>): MiphaExecuter {
 
-        return new MiphaExecuter();
+        return new MiphaExecuter(modules);
     }
 
-    private readonly _modules: Set<IMiphaModule>;
+    public static fromScratch(): MiphaExecuter {
+
+        const modules: Set<IMiphaModule> = new Set<IMiphaModule>();
+        return new MiphaExecuter(modules);
+    }
+
     private readonly _marked: Sandbox;
 
-    private constructor() {
+    private readonly _modules: Set<IMiphaModule>;
 
-        this._modules = new Set();
+    private constructor(modules: Set<IMiphaModule>) {
+
         this._marked = Sandbox.create();
+
+        this._modules = modules;
     }
 
     public get modules(): Set<IMiphaModule> {
         return this._modules;
+    }
+
+    public use(module: IMiphaModule): this {
+
+        this._modules.add(module);
+        return this;
     }
 }
