@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace Module_Script
+ * @namespace Module_Mixin
  * @description Export
  */
 
