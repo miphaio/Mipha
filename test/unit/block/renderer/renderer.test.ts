@@ -63,7 +63,7 @@ describe('Given {MiphaRenderer} Class', (): void => {
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         expect(endTime - startTime).to.be.greaterThanOrEqual(25);
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        expect(endTime - startTime).to.be.lessThan(40);
+        expect(endTime - startTime).to.be.lessThan(49);
     });
 
     it('should be able to render multiple block serial', async (): Promise<void> => {
@@ -97,6 +97,6 @@ describe('Given {MiphaRenderer} Class', (): void => {
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         expect(endTime - startTime).to.be.greaterThanOrEqual(75);
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        expect(endTime - startTime).to.be.lessThan(90);
+        expect(endTime - startTime).to.be.lessThan(99);
     });
 });
