@@ -7,6 +7,7 @@
 import { Sandbox } from "@sudoo/marked";
 import { IMiphaModule } from "../module/interface";
 import { IMiphaExecuter } from "./interface";
+import { MiphaMountedExecuter } from "./mounted-executer";
 
 // Public
 export class MiphaExecuter implements IMiphaExecuter {
@@ -41,5 +42,10 @@ export class MiphaExecuter implements IMiphaExecuter {
 
         this._modules.add(module);
         return this;
+    }
+
+    public mount(): MiphaMountedExecuter {
+
+        return MiphaMountedExecuter.mount(this._modules);
     }
 }
