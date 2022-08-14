@@ -1,17 +1,22 @@
 /**
  * @author WMXPY
  * @namespace Module
- * @description Base
+ * @description Module
  */
 
 import { IMiphaModule } from "./interface";
 
 // Public
-export abstract class MiphaModuleBase implements IMiphaModule {
+export class MiphaModule implements IMiphaModule {
+
+    public static fromScratch(): MiphaModule {
+
+        return new MiphaModule('');
+    }
 
     private readonly _identifier: string;
 
-    protected constructor(identifier: string) {
+    private constructor(identifier: string) {
 
         this._identifier = identifier;
     }
