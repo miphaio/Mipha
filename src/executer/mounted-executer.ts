@@ -6,9 +6,9 @@
 
 import { Sandbox } from "@sudoo/marked";
 import { IMiphaModule } from "../module/interface";
-import { mountMiphaModule } from "./mount";
+import { mountMiphaModule } from "./mount/mount";
 
-// Internal
+// Public
 export class MiphaMountedExecuter {
 
     public static mount(modules: Set<IMiphaModule>): MiphaMountedExecuter {

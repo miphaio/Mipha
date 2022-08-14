@@ -5,7 +5,7 @@
  */
 
 import { Sandbox } from "@sudoo/marked";
-import { IMiphaModule } from "../module/interface";
+import { IMiphaModule } from "../../module/interface";
 
 // Internal
 export const mountMiphaModule = (sandbox: Sandbox, module: IMiphaModule): void => {
