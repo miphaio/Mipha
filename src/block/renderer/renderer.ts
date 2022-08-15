@@ -6,7 +6,7 @@
 
 import { MiphaBlock } from "../structure/block/block";
 import { MIPHA_BLOCK_DIVERSE_TYPE } from "../structure/diverse/diverse-type";
-import { ERROR_CODE, panic } from "../util/error";
+import { ERROR_CODE, panic } from "../../util/error";
 import { MiphaRendererOptions, MiphaRendererResolver, MiphaRendererResolverMap } from "./declare";
 
 export class MiphaRenderer<Result> {

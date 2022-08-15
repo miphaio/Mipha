@@ -5,7 +5,7 @@
  */
 
 import { MiphaBlockBase } from "../../structure/block/block";
-import { ERROR_CODE, panic } from "../../util/error";
+import { ERROR_CODE, panic } from "../../../util/error";
 import { findHistoryBlockCommonStart, FindHistoryBlockCommonStartResult } from "./common-start";
 
 // Internal

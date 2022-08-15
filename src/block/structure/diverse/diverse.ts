@@ -4,7 +4,7 @@
  * @description Diverse
  */
 
-import { ERROR_CODE, panic } from "../../util/error";
+import { ERROR_CODE, panic } from "../../../util/error";
 import { MiphaBlockDiverseHelper } from "./diverse-helper";
 import { MIPHA_BLOCK_DIVERSE_TYPE } from "./diverse-type";
 import { MiphaMarkdownBlockDiverseHelper } from "./markdown/diverse-helper";

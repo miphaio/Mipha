@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace Block_Cache
+ * @namespace Cache
  * @description Double Linked Node
  */
 

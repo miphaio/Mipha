@@ -1,13 +1,13 @@
 /**
  * @author WMXPY
- * @namespace Block_Cache
+ * @namespace Cache
  * @description LRU Cache
  * @override Unit Test
  */
 
 import { expect } from "chai";
 import * as Chance from "chance";
-import { MiphaLRUCache } from "../../../../src/block/cache/lru-cache";
+import { MiphaLRUCache } from "../../../src/cache/lru-cache";
 
 describe('Given {MiphaLRUCache} Class', (): void => {
 

@@ -1,13 +1,13 @@
 /**
  * @author WMXPY
- * @namespace Block_Cache
+ * @namespace Cache
  * @description Double Linked Node
  * @override Unit Test
  */
 
 import { expect } from "chai";
 import * as Chance from "chance";
-import { MiphaDoubleLinkedNode } from "../../../../src/block/cache/double-linked-node";
+import { MiphaDoubleLinkedNode } from "../../../src/cache/double-linked-node";
 
 describe('Given {MiphaDoubleLinkedNode} Class', (): void => {
 

@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace Block_Cache
+ * @namespace Cache
  * @description LRU Cache
  */
 
