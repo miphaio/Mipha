@@ -4,7 +4,6 @@
  * @description Executer
  */
 
-import { Sandbox } from "@sudoo/marked";
 import { IMiphaModule } from "../module/interface";
 import { MiphaRecipeLoader } from "../recipe/loader";
 import { IMiphaExecuter } from "./interface";
@@ -24,14 +23,10 @@ export class MiphaExecuter implements IMiphaExecuter {
         return new MiphaExecuter(modules);
     }
 
-    private readonly _marked: Sandbox;
-
     private readonly _modules: Set<IMiphaModule>;
     private readonly _recipeLoaders: Set<MiphaRecipeLoader>;
 
     private constructor(modules: Set<IMiphaModule>) {
-
-        this._marked = Sandbox.create();
 
         this._modules = modules;
         this._recipeLoaders = new Set<MiphaRecipeLoader>();
