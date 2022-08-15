@@ -8,7 +8,7 @@
 import { END_SIGNAL, MarkedResult } from "@sudoo/marked";
 import { expect } from "chai";
 import * as Chance from "chance";
-import { MiphaMountedExecuter, MiphaRecipe, MiphaRecipeLoader, MiphaScript } from "../../../src";
+import { MiphaMountedExecuter, MiphaRecipe, MiphaRecipeLoadEmptySymbol, MiphaRecipeLoader, MiphaScript } from "../../../src";
 import { createMockTriggerModule } from "../../mock/module/trigger";
 
 describe('Given {MiphaMountedExecuter} Class', (): void => {
@@ -88,14 +88,17 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
             `export const number = ${numberValue};`,
         );
 
-        const recipeLoader: MiphaRecipeLoader = MiphaRecipeLoader.fromLoadMethod(chance.string(), (identifier: string) => {
+        const recipeLoader: MiphaRecipeLoader = MiphaRecipeLoader.fromLoadMethod(
+            chance.string(),
+            (identifier: string) => {
 
-            if (identifier !== chance.string()) {
-                return null;
-            }
+                if (identifier !== chance.string()) {
+                    return MiphaRecipeLoadEmptySymbol;
+                }
 
-            return numberValueRecipe;
-        });
+                return numberValueRecipe;
+            },
+        );
 
         const mountedExecuter = MiphaMountedExecuter.fromRecipeLoaders(recipeLoader);
 

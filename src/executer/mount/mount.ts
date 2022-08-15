@@ -5,7 +5,7 @@
  */
 
 import { ITrace, ModuleResolveResult, Sandbox, ScriptLocation } from "@sudoo/marked";
-import { MiphaRecipeLoader } from "../../recipe/loader";
+import { MiphaRecipeLoadEmptySymbol, MiphaRecipeLoader } from "../../recipe/loader";
 import { MiphaRecipe } from "../../recipe/recipe";
 import { SummarizedMiphaModules } from "./summarize";
 
@@ -27,7 +27,8 @@ export const mountMiphaRecipeLoaders = (sandbox: Sandbox, recipeLoaders: Set<Mip
 
         for (const recipeLoader of recipeLoaders) {
 
-            const result: MiphaRecipe | null = await recipeLoader.load(source);
+            const result: MiphaRecipe | typeof MiphaRecipeLoadEmptySymbol =
+                await recipeLoader.load(source);
 
             if (result instanceof MiphaRecipe) {
 

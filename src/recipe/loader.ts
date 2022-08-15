@@ -7,7 +7,12 @@
 import { MiphaRecipe } from "./recipe";
 
 // Public
-export type MiphaRecipeLoadMethod = (identifier: string) => (MiphaRecipe | null) | Promise<MiphaRecipe | null>;
+export const MiphaRecipeLoadEmptySymbol = Symbol('MiphaRecipeLoadEmpty');
+
+// Public
+export type MiphaRecipeLoadMethod = (identifier: string) =>
+    | (MiphaRecipe | typeof MiphaRecipeLoadEmptySymbol)
+    | Promise<MiphaRecipe | typeof MiphaRecipeLoadEmptySymbol>;
 
 // Public
 export class MiphaRecipeLoader {
@@ -36,7 +41,9 @@ export class MiphaRecipeLoader {
         return this._sourceName;
     }
 
-    public async load(identifier: string): Promise<MiphaRecipe | null> {
+    public async load(
+        identifier: string,
+    ): Promise<MiphaRecipe | typeof MiphaRecipeLoadEmptySymbol> {
 
         return await Promise.resolve(this._method(identifier));
     }
