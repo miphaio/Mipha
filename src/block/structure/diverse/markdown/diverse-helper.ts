@@ -4,7 +4,7 @@
  * @description Diverse Helper
  */
 
-import { hashString } from "../../../util/hash";
+import { hashString } from "../../../../util/hash";
 import { MiphaBlockDiverseHelper } from "../diverse-helper";
 import { MIPHA_BLOCK_DIVERSE_TYPE } from "../diverse-type";
 import { MiphaBlockDiverseMarkdown } from "./declare";

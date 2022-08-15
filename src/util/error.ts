@@ -1,13 +1,15 @@
 /**
  * @author WMXPY
- * @namespace Block_Util
+ * @namespace Util
  * @description Error
  */
 
 import { Panic } from "connor";
 
+// Internal
 export const MODULE_NAME = 'Mipha';
 
+// Internal
 export enum ERROR_CODE {
 
     RESOLVER_ALREADY_MOUNTED_1 = 40850,
@@ -20,6 +22,7 @@ export enum ERROR_CODE {
     INVALID_BLOCK_DIVERSE_TYPE_1 = 50155,
 }
 
+// Internal
 export const ERROR_LIST: Record<ERROR_CODE, string> = {
 
     [ERROR_CODE.RESOLVER_ALREADY_MOUNTED_1]: 'Resolver for {} already mounted',
@@ -32,4 +35,5 @@ export const ERROR_LIST: Record<ERROR_CODE, string> = {
     [ERROR_CODE.INVALID_BLOCK_DIVERSE_TYPE_1]: 'Invalid block diverse type {}',
 };
 
+// Internal
 export const panic: Panic<ERROR_CODE> = Panic.withDictionary(MODULE_NAME, ERROR_LIST);

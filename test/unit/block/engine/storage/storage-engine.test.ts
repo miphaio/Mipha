@@ -8,7 +8,7 @@
 import { expect } from "chai";
 import * as Chance from "chance";
 import { MiphaBlockDiverse, MiphaDataSource, MiphaStorageEngine, MIPHA_BLOCK_DIVERSE_TYPE } from "../../../../../src/block/export";
-import { hashString } from "../../../../../src/block/util/hash";
+import { hashString } from "../../../../../src/util/hash";
 import { MockStorageEngine } from "../../../../mock/block/storage-engine/mock-storage-engine";
 
 describe('Given {MiphaStorageEngine} Class', (): void => {
