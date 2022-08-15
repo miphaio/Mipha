@@ -4,34 +4,34 @@
  * @description Executer
  */
 
-import { IMiphaModule } from "../module/interface";
+import { MiphaModule } from "../module/module";
 import { MiphaRecipeLoader } from "../recipe/loader";
 import { MiphaMountedExecuter } from "./mounted-executer";
 
 // Public
 export class MiphaExecuter {
 
-    public static fromModules(modules: Set<IMiphaModule>): MiphaExecuter {
+    public static fromModules(modules: Set<MiphaModule>): MiphaExecuter {
 
         return new MiphaExecuter(modules);
     }
 
     public static fromScratch(): MiphaExecuter {
 
-        const modules: Set<IMiphaModule> = new Set<IMiphaModule>();
+        const modules: Set<MiphaModule> = new Set<MiphaModule>();
         return new MiphaExecuter(modules);
     }
 
-    private readonly _modules: Set<IMiphaModule>;
+    private readonly _modules: Set<MiphaModule>;
     private readonly _recipeLoaders: Set<MiphaRecipeLoader>;
 
-    private constructor(modules: Set<IMiphaModule>) {
+    private constructor(modules: Set<MiphaModule>) {
 
         this._modules = modules;
         this._recipeLoaders = new Set<MiphaRecipeLoader>();
     }
 
-    public useModule(module: IMiphaModule): this {
+    public useModule(module: MiphaModule): this {
 
         this._modules.add(module);
         return this;

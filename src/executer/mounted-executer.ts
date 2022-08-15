@@ -5,7 +5,7 @@
  */
 
 import { MarkedResult, Sandbox, useEverything } from "@sudoo/marked";
-import { IMiphaModule } from "../module/interface";
+import { MiphaModule } from "../module/module";
 import { MiphaRecipeLoader } from "../recipe/loader";
 import { mountMiphaRecipeLoaders, mountMiphaSummarizedModules } from "./mount/mount";
 import { SummarizedMiphaModules, summarizeMiphaModules } from "./mount/summarize";
@@ -16,17 +16,17 @@ export class MiphaMountedExecuter {
     public static fromScratch(): MiphaMountedExecuter {
 
         return this.fromModuleAndRecipeLoaderSet(
-            new Set<IMiphaModule>(),
+            new Set<MiphaModule>(),
             new Set<MiphaRecipeLoader>(),
         );
     }
 
-    public static fromModules(...modules: IMiphaModule[]): MiphaMountedExecuter {
+    public static fromModules(...modules: MiphaModule[]): MiphaMountedExecuter {
 
-        return this.fromModuleSet(new Set<IMiphaModule>(modules));
+        return this.fromModuleSet(new Set<MiphaModule>(modules));
     }
 
-    public static fromModuleSet(modules: Set<IMiphaModule>): MiphaMountedExecuter {
+    public static fromModuleSet(modules: Set<MiphaModule>): MiphaMountedExecuter {
 
         return this.fromModuleAndRecipeLoaderSet(
             modules,
@@ -42,13 +42,13 @@ export class MiphaMountedExecuter {
     public static fromRecipeLoaderSet(recipeLoaders: Set<MiphaRecipeLoader>): MiphaMountedExecuter {
 
         return this.fromModuleAndRecipeLoaderSet(
-            new Set<IMiphaModule>(),
+            new Set<MiphaModule>(),
             recipeLoaders,
         );
     }
 
     public static fromModuleAndRecipeLoaderSet(
-        modules: Set<IMiphaModule>,
+        modules: Set<MiphaModule>,
         recipeLoaders: Set<MiphaRecipeLoader>,
     ): MiphaMountedExecuter {
 

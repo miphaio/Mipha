@@ -4,7 +4,7 @@
  * @description Summarize
  */
 
-import { IMiphaModule } from "../../module/interface";
+import { MiphaModule } from "../../module/module";
 
 // Internal
 export type SummarizedMiphaModules = {
@@ -13,7 +13,7 @@ export type SummarizedMiphaModules = {
 };
 
 // Internal
-export const summarizeMiphaModules = (modules: Set<IMiphaModule>): SummarizedMiphaModules => {
+export const summarizeMiphaModules = (modules: Set<MiphaModule>): SummarizedMiphaModules => {
 
     const provides: Record<string, Record<string, any>> = {};
 

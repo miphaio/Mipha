@@ -4,10 +4,8 @@
  * @description Module
  */
 
-import { IMiphaModule } from "./interface";
-
 // Public
-export class MiphaModule implements IMiphaModule {
+export class MiphaModule {
 
     public static fromScratch(identifier: string): MiphaModule {
 
