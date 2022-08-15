@@ -7,6 +7,7 @@
 import { MarkedResult, Sandbox, useEverything } from "@sudoo/marked";
 import { MiphaModule } from "../module/module";
 import { MiphaRecipeLoader } from "../recipe/loader";
+import { MiphaScript } from "../script/script";
 import { mountMiphaRecipeLoaders, mountMiphaSummarizedModules } from "./mount/mount";
 import { SummarizedMiphaModules, summarizeMiphaModules } from "./mount/summarize";
 
@@ -73,9 +74,9 @@ export class MiphaMountedExecuter {
         return this._sandbox;
     }
 
-    public async execute(script: string): Promise<MarkedResult> {
+    public async execute(script: MiphaScript): Promise<MarkedResult> {
 
-        const result: MarkedResult = await this._sandbox.evaluate(script);
+        const result: MarkedResult = await this._sandbox.evaluate(script.scriptCode);
         return result;
     }
 }

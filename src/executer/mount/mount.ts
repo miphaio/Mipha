@@ -6,6 +6,7 @@
 
 import { ITrace, ModuleResolveResult, Sandbox, ScriptLocation } from "@sudoo/marked";
 import { MiphaRecipeLoader } from "../../recipe/loader";
+import { MiphaRecipe } from "../../recipe/recipe";
 import { SummarizedMiphaModules } from "./summarize";
 
 // Internal
@@ -26,12 +27,12 @@ export const mountMiphaRecipeLoaders = (sandbox: Sandbox, recipeLoaders: Set<Mip
 
         for (const recipeLoader of recipeLoaders) {
 
-            const result: string | null = await recipeLoader.load(source);
+            const result: MiphaRecipe | null = await recipeLoader.load(source);
 
-            if (typeof result === 'string') {
+            if (result instanceof MiphaRecipe) {
 
                 return {
-                    script: result,
+                    script: result.recipeCode,
                     scriptLocation: ScriptLocation.create('recipe', `${recipeLoader.sourceName}/${source}`),
                 };
             }
