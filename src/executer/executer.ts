@@ -6,11 +6,10 @@
 
 import { IMiphaModule } from "../module/interface";
 import { MiphaRecipeLoader } from "../recipe/loader";
-import { IMiphaExecuter } from "./interface";
 import { MiphaMountedExecuter } from "./mounted-executer";
 
 // Public
-export class MiphaExecuter implements IMiphaExecuter {
+export class MiphaExecuter {
 
     public static fromModules(modules: Set<IMiphaModule>): MiphaExecuter {
 
@@ -30,10 +29,6 @@ export class MiphaExecuter implements IMiphaExecuter {
 
         this._modules = modules;
         this._recipeLoaders = new Set<MiphaRecipeLoader>();
-    }
-
-    public get modules(): Set<IMiphaModule> {
-        return this._modules;
     }
 
     public useModule(module: IMiphaModule): this {
