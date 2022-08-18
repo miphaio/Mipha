@@ -17,6 +17,35 @@ export type MiphaRecipeLoadMethod = (identifier: string) =>
 // Public
 export class MiphaRecipeLoader {
 
+    public static fromRecipes(
+        sourceName: string,
+        ...recipes: MiphaRecipe[]
+    ): MiphaRecipeLoader {
+
+        return this.fromRecipeList(sourceName, recipes);
+    }
+
+    public static fromRecipeList(
+        sourceName: string,
+        recipes: MiphaRecipe[],
+    ): MiphaRecipeLoader {
+
+        return this.fromLoadMethod(
+            sourceName,
+            (identifier: string): MiphaRecipe | typeof MiphaRecipeLoadEmptySymbol => {
+
+                const recipe: MiphaRecipe | undefined = recipes.find((eachRecipe: MiphaRecipe) => {
+                    return eachRecipe.identifier === identifier;
+                });
+
+                if (typeof recipe !== 'undefined') {
+                    return recipe;
+                }
+                return MiphaRecipeLoadEmptySymbol;
+            },
+        );
+    }
+
     public static fromLoadMethod(
         sourceName: string,
         recipeLoadMethod: MiphaRecipeLoadMethod,
