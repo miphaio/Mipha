@@ -56,13 +56,11 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
 
         const numberValue: number = chance.natural();
         const numberValueRecipe: MiphaRecipe = MiphaRecipe.fromCode(
+            'dynamic.number',
             `export const number = ${numberValue};`,
         );
 
-        const recipeLoader: MiphaRecipeLoader = MiphaRecipeLoader.fromLoadMethod(chance.string(), (_identifier: string) => {
-
-            return numberValueRecipe;
-        });
+        const recipeLoader: MiphaRecipeLoader = MiphaRecipeLoader.fromRecipes(chance.string(), numberValueRecipe);
 
         const dynamicNumberScript: MiphaScript = MiphaScript.fromCode(
             'import {number} from "dynamic.number"; export default number;',
@@ -85,6 +83,7 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
 
         const numberValue: number = chance.natural();
         const numberValueRecipe: MiphaRecipe = MiphaRecipe.fromCode(
+            'dynamic.number',
             `export const number = ${numberValue};`,
         );
 

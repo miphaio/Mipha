@@ -7,21 +7,29 @@
 // Public
 export class MiphaRecipe {
 
-    public static fromScratch(): MiphaRecipe {
+    public static fromScratch(identifier: string): MiphaRecipe {
 
-        return this.fromCode('');
+        return this.fromCode(identifier, '');
     }
 
-    public static fromCode(recipeCode: string): MiphaRecipe {
+    public static fromCode(identifier: string, recipeCode: string): MiphaRecipe {
 
-        return new MiphaRecipe(recipeCode);
+        return new MiphaRecipe(identifier, recipeCode);
     }
+
+    private readonly _recipeIdentifier: string;
 
     private _recipeCode: string;
 
-    private constructor(recipeCode: string) {
+    private constructor(identifier: string, recipeCode: string) {
+
+        this._recipeIdentifier = identifier;
 
         this._recipeCode = recipeCode;
+    }
+
+    public get identifier(): string {
+        return this._recipeIdentifier;
     }
 
     public get recipeCode(): string {
