@@ -58,6 +58,7 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
         const numberValueRecipe: MiphaRecipe = MiphaRecipe.fromCode(
             'dynamic.number',
             `export const number = ${numberValue};`,
+            [],
         );
 
         const recipeLoader: MiphaRecipeLoader = MiphaRecipeLoader.fromRecipes(chance.string(), numberValueRecipe);
@@ -85,6 +86,7 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
         const numberValueRecipe: MiphaRecipe = MiphaRecipe.fromCode(
             'dynamic.number',
             `export const number = ${numberValue};`,
+            [],
         );
 
         const recipeLoader: MiphaRecipeLoader = MiphaRecipeLoader.fromLoadMethod(
