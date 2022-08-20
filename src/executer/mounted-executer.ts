@@ -8,8 +8,7 @@ import { MarkedResult, Sandbox, useEverything } from "@sudoo/marked";
 import { MiphaModule } from "../module/module";
 import { MiphaRecipeLoader } from "../recipe/loader";
 import { MiphaScript } from "../script/script";
-import { mountMiphaRecipeLoaders, mountMiphaSummarizedModules } from "./mount/mount";
-import { SummarizedMiphaModules, summarizeMiphaModules } from "./mount/summarize";
+import { mountMiphaModules, mountMiphaRecipeLoaders } from "./mount/mount";
 
 // Public
 export class MiphaMountedExecuter {
@@ -56,8 +55,7 @@ export class MiphaMountedExecuter {
         const sandbox: Sandbox = Sandbox.create();
         useEverything(sandbox);
 
-        const summarizedModules: SummarizedMiphaModules = summarizeMiphaModules(modules);
-        mountMiphaSummarizedModules(sandbox, summarizedModules);
+        mountMiphaModules(sandbox, modules);
         mountMiphaRecipeLoaders(sandbox, recipeLoaders);
 
         return new MiphaMountedExecuter(sandbox);

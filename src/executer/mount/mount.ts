@@ -5,20 +5,19 @@
  */
 
 import { ITrace, ModuleResolveResult, Sandbox, ScriptLocation } from "@sudoo/marked";
+import { MiphaModule } from "../../module/module";
 import { MiphaRecipeLoadEmptySymbol, MiphaRecipeLoader } from "../../recipe/loader";
 import { MiphaRecipe } from "../../recipe/recipe";
-import { SummarizedMiphaModules } from "./summarize";
 
 // Internal
-export const mountMiphaSummarizedModules = (
+export const mountMiphaModules = (
     sandbox: Sandbox,
-    summarizedModules: SummarizedMiphaModules,
+    modules: Set<MiphaModule>,
 ): void => {
 
-    const provideKeys: string[] = Object.keys(summarizedModules.provides);
-    for (const provideKey of provideKeys) {
+    for (const module of modules) {
 
-        sandbox.provide(provideKey, summarizedModules.provides[provideKey]);
+        sandbox.provide(module.identifier, module.provides);
     }
     return;
 };
