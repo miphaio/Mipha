@@ -9,7 +9,7 @@ import { END_SIGNAL, MarkedResult } from "@sudoo/marked";
 import { expect } from "chai";
 import * as Chance from "chance";
 import { MiphaMountedExecuter, MiphaRecipe, MiphaRecipeLoadEmptySymbol, MiphaRecipeLoader, MiphaScript } from "../../../src";
-import { createMockTriggerModule } from "../../mock/module/trigger";
+import { createMockDefaultTriggerModule, createMockTriggerModule } from "../../mock/module/trigger";
 
 describe('Given {MiphaMountedExecuter} Class', (): void => {
 
@@ -27,6 +27,38 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
         const triggerModule = createMockTriggerModule();
         const triggerScript: MiphaScript = MiphaScript.fromCode(
             'import {trigger} from "mock.trigger"; trigger();',
+        );
+
+        const mountedExecuter = MiphaMountedExecuter.fromModules(
+            triggerModule.module,
+        );
+
+        await mountedExecuter.execute(triggerScript);
+
+        expect(triggerModule.payload).to.be.true;
+    });
+
+    it('should be able to execute module import wildcard script', async (): Promise<void> => {
+
+        const triggerModule = createMockTriggerModule();
+        const triggerScript: MiphaScript = MiphaScript.fromCode(
+            'import * as Trigger from "mock.trigger"; Trigger.trigger();',
+        );
+
+        const mountedExecuter = MiphaMountedExecuter.fromModules(
+            triggerModule.module,
+        );
+
+        await mountedExecuter.execute(triggerScript);
+
+        expect(triggerModule.payload).to.be.true;
+    });
+
+    it('should be able to execute module import default script', async (): Promise<void> => {
+
+        const triggerModule = createMockDefaultTriggerModule();
+        const triggerScript: MiphaScript = MiphaScript.fromCode(
+            'import trigger from "mock.trigger"; trigger();',
         );
 
         const mountedExecuter = MiphaMountedExecuter.fromModules(
