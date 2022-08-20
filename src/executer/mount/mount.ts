@@ -17,9 +17,9 @@ export const mountMiphaSummarizedModules = (
 
     const provideKeys: string[] = Object.keys(summarizedModules.provides);
     for (const provideKey of provideKeys) {
+
         sandbox.provide(provideKey, summarizedModules.provides[provideKey]);
     }
-
     return;
 };
 
@@ -45,7 +45,6 @@ export const mountMiphaRecipeLoaders = (sandbox: Sandbox, recipeLoaders: Set<Mip
                     };
                 }
             }
-
             return null;
         },
     );
