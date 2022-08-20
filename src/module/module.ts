@@ -4,6 +4,7 @@
  * @description Module
  */
 
+import { MiphaPermission } from "../permission/permission";
 import { ERROR_CODE, panic } from "../util/error";
 
 // Public
@@ -17,12 +18,14 @@ export class MiphaModule {
     private readonly _identifier: string;
 
     private readonly _provides: Map<string, any>;
+    private readonly _requiredPermissions: Set<MiphaPermission>;
 
     private constructor(identifier: string) {
 
         this._identifier = identifier;
 
         this._provides = new Map<string, any>();
+        this._requiredPermissions = new Set<MiphaPermission>();
     }
 
     public get identifier(): string {
@@ -38,6 +41,10 @@ export class MiphaModule {
         return result;
     }
 
+    public get requiredPermissions(): Set<MiphaPermission> {
+        return this._requiredPermissions;
+    }
+
     public provide<T>(symbol: string, object: T): this {
 
         if (symbol === 'default') {
@@ -51,6 +58,12 @@ export class MiphaModule {
     public provideDefault<T>(object: T): this {
 
         this._provides.set('default', object);
+        return this;
+    }
+
+    public addRequiredPermission(permission: MiphaPermission): this {
+
+        this._requiredPermissions.add(permission);
         return this;
     }
 }
