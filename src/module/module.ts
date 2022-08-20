@@ -4,6 +4,8 @@
  * @description Module
  */
 
+import { ERROR_CODE, panic } from "../util/error";
+
 // Public
 export class MiphaModule {
 
@@ -38,7 +40,17 @@ export class MiphaModule {
 
     public provide<T>(symbol: string, object: T): this {
 
+        if (symbol === 'default') {
+            throw panic.code(ERROR_CODE.INVALID_MODULE_PROVIDE_DEFAULT);
+        }
+
         this._provides.set(symbol, object);
+        return this;
+    }
+
+    public provideDefault<T>(object: T): this {
+
+        this._provides.set('default', object);
         return this;
     }
 }

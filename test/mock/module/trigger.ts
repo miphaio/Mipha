@@ -34,7 +34,7 @@ export const createMockDefaultTriggerModule = (): MockModule<boolean> => {
     };
 
     const mockConsoleModule = MiphaModule.fromScratch('mock.trigger');
-    mockConsoleModule.provide('default', () => {
+    mockConsoleModule.provideDefault(() => {
         result.payload = !result.payload;
     });
 
