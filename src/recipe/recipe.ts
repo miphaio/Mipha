@@ -40,7 +40,6 @@ export class MiphaRecipe {
     public get identifier(): string {
         return this._recipeIdentifier;
     }
-
     public get recipeCode(): string {
         return this._recipeCode;
     }

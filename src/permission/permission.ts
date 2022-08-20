@@ -7,21 +7,32 @@
 // Public
 export class MiphaPermission {
 
-    public static fromIdentifier(identifier: string, scope: string[]): MiphaPermission {
+    public static fromIdentifier(identifier: string, scopes: string[]): MiphaPermission {
 
-        return new MiphaPermission(identifier, scope);
+        return new MiphaPermission(identifier, scopes);
     }
 
     private readonly _identifier: string;
-    private readonly _scope: Set<string>;
+    private readonly _scopes: Set<string>;
 
-    private constructor(identifier: string, scope: string[]) {
+    private constructor(identifier: string, scopes: string[]) {
 
         this._identifier = identifier;
-        this._scope = new Set<string>(scope);
+        this._scopes = new Set<string>(scopes);
     }
 
     public get identifier(): string {
         return this._identifier;
+    }
+    public get scopes(): Set<string> {
+        return this._scopes;
+    }
+
+    public mergeScopes(scopes: Iterable<string>): this {
+
+        for (const scope of scopes) {
+            this._scopes.add(scope);
+        }
+        return this;
     }
 }
