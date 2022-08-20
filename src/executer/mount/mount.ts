@@ -16,7 +16,6 @@ export const mountMiphaModules = (
 ): void => {
 
     for (const module of modules) {
-
         sandbox.provide(module.identifier, module.provides);
     }
     return;

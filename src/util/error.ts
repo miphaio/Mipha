@@ -14,6 +14,8 @@ export enum ERROR_CODE {
 
     INVALID_MODULE_PROVIDE_DEFAULT = 400150,
 
+    MODULE_IDENTIFIER_ALREADY_MOUNTED_1 = 400160,
+
     RESOLVER_ALREADY_MOUNTED_1 = 408500,
     RESOLVER_NOT_MOUNTED_1 = 409500,
 
@@ -28,6 +30,8 @@ export enum ERROR_CODE {
 export const ERROR_LIST: Record<ERROR_CODE, string> = {
 
     [ERROR_CODE.INVALID_MODULE_PROVIDE_DEFAULT]: 'Cannot provide default, use provideDefault method instead',
+
+    [ERROR_CODE.MODULE_IDENTIFIER_ALREADY_MOUNTED_1]: 'Module identifier already mounted: {0}',
 
     [ERROR_CODE.RESOLVER_ALREADY_MOUNTED_1]: 'Resolver for {} already mounted',
     [ERROR_CODE.RESOLVER_NOT_MOUNTED_1]: 'Resolver for {} not mounted',

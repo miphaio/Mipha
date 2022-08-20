@@ -7,6 +7,8 @@
 import { MiphaModule } from "../module/module";
 import { MiphaRecipeLoader } from "../recipe/loader";
 import { MiphaScript } from "../script/script";
+import { ERROR_CODE, panic } from "../util/error";
+import { filterMiphaModulesByPermissions } from "./mount/filter-modules";
 import { MiphaMountedExecuter } from "./mounted-executer";
 
 // Public
@@ -34,6 +36,15 @@ export class MiphaExecuter {
 
     public useModule(module: MiphaModule): this {
 
+        for (const existModule of this._modules) {
+            if (existModule.identifier === module.identifier) {
+                throw panic.code(
+                    ERROR_CODE.MODULE_IDENTIFIER_ALREADY_MOUNTED_1,
+                    module.identifier,
+                );
+            }
+        }
+
         this._modules.add(module);
         return this;
     }
@@ -46,9 +57,12 @@ export class MiphaExecuter {
 
     public mountForScript(script: MiphaScript): MiphaMountedExecuter {
 
+        const filteredModules: Set<MiphaModule> =
+            filterMiphaModulesByPermissions(this._modules, script.permissions);
+
         return MiphaMountedExecuter.fromModuleAndRecipeLoaderSet(
             script,
-            this._modules,
+            filteredModules,
             this._recipeLoaders,
         );
     }
