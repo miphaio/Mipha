@@ -13,41 +13,65 @@ import { mountMiphaModules, mountMiphaRecipeLoaders } from "./mount/mount";
 // Public
 export class MiphaMountedExecuter {
 
-    public static fromScratch(): MiphaMountedExecuter {
+    public static fromScratch(
+        script: MiphaScript,
+    ): MiphaMountedExecuter {
 
         return this.fromModuleAndRecipeLoaderSet(
+            script,
             new Set<MiphaModule>(),
             new Set<MiphaRecipeLoader>(),
         );
     }
 
-    public static fromModules(...modules: MiphaModule[]): MiphaMountedExecuter {
+    public static fromModules(
+        script: MiphaScript,
+        ...modules: MiphaModule[]
+    ): MiphaMountedExecuter {
 
-        return this.fromModuleSet(new Set<MiphaModule>(modules));
+        return this.fromModuleSet(
+            script,
+            new Set<MiphaModule>(modules),
+        );
     }
 
-    public static fromModuleSet(modules: Set<MiphaModule>): MiphaMountedExecuter {
+    public static fromModuleSet(
+        script: MiphaScript,
+        modules: Set<MiphaModule>,
+    ): MiphaMountedExecuter {
 
         return this.fromModuleAndRecipeLoaderSet(
+            script,
             modules,
             new Set<MiphaRecipeLoader>(),
         );
     }
 
-    public static fromRecipeLoaders(...recipeLoaders: MiphaRecipeLoader[]): MiphaMountedExecuter {
+    public static fromRecipeLoaders(
+        script: MiphaScript,
+        ...recipeLoaders: MiphaRecipeLoader[]
+    ): MiphaMountedExecuter {
 
-        return this.fromRecipeLoaderSet(new Set<MiphaRecipeLoader>(recipeLoaders));
+        return this.fromRecipeLoaderSet(
+            script,
+            new Set<MiphaRecipeLoader>(recipeLoaders),
+        );
     }
 
-    public static fromRecipeLoaderSet(recipeLoaders: Set<MiphaRecipeLoader>): MiphaMountedExecuter {
+    public static fromRecipeLoaderSet(
+        script: MiphaScript,
+        recipeLoaders: Set<MiphaRecipeLoader>,
+    ): MiphaMountedExecuter {
 
         return this.fromModuleAndRecipeLoaderSet(
+            script,
             new Set<MiphaModule>(),
             recipeLoaders,
         );
     }
 
     public static fromModuleAndRecipeLoaderSet(
+        script: MiphaScript,
         modules: Set<MiphaModule>,
         recipeLoaders: Set<MiphaRecipeLoader>,
     ): MiphaMountedExecuter {
@@ -58,13 +82,15 @@ export class MiphaMountedExecuter {
         mountMiphaModules(sandbox, modules);
         mountMiphaRecipeLoaders(sandbox, recipeLoaders);
 
-        return new MiphaMountedExecuter(sandbox);
+        return new MiphaMountedExecuter(script, sandbox);
     }
 
+    private readonly _script: MiphaScript;
     private readonly _sandbox: Sandbox;
 
-    private constructor(sandbox: Sandbox) {
+    private constructor(script: MiphaScript, sandbox: Sandbox) {
 
+        this._script = script;
         this._sandbox = sandbox;
     }
 
@@ -72,9 +98,10 @@ export class MiphaMountedExecuter {
         return this._sandbox;
     }
 
-    public async execute(script: MiphaScript): Promise<MarkedResult> {
+    public async execute(): Promise<MarkedResult> {
 
-        const result: MarkedResult = await this._sandbox.evaluate(script.scriptCode);
+        const scriptCode: string = this._script.scriptCode;
+        const result: MarkedResult = await this._sandbox.evaluate(scriptCode);
         return result;
     }
 }

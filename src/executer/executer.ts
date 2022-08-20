@@ -6,6 +6,7 @@
 
 import { MiphaModule } from "../module/module";
 import { MiphaRecipeLoader } from "../recipe/loader";
+import { MiphaScript } from "../script/script";
 import { MiphaMountedExecuter } from "./mounted-executer";
 
 // Public
@@ -43,9 +44,10 @@ export class MiphaExecuter {
         return this;
     }
 
-    public mount(): MiphaMountedExecuter {
+    public mountForScript(script: MiphaScript): MiphaMountedExecuter {
 
         return MiphaMountedExecuter.fromModuleAndRecipeLoaderSet(
+            script,
             this._modules,
             this._recipeLoaders,
         );
