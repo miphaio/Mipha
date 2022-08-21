@@ -8,7 +8,7 @@
 import { MarkedResult } from "@sudoo/marked";
 import { expect } from "chai";
 import * as Chance from "chance";
-import { MiphaScript } from "../../../../src";
+import { MiphaPermission, MiphaPermissionScope, MiphaScript } from "../../../../src";
 import { assertSucceedMarkedResult } from "../../../util/assert-result";
 import { getDataIntegrationExecuter } from "../setup/get-data";
 
@@ -25,7 +25,11 @@ describe('Given (Permission) cases for (GetData) Integration test setup', (): vo
 
         const result: MarkedResult = await getDataIntegrationExecuter.mountAndExecute(
             script,
-            [],
+            [
+                MiphaPermission.fromIdentifier('integration.get-data.first', [
+                    MiphaPermissionScope.fromScopeAndResource('value', 'first'),
+                ]),
+            ],
         );
 
         assertSucceedMarkedResult(result);
