@@ -8,7 +8,9 @@
 import { END_SIGNAL, MarkedResult } from "@sudoo/marked";
 import { expect } from "chai";
 import * as Chance from "chance";
-import { MiphaExecuter, MiphaPermission, MiphaScript } from "../../../src";
+import { MiphaExecuter, MiphaPermission, MiphaRecipe, MiphaScript } from "../../../src";
+import { MockModule } from "../../mock/module/declare";
+import { createMockStaticValueModule } from "../../mock/module/static-value";
 import { createMockDefaultTriggerModule } from "../../mock/module/trigger";
 
 describe('Given {MiphaExecuter} Class', (): void => {
@@ -57,5 +59,75 @@ describe('Given {MiphaExecuter} Class', (): void => {
 
         expect(result.signal).to.be.equal(END_SIGNAL.SUCCEED);
         expect(triggerModule.payload).to.be.true;
+    });
+
+    it('should be able to execute module mounted script - sad path no permission', async (): Promise<void> => {
+
+        const triggerModule = createMockDefaultTriggerModule();
+        const triggerScript: MiphaScript = MiphaScript.fromCode(
+            'import trigger from "mock.trigger"; trigger();',
+        );
+
+        const executer: MiphaExecuter = MiphaExecuter.fromModules(
+            [triggerModule.module],
+        );
+        const result: MarkedResult = await executer.mountAndExecute(triggerScript, []);
+
+        expect(result.signal).to.be.equal(END_SIGNAL.FAILED);
+    });
+
+    it('should be able to execute recipe mounted script', async (): Promise<void> => {
+
+        const numberValue: number = chance.natural();
+        const numberValueRecipe: MiphaRecipe = MiphaRecipe.fromCode(
+            'dynamic.number',
+            `export const number = ${numberValue};`,
+        );
+
+        const dynamicNumberScript: MiphaScript = MiphaScript.fromCode(
+            'import {number} from "dynamic.number"; export default number;',
+        );
+
+        const executer: MiphaExecuter = MiphaExecuter.fromRecipes(
+            [numberValueRecipe],
+        );
+        const result: MarkedResult = await executer.mountAndExecute(dynamicNumberScript, [
+            MiphaPermission.fromIdentifier('dynamic.number', []),
+        ]);
+
+        if (result.signal !== END_SIGNAL.SUCCEED) {
+            throw new Error('Execution failed');
+        }
+
+        expect(result.exports.default).to.be.equal(numberValue);
+    });
+
+    it('should be able to execute module and recipe mounted script', async (): Promise<void> => {
+
+        const staticValueModule: MockModule = createMockStaticValueModule();
+
+        const numberValueRecipe: MiphaRecipe = MiphaRecipe.fromCode(
+            'dynamic.number',
+            `import {getTen} from "mock.static-value"; export const number = getTen();`,
+        );
+
+        const dynamicNumberScript: MiphaScript = MiphaScript.fromCode(
+            'import {number} from "dynamic.number"; export default number;',
+        );
+
+        const executer: MiphaExecuter = MiphaExecuter.fromModulesAndRecipes(
+            [staticValueModule.module],
+            [numberValueRecipe],
+        );
+        const result: MarkedResult = await executer.mountAndExecute(dynamicNumberScript, [
+            MiphaPermission.fromIdentifier('mock.static-value', []),
+            MiphaPermission.fromIdentifier('dynamic.number', []),
+        ]);
+
+        if (result.signal !== END_SIGNAL.SUCCEED) {
+            throw new Error('Execution failed');
+        }
+
+        expect(result.exports.default).to.be.equal(10);
     });
 });

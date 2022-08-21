@@ -16,12 +16,12 @@ export const createMockTriggerModule = (): MockModule<boolean> => {
         payload: false,
     };
 
-    const mockConsoleModule = MiphaModule.fromScratch('mock.trigger');
-    mockConsoleModule.provide('trigger', () => {
+    const mockTriggerModule = MiphaModule.fromScratch('mock.trigger');
+    mockTriggerModule.provide('trigger', () => {
         result.payload = !result.payload;
     });
 
-    result.module = mockConsoleModule;
+    result.module = mockTriggerModule;
 
     return result;
 };
@@ -33,12 +33,12 @@ export const createMockDefaultTriggerModule = (): MockModule<boolean> => {
         payload: false,
     };
 
-    const mockConsoleModule = MiphaModule.fromScratch('mock.trigger');
-    mockConsoleModule.provideDefault(() => {
+    const mockTriggerModule = MiphaModule.fromScratch('mock.trigger');
+    mockTriggerModule.provideDefault(() => {
         result.payload = !result.payload;
     });
 
-    result.module = mockConsoleModule;
+    result.module = mockTriggerModule;
 
     return result;
 };
