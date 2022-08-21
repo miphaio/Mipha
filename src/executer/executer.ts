@@ -6,6 +6,7 @@
 
 import { MarkedResult } from "@sudoo/marked";
 import { MiphaModule } from "../module/module";
+import { MiphaPermissionController } from "../permission/controller";
 import { MiphaPermission } from "../permission/permission";
 import { MiphaRecipe } from "../recipe/recipe";
 import { MiphaScript } from "../script/script";
@@ -84,8 +85,12 @@ export class MiphaExecuter {
         const filetedRecipes: Set<MiphaRecipe> =
             filterMiphaRecipesByPermissions(this._recipes, permissions);
 
+        const permissionController: MiphaPermissionController
+            = MiphaPermissionController.fromPermissionList(permissions);
+
         return MiphaMountedExecuter.fromModuleAndRecipeSet(
             script,
+            permissionController,
             filteredModules,
             filetedRecipes,
         );

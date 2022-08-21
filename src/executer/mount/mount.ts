@@ -6,6 +6,7 @@
 
 import { ITrace, ModuleResolveResult, Sandbox, ScriptLocation } from "@sudoo/marked";
 import { MiphaModule } from "../../module/module";
+import { MiphaPermissionController } from "../../permission/controller";
 import { MiphaRecipeLoadEmptySymbol, MiphaRecipeLoader } from "../../recipe/loader";
 import { MiphaRecipe } from "../../recipe/recipe";
 
@@ -43,4 +44,16 @@ export const mountMiphaRecipeLoader = (sandbox: Sandbox, recipeLoader: MiphaReci
             return null;
         },
     );
+};
+
+// Internal
+export const mountMiphaPermissionController = (
+    sandbox: Sandbox,
+    permissionController: MiphaPermissionController,
+): void => {
+
+    for (const module of modules) {
+        sandbox.provide(module.identifier, module.provides);
+    }
+    return;
 };

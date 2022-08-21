@@ -4,6 +4,7 @@
  * @description Export
  */
 
+export * from "./controller";
 export * from "./permission";
 export * from "./scope";
 

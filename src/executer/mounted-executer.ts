@@ -6,6 +6,7 @@
 
 import { MarkedResult, Sandbox, useEverything } from "@sudoo/marked";
 import { MiphaModule } from "../module/module";
+import { MiphaPermissionController } from "../permission/controller";
 import { MiphaRecipeLoader } from "../recipe/loader";
 import { MiphaRecipe } from "../recipe/recipe";
 import { MiphaScript } from "../script/script";
@@ -20,6 +21,7 @@ export class MiphaMountedExecuter {
 
         return this.fromModuleAndRecipeSet(
             script,
+            MiphaPermissionController.fromScratch(),
             new Set<MiphaModule>(),
             new Set<MiphaRecipe>(),
         );
@@ -27,22 +29,26 @@ export class MiphaMountedExecuter {
 
     public static fromModules(
         script: MiphaScript,
+        permissionController: MiphaPermissionController,
         ...modules: MiphaModule[]
     ): MiphaMountedExecuter {
 
         return this.fromModuleSet(
             script,
+            permissionController,
             new Set<MiphaModule>(modules),
         );
     }
 
     public static fromModuleSet(
         script: MiphaScript,
+        permissionController: MiphaPermissionController,
         modules: Set<MiphaModule>,
     ): MiphaMountedExecuter {
 
         return this.fromModuleAndRecipeSet(
             script,
+            permissionController,
             modules,
             new Set<MiphaRecipe>(),
         );
@@ -50,22 +56,26 @@ export class MiphaMountedExecuter {
 
     public static fromRecipes(
         script: MiphaScript,
+        permissionController: MiphaPermissionController,
         ...recipes: MiphaRecipe[]
     ): MiphaMountedExecuter {
 
         return this.fromRecipeSet(
             script,
+            permissionController,
             new Set<MiphaRecipe>(recipes),
         );
     }
 
     public static fromRecipeSet(
         script: MiphaScript,
+        permissionController: MiphaPermissionController,
         recipes: Set<MiphaRecipe>,
     ): MiphaMountedExecuter {
 
         return this.fromModuleAndRecipeSet(
             script,
+            permissionController,
             new Set<MiphaModule>(),
             recipes,
         );
@@ -73,6 +83,7 @@ export class MiphaMountedExecuter {
 
     public static fromModuleAndRecipeSet(
         script: MiphaScript,
+        permissionController: MiphaPermissionController,
         modules: Set<MiphaModule>,
         recipes: Set<MiphaRecipe>,
     ): MiphaMountedExecuter {
@@ -94,7 +105,10 @@ export class MiphaMountedExecuter {
     private readonly _script: MiphaScript;
     private readonly _sandbox: Sandbox;
 
-    private constructor(script: MiphaScript, sandbox: Sandbox) {
+    private constructor(
+        script: MiphaScript,
+        sandbox: Sandbox,
+    ) {
 
         this._script = script;
         this._sandbox = sandbox;
