@@ -10,6 +10,7 @@ import { expect } from "chai";
 import * as Chance from "chance";
 import { MiphaMountedExecuter, MiphaPermissionController, MiphaRecipe, MiphaScript } from "../../../src";
 import { createMockDefaultTriggerModule, createMockTriggerModule } from "../../mock/module/trigger";
+import { assertSucceedMarkedResult } from "../../util/assert-result";
 
 describe('Given {MiphaMountedExecuter} Class', (): void => {
 
@@ -110,9 +111,7 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
 
         const result: MarkedResult = await mountedExecuter.execute();
 
-        if (result.signal !== END_SIGNAL.SUCCEED) {
-            throw new Error('Execution failed');
-        }
+        assertSucceedMarkedResult(result);
 
         expect(result.exports.default).to.be.equal(numberValue);
     });
@@ -155,9 +154,7 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
 
         const result: MarkedResult = await mountedExecuter.execute();
 
-        if (result.signal !== END_SIGNAL.SUCCEED) {
-            throw new Error('Execution failed');
-        }
+        assertSucceedMarkedResult(result);
 
         expect(result.exports.default).to.be.equal(numberValue);
     });

@@ -12,6 +12,7 @@ import { MiphaExecuter, MiphaPermission, MiphaPermissionScope, MiphaRecipe, Miph
 import { MockModule } from "../../mock/module/declare";
 import { createMockStaticValueInvalidScopedModule, createMockStaticValueModule, createMockStaticValueScopedModule } from "../../mock/module/static-value";
 import { createMockDefaultTriggerModule } from "../../mock/module/trigger";
+import { assertSucceedMarkedResult } from "../../util/assert-result";
 
 describe('Given {MiphaExecuter} Class', (): void => {
 
@@ -92,9 +93,7 @@ describe('Given {MiphaExecuter} Class', (): void => {
             ]),
         ]);
 
-        if (result.signal !== END_SIGNAL.SUCCEED) {
-            throw new Error('Execution failed');
-        }
+        assertSucceedMarkedResult(result);
 
         expect(result.exports.default).to.be.equal(10);
     });
@@ -115,9 +114,7 @@ describe('Given {MiphaExecuter} Class', (): void => {
             ]),
         ]);
 
-        if (result.signal !== END_SIGNAL.SUCCEED) {
-            throw new Error('Execution failed');
-        }
+        assertSucceedMarkedResult(result);
 
         expect(result.exports.default).to.be.equal(10);
     });
@@ -160,9 +157,7 @@ describe('Given {MiphaExecuter} Class', (): void => {
             MiphaPermission.fromIdentifier('dynamic.number', []),
         ]);
 
-        if (result.signal !== END_SIGNAL.SUCCEED) {
-            throw new Error('Execution failed');
-        }
+        assertSucceedMarkedResult(result);
 
         expect(result.exports.default).to.be.equal(numberValue);
     });
@@ -189,9 +184,7 @@ describe('Given {MiphaExecuter} Class', (): void => {
             MiphaPermission.fromIdentifier('dynamic.number', []),
         ]);
 
-        if (result.signal !== END_SIGNAL.SUCCEED) {
-            throw new Error('Execution failed');
-        }
+        assertSucceedMarkedResult(result);
 
         expect(result.exports.default).to.be.equal(10);
     });
