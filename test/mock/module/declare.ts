@@ -5,10 +5,10 @@
  * @override Mock
  */
 
-import { IMiphaModule } from "../../../src";
+import { MiphaModule } from "../../../src";
 
 export type MockModule<T = undefined> = {
 
-    readonly module: IMiphaModule;
+    readonly module: MiphaModule;
     payload: T;
 };

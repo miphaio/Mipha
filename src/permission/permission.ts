@@ -7,7 +7,10 @@
 // Public
 export class MiphaPermission {
 
-    public static fromIdentifier(identifier: string, scopes: string[]): MiphaPermission {
+    public static fromIdentifier(
+        identifier: string,
+        scopes: Iterable<string>,
+    ): MiphaPermission {
 
         return new MiphaPermission(identifier, scopes);
     }
@@ -15,7 +18,10 @@ export class MiphaPermission {
     private readonly _identifier: string;
     private readonly _scopes: Set<string>;
 
-    private constructor(identifier: string, scopes: string[]) {
+    private constructor(
+        identifier: string,
+        scopes: Iterable<string>,
+    ) {
 
         this._identifier = identifier;
         this._scopes = new Set<string>(scopes);

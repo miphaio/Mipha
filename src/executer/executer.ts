@@ -4,6 +4,7 @@
  * @description Executer
  */
 
+import { MarkedResult } from "@sudoo/marked";
 import { MiphaModule } from "../module/module";
 import { MiphaPermission } from "../permission/permission";
 import { MiphaRecipe } from "../recipe/recipe";
@@ -18,29 +19,27 @@ export class MiphaExecuter {
 
     public static fromScratch(): MiphaExecuter {
 
-        const modules: Set<MiphaModule> = new Set<MiphaModule>();
-        const recipes: Set<MiphaRecipe> = new Set<MiphaRecipe>();
-        return MiphaExecuter.fromModulesAndRecipes(modules, recipes);
+        return MiphaExecuter.fromModulesAndRecipes([], []);
     }
 
-    public static fromModules(modules: Set<MiphaModule>): MiphaExecuter {
+    public static fromModules(modules: Iterable<MiphaModule>): MiphaExecuter {
 
-        const recipes: Set<MiphaRecipe> = new Set<MiphaRecipe>();
-        return MiphaExecuter.fromModulesAndRecipes(modules, recipes);
+        return MiphaExecuter.fromModulesAndRecipes(modules, []);
     }
 
-    public static fromRecipes(recipes: Set<MiphaRecipe>): MiphaExecuter {
+    public static fromRecipes(recipes: Iterable<MiphaRecipe>): MiphaExecuter {
 
-        const modules: Set<MiphaModule> = new Set<MiphaModule>();
-        return MiphaExecuter.fromModulesAndRecipes(modules, recipes);
+        return MiphaExecuter.fromModulesAndRecipes([], recipes);
     }
 
     public static fromModulesAndRecipes(
-        modules: Set<MiphaModule>,
-        recipes: Set<MiphaRecipe>,
+        modules: Iterable<MiphaModule>,
+        recipes: Iterable<MiphaRecipe>,
     ): MiphaExecuter {
 
-        return new MiphaExecuter(modules, recipes);
+        const modulesSet: Set<MiphaModule> = new Set<MiphaModule>(modules);
+        const recipesSet: Set<MiphaRecipe> = new Set<MiphaRecipe>(recipes);
+        return new MiphaExecuter(modulesSet, recipesSet);
     }
 
     private readonly _modules: Set<MiphaModule>;
@@ -90,5 +89,17 @@ export class MiphaExecuter {
             filteredModules,
             filetedRecipes,
         );
+    }
+
+    public async mountAndExecute(
+        script: MiphaScript,
+        permissions: Iterable<MiphaPermission>,
+    ): Promise<MarkedResult> {
+
+        const executer: MiphaMountedExecuter = this.mountForScript(
+            script,
+            permissions,
+        );
+        return await executer.execute();
     }
 }
