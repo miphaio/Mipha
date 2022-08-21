@@ -6,6 +6,7 @@
 
 import { ERROR_CODE, panic } from "../util/error";
 import { MiphaPermissionScope } from "./scope";
+import { ModuleIdentifierAssignedFormatRegExp } from "./util/regular-expression";
 
 // Public
 export class MiphaPermission {
@@ -15,10 +16,9 @@ export class MiphaPermission {
         scopes: Iterable<MiphaPermissionScope>,
     ): MiphaPermission {
 
-        const identifierFormatRegExp = new RegExp(`^[a-zA-Z0-9._-]+$`);
-        if (!identifierFormatRegExp.test(identifier)) {
+        if (!ModuleIdentifierAssignedFormatRegExp.test(identifier)) {
             throw panic.code(
-                ERROR_CODE.INVALID_ASSIGNED_PERMISSION_IDENTIFIER_FORMAT_1,
+                ERROR_CODE.INVALID_ASSIGNED_PERMISSION_MODULE_FORMAT_1,
                 identifier,
             );
         }

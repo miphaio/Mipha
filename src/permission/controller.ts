@@ -6,6 +6,7 @@
 
 import { ERROR_CODE, panic } from "../util/error";
 import { MiphaPermission } from "./permission";
+import { ModuleIdentifierRequiredFormatRegExp } from "./util/regular-expression";
 
 // Public
 export class MiphaPermissionController {
@@ -68,6 +69,13 @@ export class MiphaPermissionController {
         scopeIdentifier: string,
         resourceIdentifier: string,
     ): void {
+
+        if (!ModuleIdentifierRequiredFormatRegExp.test(moduleIdentifier)) {
+            throw panic.code(
+                ERROR_CODE.INVALID_REQUIRED_PERMISSION_MODULE_FORMAT_1,
+                moduleIdentifier,
+            );
+        }
 
         if (!this.canExecute(moduleIdentifier, scopeIdentifier, resourceIdentifier)) {
             throw panic.code(

@@ -5,6 +5,7 @@
  */
 
 import { ERROR_CODE, panic } from "../util/error";
+import { ResourceIdentifierAssignedFormatRegExp, ResourceIdentifierRequiredFormatRegExp, ScopeIdentifierAssignedFormatRegExp, ScopeIdentifierRequiredFormatRegExp } from "./util/regular-expression";
 
 // Public
 export class MiphaPermissionScope {
@@ -14,16 +15,14 @@ export class MiphaPermissionScope {
         resource: string,
     ): MiphaPermissionScope {
 
-        const scopeFormatRegExp = new RegExp(`^[a-zA-Z0-9\\*_-]+$`);
-        if (!scopeFormatRegExp.test(scope)) {
+        if (!ScopeIdentifierAssignedFormatRegExp.test(scope)) {
             throw panic.code(
                 ERROR_CODE.INVALID_ASSIGNED_PERMISSION_SCOPE_FORMAT_1,
                 scope,
             );
         }
 
-        const resourceFormatRegExp = new RegExp(`^[a-zA-Z0-9\\*_-]+$`);
-        if (!resourceFormatRegExp.test(resource)) {
+        if (!ResourceIdentifierAssignedFormatRegExp.test(resource)) {
             throw panic.code(
                 ERROR_CODE.INVALID_ASSIGNED_PERMISSION_RESOURCE_FORMAT_1,
                 resource,
@@ -57,7 +56,19 @@ export class MiphaPermissionScope {
         resource: string,
     ): boolean {
 
+        if (!ScopeIdentifierRequiredFormatRegExp.test(scope)) {
+            throw panic.code(
+                ERROR_CODE.INVALID_REQUIRED_PERMISSION_SCOPE_FORMAT_1,
+                scope,
+            );
+        }
 
+        if (!ResourceIdentifierRequiredFormatRegExp.test(resource)) {
+            throw panic.code(
+                ERROR_CODE.INVALID_REQUIRED_PERMISSION_RESOURCE_FORMAT_1,
+                resource,
+            );
+        }
 
         const wildcardScopeRegExp = new RegExp(`^${this._scope.replace('*', '.+')}$`);
         const wildcardResourceRegExp = new RegExp(`^${this._resource.replace('*', '.+')}$`);

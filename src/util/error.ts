@@ -16,7 +16,7 @@ export enum ERROR_CODE {
 
     MODULE_IDENTIFIER_ALREADY_MOUNTED_1 = 400160,
 
-    INVALID_ASSIGNED_PERMISSION_IDENTIFIER_FORMAT_1 = 400401,
+    INVALID_ASSIGNED_PERMISSION_MODULE_FORMAT_1 = 400401,
     INVALID_ASSIGNED_PERMISSION_SCOPE_FORMAT_1 = 400402,
     INVALID_ASSIGNED_PERMISSION_RESOURCE_FORMAT_1 = 400403,
 
@@ -29,7 +29,7 @@ export enum ERROR_CODE {
 
     FAILED_CALCULATE_COMMON_START = 500050,
 
-    INVALID_REQUIRED_PERMISSION_IDENTIFIER_FORMAT_1 = 500411,
+    INVALID_REQUIRED_PERMISSION_MODULE_FORMAT_1 = 500411,
     INVALID_REQUIRED_PERMISSION_SCOPE_FORMAT_1 = 500412,
     INVALID_REQUIRED_PERMISSION_RESOURCE_FORMAT_1 = 500413,
 
@@ -43,9 +43,9 @@ export const ERROR_LIST: Record<ERROR_CODE, string> = {
 
     [ERROR_CODE.MODULE_IDENTIFIER_ALREADY_MOUNTED_1]: 'Module identifier already mounted: {}',
 
-    [ERROR_CODE.INVALID_ASSIGNED_PERMISSION_IDENTIFIER_FORMAT_1]: 'Invalid assigned permission identifier format: {}',
-    [ERROR_CODE.INVALID_ASSIGNED_PERMISSION_SCOPE_FORMAT_1]: 'Invalid assigned permission scope format: {}',
-    [ERROR_CODE.INVALID_ASSIGNED_PERMISSION_RESOURCE_FORMAT_1]: 'Invalid assigned permission resource format: {}',
+    [ERROR_CODE.INVALID_ASSIGNED_PERMISSION_MODULE_FORMAT_1]: 'Invalid assigned permission module identifier format: {}',
+    [ERROR_CODE.INVALID_ASSIGNED_PERMISSION_SCOPE_FORMAT_1]: 'Invalid assigned permission scope identifier format: {}',
+    [ERROR_CODE.INVALID_ASSIGNED_PERMISSION_RESOURCE_FORMAT_1]: 'Invalid assigned permission resource identifier format: {}',
 
     [ERROR_CODE.INSUFFICIENT_PERMISSION_TO_EXECUTE_1]: 'Permission {} is required',
 
@@ -56,9 +56,9 @@ export const ERROR_LIST: Record<ERROR_CODE, string> = {
 
     [ERROR_CODE.FAILED_CALCULATE_COMMON_START]: 'Failed to calculate common start',
 
-    [ERROR_CODE.INVALID_REQUIRED_PERMISSION_IDENTIFIER_FORMAT_1]: 'Invalid required permission identifier format: {}',
-    [ERROR_CODE.INVALID_REQUIRED_PERMISSION_SCOPE_FORMAT_1]: 'Invalid required permission scope format: {}',
-    [ERROR_CODE.INVALID_REQUIRED_PERMISSION_RESOURCE_FORMAT_1]: 'Invalid required permission resource format: {}',
+    [ERROR_CODE.INVALID_REQUIRED_PERMISSION_MODULE_FORMAT_1]: 'Invalid required permission module identifier format: {}',
+    [ERROR_CODE.INVALID_REQUIRED_PERMISSION_SCOPE_FORMAT_1]: 'Invalid required permission scope identifier format: {}',
+    [ERROR_CODE.INVALID_REQUIRED_PERMISSION_RESOURCE_FORMAT_1]: 'Invalid required permission resource identifier format: {}',
 
     [ERROR_CODE.INVALID_BLOCK_DIVERSE_TYPE_1]: 'Invalid block diverse type {}',
 };
