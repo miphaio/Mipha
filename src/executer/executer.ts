@@ -16,24 +16,43 @@ import { MiphaMountedExecuter } from "./mounted-executer";
 // Public
 export class MiphaExecuter {
 
-    public static fromModules(modules: Set<MiphaModule>): MiphaExecuter {
-
-        return new MiphaExecuter(modules);
-    }
-
     public static fromScratch(): MiphaExecuter {
 
         const modules: Set<MiphaModule> = new Set<MiphaModule>();
-        return new MiphaExecuter(modules);
+        const recipes: Set<MiphaRecipe> = new Set<MiphaRecipe>();
+        return MiphaExecuter.fromModulesAndRecipes(modules, recipes);
+    }
+
+    public static fromModules(modules: Set<MiphaModule>): MiphaExecuter {
+
+        const recipes: Set<MiphaRecipe> = new Set<MiphaRecipe>();
+        return MiphaExecuter.fromModulesAndRecipes(modules, recipes);
+    }
+
+    public static fromRecipes(recipes: Set<MiphaRecipe>): MiphaExecuter {
+
+        const modules: Set<MiphaModule> = new Set<MiphaModule>();
+        return MiphaExecuter.fromModulesAndRecipes(modules, recipes);
+    }
+
+    public static fromModulesAndRecipes(
+        modules: Set<MiphaModule>,
+        recipes: Set<MiphaRecipe>,
+    ): MiphaExecuter {
+
+        return new MiphaExecuter(modules, recipes);
     }
 
     private readonly _modules: Set<MiphaModule>;
     private readonly _recipes: Set<MiphaRecipe>;
 
-    private constructor(modules: Set<MiphaModule>) {
+    private constructor(
+        modules: Set<MiphaModule>,
+        recipes: Set<MiphaRecipe>,
+    ) {
 
         this._modules = modules;
-        this._recipes = new Set<MiphaRecipe>();
+        this._recipes = recipes;
     }
 
     public useModule(module: MiphaModule): this {
@@ -46,7 +65,6 @@ export class MiphaExecuter {
                 );
             }
         }
-
         this._modules.add(module);
         return this;
     }
