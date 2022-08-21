@@ -5,8 +5,8 @@
  * @override Test
  */
 
-import { MarkedResult } from "@sudoo/marked";
-import { END_SIGNAL, IMarkedResultSucceed } from "@sudoo/marked/declare/evaluate";
+import { END_SIGNAL, MarkedResult } from "@sudoo/marked";
+import { IMarkedResultSucceed } from "@sudoo/marked/declare/evaluate";
 
 export const assertSucceedMarkedResult: (
     result: MarkedResult,
