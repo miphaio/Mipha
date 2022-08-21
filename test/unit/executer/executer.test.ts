@@ -10,7 +10,7 @@ import { expect } from "chai";
 import * as Chance from "chance";
 import { MiphaExecuter, MiphaPermission, MiphaRecipe, MiphaScript } from "../../../src";
 import { MockModule } from "../../mock/module/declare";
-import { createMockStaticValueModule } from "../../mock/module/static-value";
+import { createMockStaticValueModule, createMockStaticValueScopedModule } from "../../mock/module/static-value";
 import { createMockDefaultTriggerModule } from "../../mock/module/trigger";
 
 describe('Given {MiphaExecuter} Class', (): void => {
@@ -74,6 +74,28 @@ describe('Given {MiphaExecuter} Class', (): void => {
         const result: MarkedResult = await executer.mountAndExecute(triggerScript, []);
 
         expect(result.signal).to.be.equal(END_SIGNAL.FAILED);
+    });
+
+    it('should be able to execute module mounted script with scoped permission', async (): Promise<void> => {
+
+        const staticValueModule = createMockStaticValueScopedModule();
+        const getTenScript: MiphaScript = MiphaScript.fromCode(
+            'import {getTen} from "mock.static-value"; export default getTen();',
+        );
+
+        const executer: MiphaExecuter = MiphaExecuter.fromModules(
+            [staticValueModule.module],
+        );
+        const result: MarkedResult = await executer.mountAndExecute(getTenScript, [
+            MiphaPermission.fromIdentifier('mock.static-value', []),
+        ]);
+
+
+        if (result.signal !== END_SIGNAL.SUCCEED) {
+            throw new Error('Execution failed');
+        }
+
+        expect(result.exports.default).to.be.equal(10);
     });
 
     it('should be able to execute recipe mounted script', async (): Promise<void> => {
