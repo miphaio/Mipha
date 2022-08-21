@@ -4,6 +4,7 @@
  * @description Permission
  */
 
+import { ERROR_CODE, panic } from "../util/error";
 import { MiphaPermissionScope } from "./scope";
 
 // Public
@@ -13,6 +14,14 @@ export class MiphaPermission {
         identifier: string,
         scopes: Iterable<MiphaPermissionScope>,
     ): MiphaPermission {
+
+        const identifierFormatRegExp = new RegExp(`^[a-zA-Z0-9._-]+$`);
+        if (!identifierFormatRegExp.test(identifier)) {
+            throw panic.code(
+                ERROR_CODE.INVALID_ASSIGNED_PERMISSION_IDENTIFIER_FORMAT_1,
+                identifier,
+            );
+        }
 
         return new MiphaPermission(identifier, scopes);
     }
