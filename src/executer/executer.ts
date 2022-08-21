@@ -5,10 +5,12 @@
  */
 
 import { MiphaModule } from "../module/module";
-import { MiphaRecipeLoader } from "../recipe/loader";
+import { MiphaPermission } from "../permission/permission";
+import { MiphaRecipe } from "../recipe/recipe";
 import { MiphaScript } from "../script/script";
 import { ERROR_CODE, panic } from "../util/error";
 import { filterMiphaModulesByPermissions } from "./mount/filter-modules";
+import { filterMiphaRecipesByPermissions } from "./mount/filter-recipes";
 import { MiphaMountedExecuter } from "./mounted-executer";
 
 // Public
@@ -26,12 +28,12 @@ export class MiphaExecuter {
     }
 
     private readonly _modules: Set<MiphaModule>;
-    private readonly _recipeLoaders: Set<MiphaRecipeLoader>;
+    private readonly _recipes: Set<MiphaRecipe>;
 
     private constructor(modules: Set<MiphaModule>) {
 
         this._modules = modules;
-        this._recipeLoaders = new Set<MiphaRecipeLoader>();
+        this._recipes = new Set<MiphaRecipe>();
     }
 
     public useModule(module: MiphaModule): this {
@@ -49,21 +51,26 @@ export class MiphaExecuter {
         return this;
     }
 
-    public useRecipeLoader(recipeLoader: MiphaRecipeLoader): this {
+    public useRecipe(recipe: MiphaRecipe): this {
 
-        this._recipeLoaders.add(recipeLoader);
+        this._recipes.add(recipe);
         return this;
     }
 
-    public mountForScript(script: MiphaScript): MiphaMountedExecuter {
+    public mountForScript(
+        script: MiphaScript,
+        permissions: Iterable<MiphaPermission>,
+    ): MiphaMountedExecuter {
 
         const filteredModules: Set<MiphaModule> =
-            filterMiphaModulesByPermissions(this._modules, script.permissions);
+            filterMiphaModulesByPermissions(this._modules, permissions);
+        const filetedRecipes: Set<MiphaRecipe> =
+            filterMiphaRecipesByPermissions(this._recipes, permissions);
 
-        return MiphaMountedExecuter.fromModuleAndRecipeLoaderSet(
+        return MiphaMountedExecuter.fromModuleAndRecipeSet(
             script,
             filteredModules,
-            this._recipeLoaders,
+            filetedRecipes,
         );
     }
 }

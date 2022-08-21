@@ -27,19 +27,17 @@ export class MiphaRecipeLoader {
 
     public static fromRecipeList(
         sourceName: string,
-        recipes: MiphaRecipe[],
+        recipes: Iterable<MiphaRecipe>,
     ): MiphaRecipeLoader {
 
         return this.fromLoadMethod(
             sourceName,
             (identifier: string): MiphaRecipe | typeof MiphaRecipeLoadEmptySymbol => {
 
-                const recipe: MiphaRecipe | undefined = recipes.find((eachRecipe: MiphaRecipe) => {
-                    return eachRecipe.identifier === identifier;
-                });
-
-                if (typeof recipe !== 'undefined') {
-                    return recipe;
+                for (const recipe of recipes) {
+                    if (recipe.identifier === identifier) {
+                        return recipe;
+                    }
                 }
                 return MiphaRecipeLoadEmptySymbol;
             },

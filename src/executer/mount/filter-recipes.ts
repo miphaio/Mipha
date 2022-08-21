@@ -1,26 +1,26 @@
 /**
  * @author WMXPY
  * @namespace Executer_Mount
- * @description Filter Modules
+ * @description Filter Recipes
  */
 
-import { MiphaModule } from "../../module/module";
 import { MiphaPermission } from "../../permission/permission";
+import { MiphaRecipe } from "../../recipe/recipe";
 
-export const filterMiphaModulesByPermissions = (
-    modules: Iterable<MiphaModule>,
+export const filterMiphaRecipesByPermissions = (
+    recipes: Iterable<MiphaRecipe>,
     permissions: Iterable<MiphaPermission>,
-): Set<MiphaModule> => {
+): Set<MiphaRecipe> => {
 
     const permissionMap: Map<string, MiphaPermission> = new Map();
     for (const permission of permissions) {
         permissionMap.set(permission.identifier, permission);
     }
 
-    const filtered: Set<MiphaModule> = new Set();
-    for (const module of modules) {
-        if (permissionMap.has(module.identifier)) {
-            filtered.add(module);
+    const filtered: Set<MiphaRecipe> = new Set();
+    for (const recipe of recipes) {
+        if (permissionMap.has(recipe.identifier)) {
+            filtered.add(recipe);
         }
     }
     return filtered;

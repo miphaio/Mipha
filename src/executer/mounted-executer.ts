@@ -7,8 +7,9 @@
 import { MarkedResult, Sandbox, useEverything } from "@sudoo/marked";
 import { MiphaModule } from "../module/module";
 import { MiphaRecipeLoader } from "../recipe/loader";
+import { MiphaRecipe } from "../recipe/recipe";
 import { MiphaScript } from "../script/script";
-import { mountMiphaModules, mountMiphaRecipeLoaders } from "./mount/mount";
+import { mountMiphaModules, mountMiphaRecipeLoader } from "./mount/mount";
 
 // Public
 export class MiphaMountedExecuter {
@@ -17,10 +18,10 @@ export class MiphaMountedExecuter {
         script: MiphaScript,
     ): MiphaMountedExecuter {
 
-        return this.fromModuleAndRecipeLoaderSet(
+        return this.fromModuleAndRecipeSet(
             script,
             new Set<MiphaModule>(),
-            new Set<MiphaRecipeLoader>(),
+            new Set<MiphaRecipe>(),
         );
     }
 
@@ -40,47 +41,52 @@ export class MiphaMountedExecuter {
         modules: Set<MiphaModule>,
     ): MiphaMountedExecuter {
 
-        return this.fromModuleAndRecipeLoaderSet(
+        return this.fromModuleAndRecipeSet(
             script,
             modules,
-            new Set<MiphaRecipeLoader>(),
+            new Set<MiphaRecipe>(),
         );
     }
 
-    public static fromRecipeLoaders(
+    public static fromRecipes(
         script: MiphaScript,
-        ...recipeLoaders: MiphaRecipeLoader[]
+        ...recipes: MiphaRecipe[]
     ): MiphaMountedExecuter {
 
-        return this.fromRecipeLoaderSet(
+        return this.fromRecipeSet(
             script,
-            new Set<MiphaRecipeLoader>(recipeLoaders),
+            new Set<MiphaRecipe>(recipes),
         );
     }
 
-    public static fromRecipeLoaderSet(
+    public static fromRecipeSet(
         script: MiphaScript,
-        recipeLoaders: Set<MiphaRecipeLoader>,
+        recipes: Set<MiphaRecipe>,
     ): MiphaMountedExecuter {
 
-        return this.fromModuleAndRecipeLoaderSet(
+        return this.fromModuleAndRecipeSet(
             script,
             new Set<MiphaModule>(),
-            recipeLoaders,
+            recipes,
         );
     }
 
-    public static fromModuleAndRecipeLoaderSet(
+    public static fromModuleAndRecipeSet(
         script: MiphaScript,
         modules: Set<MiphaModule>,
-        recipeLoaders: Set<MiphaRecipeLoader>,
+        recipes: Set<MiphaRecipe>,
     ): MiphaMountedExecuter {
 
         const sandbox: Sandbox = Sandbox.create();
         useEverything(sandbox);
 
+        const recipeLoader: MiphaRecipeLoader = MiphaRecipeLoader.fromRecipeList(
+            'mipha-mounted-executer',
+            recipes,
+        );
+
         mountMiphaModules(sandbox, modules);
-        mountMiphaRecipeLoaders(sandbox, recipeLoaders);
+        mountMiphaRecipeLoader(sandbox, recipeLoader);
 
         return new MiphaMountedExecuter(script, sandbox);
     }

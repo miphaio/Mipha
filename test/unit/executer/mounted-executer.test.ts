@@ -8,7 +8,7 @@
 import { END_SIGNAL, MarkedResult } from "@sudoo/marked";
 import { expect } from "chai";
 import * as Chance from "chance";
-import { MiphaMountedExecuter, MiphaRecipe, MiphaRecipeLoadEmptySymbol, MiphaRecipeLoader, MiphaScript } from "../../../src";
+import { MiphaMountedExecuter, MiphaRecipe, MiphaScript } from "../../../src";
 import { createMockDefaultTriggerModule, createMockTriggerModule } from "../../mock/module/trigger";
 
 describe('Given {MiphaMountedExecuter} Class', (): void => {
@@ -95,15 +95,13 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
             `export const number = ${numberValue};`,
         );
 
-        const recipeLoader: MiphaRecipeLoader = MiphaRecipeLoader.fromRecipes(chance.string(), numberValueRecipe);
-
         const dynamicNumberScript: MiphaScript = MiphaScript.fromCode(
             'import {number} from "dynamic.number"; export default number;',
         );
 
-        const mountedExecuter = MiphaMountedExecuter.fromRecipeLoaders(
+        const mountedExecuter = MiphaMountedExecuter.fromRecipes(
             dynamicNumberScript,
-            recipeLoader,
+            numberValueRecipe,
         );
 
         const result: MarkedResult = await mountedExecuter.execute();
@@ -117,30 +115,11 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
 
     it('should be able to execute dynamic import script - module not found', async (): Promise<void> => {
 
-        const numberValue: number = chance.natural();
-        const numberValueRecipe: MiphaRecipe = MiphaRecipe.fromCode(
-            'dynamic.number',
-            `export const number = ${numberValue};`,
-        );
-
-        const recipeLoader: MiphaRecipeLoader = MiphaRecipeLoader.fromLoadMethod(
-            chance.string(),
-            (identifier: string) => {
-
-                if (identifier !== chance.string()) {
-                    return MiphaRecipeLoadEmptySymbol;
-                }
-
-                return numberValueRecipe;
-            },
-        );
-
         const dynamicNumberScript: MiphaScript = MiphaScript.fromCode(
             'import {number} from "dynamic.number"; export default number;',
         );
-        const mountedExecuter = MiphaMountedExecuter.fromRecipeLoaders(
+        const mountedExecuter = MiphaMountedExecuter.fromRecipes(
             dynamicNumberScript,
-            recipeLoader,
         );
 
         const result: MarkedResult = await mountedExecuter.execute();

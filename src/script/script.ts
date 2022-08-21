@@ -4,37 +4,36 @@
  * @description Script
  */
 
-import { MiphaPermission } from "../permission/permission";
-
 // Public
 export class MiphaScript {
 
-    public static fromCode(scriptCode: string): MiphaScript {
+    public static fromCode(
+        scriptCode: string,
+        requirements: string[] = [],
+    ): MiphaScript {
 
-        return new MiphaScript(scriptCode);
+        return new MiphaScript(scriptCode, requirements);
     }
 
     private readonly _scriptCode: string;
 
-    private readonly _permissions: Set<MiphaPermission>;
+    private readonly _requirements: Set<string>;
 
-    private constructor(scriptCode: string) {
+    private constructor(
+        scriptCode: string,
+        requirements: string[],
+    ) {
 
         this._scriptCode = scriptCode;
 
-        this._permissions = new Set<MiphaPermission>();
+        this._requirements = new Set<string>(requirements);
     }
 
     public get scriptCode(): string {
         return this._scriptCode;
     }
-    public get permissions(): Set<MiphaPermission> {
-        return this._permissions;
-    }
 
-    public addPermission(permission: MiphaPermission): this {
-
-        this._permissions.add(permission);
-        return this;
+    public get requirements(): Set<string> {
+        return this._requirements;
     }
 }

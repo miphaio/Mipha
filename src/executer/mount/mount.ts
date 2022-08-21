@@ -22,7 +22,7 @@ export const mountMiphaModules = (
 };
 
 // Internal
-export const mountMiphaRecipeLoaders = (sandbox: Sandbox, recipeLoaders: Set<MiphaRecipeLoader>): void => {
+export const mountMiphaRecipeLoader = (sandbox: Sandbox, recipeLoader: MiphaRecipeLoader): void => {
 
     sandbox.resolver(
         async (
@@ -30,18 +30,15 @@ export const mountMiphaRecipeLoaders = (sandbox: Sandbox, recipeLoaders: Set<Mip
             _trace: ITrace,
         ): Promise<ModuleResolveResult | null> => {
 
-            for (const recipeLoader of recipeLoaders) {
+            const result: MiphaRecipe | typeof MiphaRecipeLoadEmptySymbol =
+                await recipeLoader.load(source);
 
-                const result: MiphaRecipe | typeof MiphaRecipeLoadEmptySymbol =
-                    await recipeLoader.load(source);
+            if (result instanceof MiphaRecipe) {
 
-                if (result instanceof MiphaRecipe) {
-
-                    return {
-                        script: result.recipeCode,
-                        scriptLocation: ScriptLocation.create('recipe', `${recipeLoader.sourceName}/${source}`),
-                    };
-                }
+                return {
+                    script: result.recipeCode,
+                    scriptLocation: ScriptLocation.create('recipe', `${recipeLoader.sourceName}/${source}`),
+                };
             }
             return null;
         },
