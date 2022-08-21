@@ -43,4 +43,17 @@ export class MiphaPermission {
         }
         return this;
     }
+
+    public canExecute(
+        scope: string,
+        resource: string,
+    ): boolean {
+
+        for (const permissionScope of this._scopes) {
+            if (permissionScope.canExecute(scope, resource)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

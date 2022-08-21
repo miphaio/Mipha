@@ -33,4 +33,15 @@ export class MiphaPermissionScope {
     public get resource(): string {
         return this._resource;
     }
+
+    public canExecute(
+        scope: string,
+        resource: string,
+    ): boolean {
+
+        const wildcardScopeRegExp = new RegExp(`^${this._scope.replace('*', '.+')}$`);
+        const wildcardResourceRegExp = new RegExp(`^${this._resource.replace('*', '.+')}$`);
+
+        return wildcardScopeRegExp.test(scope) && wildcardResourceRegExp.test(resource);
+    }
 }

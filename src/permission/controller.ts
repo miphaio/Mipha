@@ -4,6 +4,7 @@
  * @description Controller
  */
 
+import { ERROR_CODE, panic } from "../util/error";
 import { MiphaPermission } from "./permission";
 
 // Public
@@ -16,20 +17,64 @@ export class MiphaPermissionController {
 
     public static fromPermissionList(permissions: Iterable<MiphaPermission>): MiphaPermissionController {
 
-        const permissionsSet: Set<MiphaPermission> = new Set<MiphaPermission>(permissions);
-        return new MiphaPermissionController(permissionsSet);
+        const permissionMap: Map<string, Set<MiphaPermission>> = new Map<string, Set<MiphaPermission>>();
+
+        for (const permission of permissions) {
+
+            if (permissionMap.has(permission.identifier)) {
+
+                const permissionSet: Set<MiphaPermission> = permissionMap.get(permission.identifier) as Set<MiphaPermission>;
+                permissionSet.add(permission);
+            } else {
+
+                const permissionSet: Set<MiphaPermission> = new Set<MiphaPermission>();
+                permissionSet.add(permission);
+                permissionMap.set(permission.identifier, permissionSet);
+            }
+        }
+        return new MiphaPermissionController(permissionMap);
     }
 
-    private readonly _permissions: Set<MiphaPermission>;
+    private readonly _permissions: Map<string, Set<MiphaPermission>>;
 
     private constructor(
-        permissions: Set<MiphaPermission>,
+        permissions: Map<string, Set<MiphaPermission>>,
     ) {
 
         this._permissions = permissions;
     }
 
-    public get permissions(): Set<MiphaPermission> {
-        return this._permissions;
+    public canExecute(
+        moduleIdentifier: string,
+        scopeIdentifier: string,
+        resourceIdentifier: string,
+    ): boolean {
+
+        if (!this._permissions.has(moduleIdentifier)) {
+            return false;
+        }
+
+        const permissionSet: Set<MiphaPermission> = this._permissions.get(moduleIdentifier) as Set<MiphaPermission>;
+        for (const permission of permissionSet) {
+            if (permission.canExecute(scopeIdentifier, resourceIdentifier)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public assert(
+        moduleIdentifier: string,
+        scopeIdentifier: string,
+        resourceIdentifier: string,
+    ): void {
+
+        if (!this.canExecute(moduleIdentifier, scopeIdentifier, resourceIdentifier)) {
+            throw panic.code(
+                ERROR_CODE.INSUFFICIENT_PERMISSION_TO_EXECUTE_1,
+                `${moduleIdentifier}:${scopeIdentifier}:${resourceIdentifier}`,
+            );
+        }
+        return;
     }
 }

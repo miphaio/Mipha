@@ -5,7 +5,7 @@
  * @override Mock
  */
 
-import { MiphaModule } from "../../../src";
+import { MiphaExecuterAdditionalArgument, MiphaModule } from "../../../src";
 import { Writeable } from "../../../src/util/writeable";
 import { MockModule } from "./declare";
 
@@ -27,7 +27,13 @@ export const createMockStaticValueModule = (): MockModule => {
 export const createMockStaticValueScopedModule = (): MockModule => {
 
     const mockStaticValueModule = MiphaModule.fromScratch('mock.static-value');
-    mockStaticValueModule.provide('getTen', () => {
+    mockStaticValueModule.provide('getTen', (additionalArguments: MiphaExecuterAdditionalArgument) => {
+
+        additionalArguments.permissionController.assert(
+            'mock.static-value',
+            'value',
+            '10',
+        );
         return 10;
     });
 
