@@ -9,6 +9,7 @@ import { MiphaModule } from "../../module/module";
 import { MiphaPermissionController } from "../../permission/controller";
 import { MiphaRecipeLoadEmptySymbol, MiphaRecipeLoader } from "../../recipe/loader";
 import { MiphaRecipe } from "../../recipe/recipe";
+import { MiphaExecuterAdditionalArgument } from "../additional-argument";
 
 // Internal
 export const mountMiphaModules = (
@@ -44,16 +45,18 @@ export const mountMiphaRecipeLoader = (sandbox: Sandbox, recipeLoader: MiphaReci
             return null;
         },
     );
+    return;
 };
 
 // Internal
-export const mountMiphaPermissionController = (
+export const mountMiphaAdditionalArgument = (
     sandbox: Sandbox,
     permissionController: MiphaPermissionController,
 ): void => {
 
-    for (const module of modules) {
-        sandbox.provide(module.identifier, module.provides);
-    }
+    const additionalArgument: MiphaExecuterAdditionalArgument =
+        MiphaExecuterAdditionalArgument.create(permissionController);
+
+    sandbox.setAdditionalArgument(additionalArgument);
     return;
 };

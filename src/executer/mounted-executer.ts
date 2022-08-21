@@ -10,7 +10,7 @@ import { MiphaPermissionController } from "../permission/controller";
 import { MiphaRecipeLoader } from "../recipe/loader";
 import { MiphaRecipe } from "../recipe/recipe";
 import { MiphaScript } from "../script/script";
-import { mountMiphaModules, mountMiphaRecipeLoader } from "./mount/mount";
+import { mountMiphaAdditionalArgument, mountMiphaModules, mountMiphaRecipeLoader } from "./mount/mount";
 
 // Public
 export class MiphaMountedExecuter {
@@ -98,6 +98,10 @@ export class MiphaMountedExecuter {
 
         mountMiphaModules(sandbox, modules);
         mountMiphaRecipeLoader(sandbox, recipeLoader);
+        mountMiphaAdditionalArgument(
+            sandbox,
+            permissionController,
+        );
 
         return new MiphaMountedExecuter(script, sandbox);
     }

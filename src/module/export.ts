@@ -4,4 +4,6 @@
  * @description Export
  */
 
+export * from "./declare";
 export * from "./module";
+

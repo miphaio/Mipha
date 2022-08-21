@@ -6,6 +6,7 @@
 
 import { MiphaPermission } from "../permission/permission";
 import { ERROR_CODE, panic } from "../util/error";
+import { MiphaModuleProvideObject } from "./declare";
 
 // Public
 export class MiphaModule {
@@ -45,7 +46,7 @@ export class MiphaModule {
         return this._requiredPermissions;
     }
 
-    public provide<T>(symbol: string, object: T): this {
+    public provide<T>(symbol: string, object: MiphaModuleProvideObject<T>): this {
 
         if (symbol === 'default') {
             throw panic.code(ERROR_CODE.INVALID_MODULE_PROVIDE_DEFAULT);
@@ -55,7 +56,7 @@ export class MiphaModule {
         return this;
     }
 
-    public provideDefault<T>(object: T): this {
+    public provideDefault<T>(object: MiphaModuleProvideObject<T>): this {
 
         this._provides.set('default', object);
         return this;
