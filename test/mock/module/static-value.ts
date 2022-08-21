@@ -44,3 +44,24 @@ export const createMockStaticValueScopedModule = (): MockModule => {
 
     return result;
 };
+
+export const createMockStaticValueInvalidScopedModule = (): MockModule => {
+
+    const mockStaticValueModule = MiphaModule.fromScratch('mock.static-value');
+    mockStaticValueModule.provide('getTen', (additionalArguments: MiphaExecuterAdditionalArgument) => {
+
+        additionalArguments.permissionController.assert(
+            'mock.static-value',
+            '*',
+            '*',
+        );
+        return 10;
+    });
+
+    const result: Writeable<MockModule> = {
+        module: mockStaticValueModule,
+        payload: undefined,
+    };
+
+    return result;
+};
