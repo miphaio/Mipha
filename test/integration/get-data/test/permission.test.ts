@@ -9,6 +9,7 @@ import { MarkedResult } from "@sudoo/marked";
 import { expect } from "chai";
 import * as Chance from "chance";
 import { MiphaScript } from "../../../../src";
+import { assertSucceedMarkedResult } from "../../../util/assert-result";
 import { getDataIntegrationExecuter } from "../setup/get-data";
 
 describe('Given (Permission) cases for (GetData) Integration test setup', (): void => {
@@ -27,6 +28,8 @@ describe('Given (Permission) cases for (GetData) Integration test setup', (): vo
             [],
         );
 
-        expect(result).to.be.equal('first');
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.equal('first');
     });
 });
