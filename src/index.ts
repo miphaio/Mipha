@@ -11,4 +11,5 @@ export * from "./module/export";
 export * from "./permission/export";
 export * from "./recipe/export";
 export * from "./script/export";
+export * from "./storage/export";
 
