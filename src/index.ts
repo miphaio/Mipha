@@ -6,6 +6,7 @@
 
 export * from "./block/export";
 export * from "./executer/export";
+export * from "./mipha/export";
 export * from "./module/export";
 export * from "./permission/export";
 export * from "./recipe/export";
