@@ -20,6 +20,8 @@ export enum ERROR_CODE {
     INVALID_ASSIGNED_PERMISSION_SCOPE_FORMAT_1 = 400402,
     INVALID_ASSIGNED_PERMISSION_RESOURCE_FORMAT_1 = 400403,
 
+    UNCLEARED_REQUIRED_BUILDER_VALUE_1 = 400501,
+
     INSUFFICIENT_PERMISSION_TO_EXECUTE_1 = 403100,
 
     RESOLVER_ALREADY_MOUNTED_1 = 408500,
@@ -46,6 +48,8 @@ export const ERROR_LIST: Record<ERROR_CODE, string> = {
     [ERROR_CODE.INVALID_ASSIGNED_PERMISSION_MODULE_FORMAT_1]: 'Invalid assigned permission module identifier format: {}',
     [ERROR_CODE.INVALID_ASSIGNED_PERMISSION_SCOPE_FORMAT_1]: 'Invalid assigned permission scope identifier format: {}',
     [ERROR_CODE.INVALID_ASSIGNED_PERMISSION_RESOURCE_FORMAT_1]: 'Invalid assigned permission resource identifier format: {}',
+
+    [ERROR_CODE.UNCLEARED_REQUIRED_BUILDER_VALUE_1]: 'Uncleared required builder value: {}',
 
     [ERROR_CODE.INSUFFICIENT_PERMISSION_TO_EXECUTE_1]: 'Permission {} is required',
 
