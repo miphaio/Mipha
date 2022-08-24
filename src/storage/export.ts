@@ -5,3 +5,6 @@
  */
 
 export * from "./declare";
+export * from "./proxy";
+export * from "./proxy-builder";
+

@@ -5,6 +5,12 @@
  */
 
 // Public
+export type MiphaStorageProxyReadConfigMethod = () => Promise<MiphaStorageConfig> | MiphaStorageConfig;
+
+// Public
+export type MiphaStorageProxySaveConfigMethod = (config: MiphaStorageConfig) => Promise<void>;
+
+// Public
 export type MiphaStorageRecipeConfig = {
 
     readonly identifier: string;
