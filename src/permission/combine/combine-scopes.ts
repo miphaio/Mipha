@@ -24,9 +24,14 @@ export const combineScopes = (scopes: MiphaPermissionScope[]): MiphaPermissionSc
             ];
             const newResources: Set<string> = new Set();
 
-            for (const toBeAddResource of toBeAddResources) {
+            outer: for (const toBeAddResource of toBeAddResources) {
+
+                if (newResources.size === 0) {
+                    newResources.add(toBeAddResource);
+                }
 
                 const existResources: Set<string> = new Set(newResources);
+
                 for (const existResource of existResources) {
 
                     const toBeAddRegExp: RegExp =
@@ -36,14 +41,14 @@ export const combineScopes = (scopes: MiphaPermissionScope[]): MiphaPermissionSc
 
                         newResources.delete(existResource);
                         newResources.add(toBeAddResource);
-                        continue;
+                        continue outer;
                     }
 
-                    const newRegExp: RegExp =
+                    const existRegExp: RegExp =
                         new RegExp(`^${existResource.replace('*', '.+')}$`);
 
-                    if (newRegExp.test(toBeAddResource)) {
-                        continue;
+                    if (existRegExp.test(toBeAddResource)) {
+                        continue outer;
                     }
 
                     newResources.add(toBeAddResource);

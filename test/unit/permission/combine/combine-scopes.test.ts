@@ -24,4 +24,86 @@ describe('Given [CombineScopes] Helper Methods', (): void => {
         const combined: MiphaPermissionScope[] = combineScopes([scope]);
         expect(combined).to.be.lengthOf(1);
     });
+
+    it('should be able to combine single scope and multiple resource', async (): Promise<void> => {
+
+        const firstScope: MiphaPermissionScope = MiphaPermissionScope.fromScopeAndResources(
+            'first',
+            ['first-resource-1', 'first-resource-2'],
+        );
+        const secondScope: MiphaPermissionScope = MiphaPermissionScope.fromScopeAndResources(
+            'first',
+            ['second-resource-1', 'second-resource-2'],
+        );
+
+        const combined: MiphaPermissionScope[] = combineScopes([
+            firstScope,
+            secondScope,
+        ]);
+        expect(combined.map((scope) => scope.toConfig())).to.be.deep.equal([
+            {
+                scope: 'first',
+                resources: [
+                    'first-resource-1',
+                    'first-resource-2',
+                    'second-resource-1',
+                    'second-resource-2',
+                ],
+            },
+        ]);
+    });
+
+    it('should be able to combine single scope and multiple resource with wildcard first in', async (): Promise<void> => {
+
+        const firstScope: MiphaPermissionScope = MiphaPermissionScope.fromScopeAndResources(
+            'first',
+            ['*-resource-1', 'first-resource-2'],
+        );
+        const secondScope: MiphaPermissionScope = MiphaPermissionScope.fromScopeAndResources(
+            'first',
+            ['second-resource-1', 'second-resource-2'],
+        );
+
+        const combined: MiphaPermissionScope[] = combineScopes([
+            firstScope,
+            secondScope,
+        ]);
+        expect(combined.map((scope) => scope.toConfig())).to.be.deep.equal([
+            {
+                scope: 'first',
+                resources: [
+                    '*-resource-1',
+                    'first-resource-2',
+                    'second-resource-2',
+                ],
+            },
+        ]);
+    });
+
+    it('should be able to combine single scope and multiple resource with wildcard last in', async (): Promise<void> => {
+
+        const firstScope: MiphaPermissionScope = MiphaPermissionScope.fromScopeAndResources(
+            'first',
+            ['first-resource-1', 'first-resource-2'],
+        );
+        const secondScope: MiphaPermissionScope = MiphaPermissionScope.fromScopeAndResources(
+            'first',
+            ['*-resource-1', 'second-resource-2'],
+        );
+
+        const combined: MiphaPermissionScope[] = combineScopes([
+            firstScope,
+            secondScope,
+        ]);
+        expect(combined.map((scope) => scope.toConfig())).to.be.deep.equal([
+            {
+                scope: 'first',
+                resources: [
+                    'first-resource-2',
+                    '*-resource-1',
+                    'second-resource-2',
+                ],
+            },
+        ]);
+    });
 });
