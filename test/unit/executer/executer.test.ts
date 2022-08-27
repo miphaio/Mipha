@@ -8,7 +8,7 @@
 import { END_SIGNAL, MarkedResult } from "@sudoo/marked";
 import { expect } from "chai";
 import * as Chance from "chance";
-import { MiphaExecuter, MiphaPermission, MiphaPermissionScope, MiphaRecipe, MiphaScript } from "../../../src";
+import { MiphaExecuter, MiphaPermission, MiphaPermissionScope, MiphaRecipe, MiphaRecipeMetadata, MiphaScript, MiphaScriptMetadata } from "../../../src";
 import { MockModule } from "../../mock/module/declare";
 import { createMockStaticValueInvalidScopedModule, createMockStaticValueModule, createMockStaticValueScopedModule } from "../../mock/module/static-value";
 import { createMockDefaultTriggerModule } from "../../mock/module/trigger";
@@ -29,6 +29,7 @@ describe('Given {MiphaExecuter} Class', (): void => {
 
         const scriptValue: number = chance.integer();
         const simpleScript: MiphaScript = MiphaScript.fromCode(
+            MiphaScriptMetadata.fromScratch(),
             `export default ${scriptValue};`,
         );
 
@@ -48,6 +49,7 @@ describe('Given {MiphaExecuter} Class', (): void => {
 
         const triggerModule = createMockDefaultTriggerModule();
         const triggerScript: MiphaScript = MiphaScript.fromCode(
+            MiphaScriptMetadata.fromScratch(),
             'import trigger from "mock.trigger"; trigger();',
         );
 
@@ -66,6 +68,7 @@ describe('Given {MiphaExecuter} Class', (): void => {
 
         const triggerModule = createMockDefaultTriggerModule();
         const triggerScript: MiphaScript = MiphaScript.fromCode(
+            MiphaScriptMetadata.fromScratch(),
             'import trigger from "mock.trigger"; trigger();',
         );
 
@@ -81,6 +84,7 @@ describe('Given {MiphaExecuter} Class', (): void => {
 
         const staticValueModule = createMockStaticValueScopedModule();
         const getTenScript: MiphaScript = MiphaScript.fromCode(
+            MiphaScriptMetadata.fromScratch(),
             'import {getTen} from "mock.static-value"; export default getTen();',
         );
 
@@ -102,6 +106,7 @@ describe('Given {MiphaExecuter} Class', (): void => {
 
         const staticValueModule = createMockStaticValueScopedModule();
         const getTenScript: MiphaScript = MiphaScript.fromCode(
+            MiphaScriptMetadata.fromScratch(),
             'import {getTen} from "mock.static-value"; export default getTen();',
         );
 
@@ -123,6 +128,7 @@ describe('Given {MiphaExecuter} Class', (): void => {
 
         const staticValueModule = createMockStaticValueInvalidScopedModule();
         const getTenScript: MiphaScript = MiphaScript.fromCode(
+            MiphaScriptMetadata.fromScratch(),
             'import {getTen} from "mock.static-value"; export default getTen();',
         );
 
@@ -142,11 +148,12 @@ describe('Given {MiphaExecuter} Class', (): void => {
 
         const numberValue: number = chance.natural();
         const numberValueRecipe: MiphaRecipe = MiphaRecipe.fromCode(
-            'dynamic.number',
+            MiphaRecipeMetadata.fromIdentifier('dynamic.number'),
             `export const number = ${numberValue};`,
         );
 
         const dynamicNumberScript: MiphaScript = MiphaScript.fromCode(
+            MiphaScriptMetadata.fromScratch(),
             'import {number} from "dynamic.number"; export default number;',
         );
 
@@ -167,11 +174,12 @@ describe('Given {MiphaExecuter} Class', (): void => {
         const staticValueModule: MockModule = createMockStaticValueModule();
 
         const numberValueRecipe: MiphaRecipe = MiphaRecipe.fromCode(
-            'dynamic.number',
+            MiphaRecipeMetadata.fromIdentifier('dynamic.number'),
             `import {getTen} from "mock.static-value"; export const number = getTen();`,
         );
 
         const dynamicNumberScript: MiphaScript = MiphaScript.fromCode(
+            MiphaScriptMetadata.fromScratch(),
             'import {number} from "dynamic.number"; export default number;',
         );
 

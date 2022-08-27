@@ -8,7 +8,7 @@
 import { END_SIGNAL, MarkedResult } from "@sudoo/marked";
 import { expect } from "chai";
 import * as Chance from "chance";
-import { MiphaMountedExecuter, MiphaPermissionController, MiphaRecipe, MiphaScript } from "../../../src";
+import { MiphaMountedExecuter, MiphaPermissionController, MiphaRecipe, MiphaRecipeMetadata, MiphaScript, MiphaScriptMetadata } from "../../../src";
 import { createMockDefaultTriggerModule, createMockTriggerModule } from "../../mock/module/trigger";
 import { assertSucceedMarkedResult } from "../../util/assert-result";
 
@@ -29,6 +29,7 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
 
         const triggerModule = createMockTriggerModule();
         const triggerScript: MiphaScript = MiphaScript.fromCode(
+            MiphaScriptMetadata.fromScratch(),
             'import {trigger} from "mock.trigger"; trigger();',
         );
 
@@ -47,6 +48,7 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
 
         const triggerModule = createMockTriggerModule();
         const triggerScript: MiphaScript = MiphaScript.fromCode(
+            MiphaScriptMetadata.fromScratch(),
             'import * as Trigger from "mock.trigger"; Trigger.trigger();',
         );
 
@@ -65,6 +67,7 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
 
         const triggerModule = createMockDefaultTriggerModule();
         const triggerScript: MiphaScript = MiphaScript.fromCode(
+            MiphaScriptMetadata.fromScratch(),
             'import trigger from "mock.trigger"; trigger();',
         );
 
@@ -82,6 +85,7 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
     it('should be able to execute module import script - not found', async (): Promise<void> => {
 
         const triggerScript: MiphaScript = MiphaScript.fromCode(
+            MiphaScriptMetadata.fromScratch(),
             'import {trigger} from "mock.trigger"; trigger();',
         );
         const mountedExecuter = MiphaMountedExecuter.fromScratch(triggerScript);
@@ -95,11 +99,12 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
 
         const numberValue: number = chance.natural();
         const numberValueRecipe: MiphaRecipe = MiphaRecipe.fromCode(
-            'dynamic.number',
+            MiphaRecipeMetadata.fromIdentifier('dynamic.number'),
             `export const number = ${numberValue};`,
         );
 
         const dynamicNumberScript: MiphaScript = MiphaScript.fromCode(
+            MiphaScriptMetadata.fromScratch(),
             'import {number} from "dynamic.number"; export default number;',
         );
 
@@ -119,6 +124,7 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
     it('should be able to execute dynamic import script - module not found', async (): Promise<void> => {
 
         const dynamicNumberScript: MiphaScript = MiphaScript.fromCode(
+            MiphaScriptMetadata.fromScratch(),
             'import {number} from "dynamic.number"; export default number;',
         );
         const mountedExecuter = MiphaMountedExecuter.fromRecipes(
@@ -134,6 +140,7 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
     it('should be able to execute dynamic import script - module not declared', async (): Promise<void> => {
 
         const dynamicNumberScript: MiphaScript = MiphaScript.fromCode(
+            MiphaScriptMetadata.fromScratch(),
             'import {number} from "dynamic.number"; export default number;',
         );
         const mountedExecuter = MiphaMountedExecuter.fromScratch(dynamicNumberScript);
@@ -148,6 +155,7 @@ describe('Given {MiphaMountedExecuter} Class', (): void => {
         const numberValue: number = chance.natural();
 
         const exportNumberValueScript: MiphaScript = MiphaScript.fromCode(
+            MiphaScriptMetadata.fromScratch(),
             `export default ${numberValue};`,
         );
         const mountedExecuter = MiphaMountedExecuter.fromScratch(exportNumberValueScript);
