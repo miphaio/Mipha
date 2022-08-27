@@ -99,9 +99,73 @@ describe('Given [CombineScopes] Helper Methods', (): void => {
             {
                 scope: 'first',
                 resources: [
-                    'first-resource-2',
                     '*-resource-1',
+                    'first-resource-2',
                     'second-resource-2',
+                ],
+            },
+        ]);
+    });
+
+    it('should be able to combine multiple scope and multiple resource', async (): Promise<void> => {
+
+        const firstScope: MiphaPermissionScope = MiphaPermissionScope.fromScopeAndResources(
+            'first',
+            ['first-resource-1', 'first-resource-2'],
+        );
+        const secondScope: MiphaPermissionScope = MiphaPermissionScope.fromScopeAndResources(
+            'second',
+            ['second-resource-1', 'second-resource-2'],
+        );
+
+        const combined: MiphaPermissionScope[] = combineScopes([
+            firstScope,
+            secondScope,
+        ]);
+        expect(combined.map((scope) => scope.toConfig())).to.be.deep.equal([
+            {
+                scope: 'first',
+                resources: [
+                    'first-resource-1',
+                    'first-resource-2',
+                ],
+            },
+            {
+                scope: 'second',
+                resources: [
+                    'second-resource-1',
+                    'second-resource-2',
+                ],
+            },
+        ]);
+    });
+
+    it('should be able to combine multiple scope and multiple resource with wildcard', async (): Promise<void> => {
+
+        const firstScope: MiphaPermissionScope = MiphaPermissionScope.fromScopeAndResources(
+            'first',
+            ['*-resource-1', 'first-resource-1'],
+        );
+        const secondScope: MiphaPermissionScope = MiphaPermissionScope.fromScopeAndResources(
+            'second',
+            ['second-resource-1', '*-resource-1'],
+        );
+
+        const combined: MiphaPermissionScope[] = combineScopes([
+            firstScope,
+            secondScope,
+        ]);
+        expect(combined.map((scope) => scope.toConfig())).to.be.deep.equal([
+            {
+                scope: 'first',
+                resources: [
+                    '*-resource-1',
+                ],
+            },
+            {
+                scope: 'second',
+                resources: [
+                    '*-resource-1',
                 ],
             },
         ]);

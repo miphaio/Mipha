@@ -13,53 +13,54 @@ export const combineScopes = (scopes: MiphaPermissionScope[]): MiphaPermissionSc
 
     for (const scope of scopes) {
 
-        if (tempMap.has(scope.scope)) {
+        if (!tempMap.has(scope.scope)) {
+            tempMap.set(scope.scope, MiphaPermissionScope.fromScopeAndResources(
+                scope.scope,
+                [],
+            ));
+        }
 
-            const temp: MiphaPermissionScope =
-                tempMap.get(scope.scope) as MiphaPermissionScope;
+        const temp: MiphaPermissionScope =
+            tempMap.get(scope.scope) as MiphaPermissionScope;
 
-            const toBeAddResources: string[] = [
-                ...temp.resources,
-                ...scope.resources,
-            ];
-            const newResources: Set<string> = new Set();
+        const toBeAddResources: string[] = [
+            ...temp.resources,
+            ...scope.resources,
+        ];
+        const newResources: Set<string> = new Set();
 
-            outer: for (const toBeAddResource of toBeAddResources) {
+        outer: for (const toBeAddResource of toBeAddResources) {
 
-                if (newResources.size === 0) {
-                    newResources.add(toBeAddResource);
-                }
-
-                const existResources: Set<string> = new Set(newResources);
-
-                for (const existResource of existResources) {
-
-                    const toBeAddRegExp: RegExp =
-                        new RegExp(`^${toBeAddResource.replace('*', '.+')}$`);
-
-                    if (toBeAddRegExp.test(existResource)) {
-
-                        newResources.delete(existResource);
-                        newResources.add(toBeAddResource);
-                        continue outer;
-                    }
-
-                    const existRegExp: RegExp =
-                        new RegExp(`^${existResource.replace('*', '.+')}$`);
-
-                    if (existRegExp.test(toBeAddResource)) {
-                        continue outer;
-                    }
-
-                    newResources.add(toBeAddResource);
-                }
+            if (newResources.size === 0) {
+                newResources.add(toBeAddResource);
+                continue outer;
             }
 
-            temp.replaceResources(newResources);
-        } else {
+            const existResources: Set<string> = new Set(newResources);
+            for (const existResource of existResources) {
 
-            tempMap.set(scope.scope, scope.clone());
+                const toBeAddRegExp: RegExp =
+                    new RegExp(`^${toBeAddResource.replace('*', '.+')}$`);
+
+                if (toBeAddRegExp.test(existResource)) {
+
+                    newResources.delete(existResource);
+                    newResources.add(toBeAddResource);
+                    continue outer;
+                }
+
+                const existRegExp: RegExp =
+                    new RegExp(`^${existResource.replace('*', '.+')}$`);
+
+                if (existRegExp.test(toBeAddResource)) {
+                    continue outer;
+                }
+
+                newResources.add(toBeAddResource);
+            }
         }
+
+        temp.replaceResources([...newResources].sort());
     }
 
     return [
