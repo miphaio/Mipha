@@ -4,20 +4,21 @@
  * @description Declare
  */
 
-// Public
-export type MiphaStorageProxyReadConfigMethod = () => Promise<MiphaStorageConfig> | MiphaStorageConfig;
+import { MiphaStorageProxyReadConfigMethod, MiphaStorageProxySaveConfigMethod } from "./declare/config";
+import { MiphaStorageProxyGetAllRecipesMethod, MiphaStorageProxyGetSingleRecipeMethod, MiphaStorageProxyPutRecipesMethod } from "./declare/recipe";
+import { MiphaStorageProxyGetAllScriptsMethod, MiphaStorageProxyGetSingleScriptMethod, MiphaStorageProxyPutScriptsMethod } from "./declare/script";
 
-// Public
-export type MiphaStorageProxySaveConfigMethod = (config: MiphaStorageConfig) => Promise<void>;
+// Internal
+export type MiphaStorageProxyConstructConfig = {
 
-// Public
-export type MiphaStorageRecipeConfig = {
+    readonly readConfigMethod: MiphaStorageProxyReadConfigMethod;
+    readonly saveConfigMethod: MiphaStorageProxySaveConfigMethod;
 
-    readonly identifier: string;
-};
+    readonly getAllRecipesMethod: MiphaStorageProxyGetAllRecipesMethod;
+    readonly putRecipesMethod: MiphaStorageProxyPutRecipesMethod;
+    readonly getSingleRecipeMethod: MiphaStorageProxyGetSingleRecipeMethod;
 
-// Public
-export type MiphaStorageConfig = {
-
-    readonly availableRecipes: MiphaStorageRecipeConfig[];
+    readonly getAllScriptsMethod: MiphaStorageProxyGetAllScriptsMethod;
+    readonly putScriptsMethod: MiphaStorageProxyPutScriptsMethod;
+    readonly getSingleScriptMethod: MiphaStorageProxyGetSingleScriptMethod;
 };
