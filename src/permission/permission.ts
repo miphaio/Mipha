@@ -64,6 +64,15 @@ export class MiphaPermission {
         return this;
     }
 
+    public replaceScopes(scopes: Iterable<MiphaPermissionScope>): this {
+
+        this._scopes.clear();
+        for (const scope of scopes) {
+            this._scopes.add(scope);
+        }
+        return this;
+    }
+
     public canExecute(
         scope: string,
         resource: string,
@@ -88,5 +97,15 @@ export class MiphaPermission {
             identifier: this._identifier,
             scopes,
         };
+    }
+
+    public clone(): MiphaPermission {
+
+        const scopes: MiphaPermissionScope[] = [];
+        for (const scope of this._scopes) {
+            scopes.push(scope.clone());
+        }
+
+        return new MiphaPermission(this._identifier, scopes);
     }
 }

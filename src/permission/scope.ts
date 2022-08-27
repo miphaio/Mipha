@@ -104,4 +104,12 @@ export class MiphaPermissionScope {
             resources: this._resources,
         };
     }
+
+    public clone(): MiphaPermissionScope {
+
+        return new MiphaPermissionScope(
+            this._scope,
+            [...this._resources],
+        );
+    }
 }
