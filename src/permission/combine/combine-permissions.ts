@@ -1,13 +1,13 @@
 /**
  * @author WMXPY
  * @namespace Permission_Combine
- * @description Combine Permission
+ * @description Combine Permissions
  */
 
 import { MiphaPermission } from "../permission";
 
 // Internal
-export const combinePermission = (permissions: Iterable<MiphaPermission>): MiphaPermission[] => {
+export const combinePermissions = (permissions: Iterable<MiphaPermission>): MiphaPermission[] => {
 
     const result: MiphaPermission[] = [];
     for (const permission of permissions) {

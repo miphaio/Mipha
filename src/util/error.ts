@@ -27,6 +27,8 @@ export enum ERROR_CODE {
     RECIPE_NOT_FOUND_1 = 404102,
     SCRIPT_NOT_FOUND_1 = 404103,
 
+    CORRESPONDED_DEPENDENCY_NOT_FOUND_1 = 404110,
+
     RESOLVER_ALREADY_MOUNTED_1 = 408500,
     RESOLVER_NOT_MOUNTED_1 = 409500,
 
@@ -58,6 +60,8 @@ export const ERROR_LIST: Record<ERROR_CODE, string> = {
 
     [ERROR_CODE.RECIPE_NOT_FOUND_1]: 'Recipe not found: {}',
     [ERROR_CODE.SCRIPT_NOT_FOUND_1]: 'Script not found: {}',
+
+    [ERROR_CODE.CORRESPONDED_DEPENDENCY_NOT_FOUND_1]: 'Corresponded dependency not found: {}',
 
     [ERROR_CODE.RESOLVER_ALREADY_MOUNTED_1]: 'Resolver for {} already mounted',
     [ERROR_CODE.RESOLVER_NOT_MOUNTED_1]: 'Resolver for {} not mounted',
