@@ -18,7 +18,7 @@ export class MiphaPermissionScope {
 
     public static fromScopeAndResources(
         scope: string,
-        resources: string[],
+        resources: Iterable<string>,
     ): MiphaPermissionScope {
 
         if (!ScopeIdentifierAssignedFormatRegExp.test(scope)) {
@@ -41,22 +41,31 @@ export class MiphaPermissionScope {
     }
 
     private readonly _scope: string;
-    private readonly _resources: string[];
+    private readonly _resources: Set<string>;
 
     private constructor(
         scope: string,
-        resources: string[],
+        resources: Iterable<string>,
     ) {
 
         this._scope = scope;
-        this._resources = resources;
+        this._resources = new Set<string>(resources);
     }
 
     public get scope(): string {
         return this._scope;
     }
-    public get resources(): string[] {
+    public get resources(): Set<string> {
         return this._resources;
+    }
+
+    public replaceResources(resources: Iterable<string>): this {
+
+        this._resources.clear();
+        for (const resource of resources) {
+            this._resources.add(resource);
+        }
+        return this;
     }
 
     public canExecute(
@@ -101,7 +110,7 @@ export class MiphaPermissionScope {
 
         return {
             scope: this._scope,
-            resources: this._resources,
+            resources: [...this._resources],
         };
     }
 

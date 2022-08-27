@@ -6,6 +6,7 @@
 
 import { MiphaPermissionScope } from "../scope";
 
+// Internal
 export const combineScopes = (scopes: MiphaPermissionScope[]): MiphaPermissionScope[] => {
 
     const tempMap: Map<string, MiphaPermissionScope> = new Map();
@@ -17,7 +18,39 @@ export const combineScopes = (scopes: MiphaPermissionScope[]): MiphaPermissionSc
             const temp: MiphaPermissionScope =
                 tempMap.get(scope.scope) as MiphaPermissionScope;
 
-            temp.resources.push(...scope.resources);
+            const toBeAddResources: string[] = [
+                ...temp.resources,
+                ...scope.resources,
+            ];
+            const newResources: Set<string> = new Set();
+
+            for (const toBeAddResource of toBeAddResources) {
+
+                const existResources: Set<string> = new Set(newResources);
+                for (const existResource of existResources) {
+
+                    const toBeAddRegExp: RegExp =
+                        new RegExp(`^${toBeAddResource.replace('*', '.+')}$`);
+
+                    if (toBeAddRegExp.test(existResource)) {
+
+                        newResources.delete(existResource);
+                        newResources.add(toBeAddResource);
+                        continue;
+                    }
+
+                    const newRegExp: RegExp =
+                        new RegExp(`^${existResource.replace('*', '.+')}$`);
+
+                    if (newRegExp.test(toBeAddResource)) {
+                        continue;
+                    }
+
+                    newResources.add(toBeAddResource);
+                }
+            }
+
+            temp.replaceResources(newResources);
         } else {
 
             tempMap.set(scope.scope, scope.clone());
