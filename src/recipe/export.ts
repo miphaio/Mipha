@@ -5,5 +5,6 @@
  */
 
 export * from "./loader";
+export * from "./metadata";
 export * from "./recipe";
 

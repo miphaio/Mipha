@@ -4,43 +4,50 @@
  * @description Recipe
  */
 
-import { MiphaPermission } from "../permission/permission";
+import { MiphaRecipeConfig } from "./declare";
+import { MiphaRecipeMetadata } from "./metadata";
 
 // Public
 export class MiphaRecipe {
 
-    public static fromCode(identifier: string, recipeCode: string,): MiphaRecipe {
+    public static fromConfig(config: MiphaRecipeConfig): MiphaRecipe {
 
-        return new MiphaRecipe(identifier, recipeCode);
+        return this.fromCode(
+            MiphaRecipeMetadata.fromConfig(config.metadata),
+            config.recipeCode,
+        );
     }
 
-    private readonly _recipeIdentifier: string;
+    public static fromCode(metadata: MiphaRecipeMetadata, recipeCode: string,): MiphaRecipe {
+
+        return new MiphaRecipe(metadata, recipeCode);
+    }
+
+    private readonly _metadata: MiphaRecipeMetadata;
     private readonly _recipeCode: string;
 
-    private readonly _requiredPermissions: Set<MiphaPermission>;
+    private constructor(metadata: MiphaRecipeMetadata, recipeCode: string) {
 
-    private constructor(identifier: string, recipeCode: string) {
-
-        this._recipeIdentifier = identifier;
+        this._metadata = metadata;
         this._recipeCode = recipeCode;
-
-        this._requiredPermissions = new Set<MiphaPermission>();
     }
 
     public get identifier(): string {
-        return this._recipeIdentifier;
+        return this._metadata.identifier;
+    }
+
+    public get metadata(): MiphaRecipeMetadata {
+        return this._metadata;
     }
     public get recipeCode(): string {
         return this._recipeCode;
     }
 
-    public get requiredPermissions(): Set<MiphaPermission> {
-        return this._requiredPermissions;
-    }
+    public toConfig(): MiphaRecipeConfig {
 
-    public addRequiredPermission(permission: MiphaPermission): this {
-
-        this._requiredPermissions.add(permission);
-        return this;
+        return {
+            metadata: this._metadata.toConfig(),
+            recipeCode: this._recipeCode,
+        };
     }
 }

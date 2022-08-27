@@ -5,6 +5,7 @@
  */
 
 export * from "./controller";
+export * from "./declare";
 export * from "./permission";
 export * from "./scope";
 

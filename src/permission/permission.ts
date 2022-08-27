@@ -5,11 +5,22 @@
  */
 
 import { ERROR_CODE, panic } from "../util/error";
+import { MiphaPermissionConfig, MiphaPermissionScopeConfig } from "./declare";
 import { MiphaPermissionScope } from "./scope";
 import { ModuleIdentifierAssignedFormatRegExp } from "./util/regular-expression";
 
 // Public
 export class MiphaPermission {
+
+    public static fromConfig(config: MiphaPermissionConfig): MiphaPermission {
+
+        const scopes: MiphaPermissionScope[] = [];
+        for (const scope of config.scopes) {
+            scopes.push(MiphaPermissionScope.fromConfig(scope));
+        }
+
+        return this.fromIdentifier(config.identifier, scopes);
+    }
 
     public static fromIdentifier(
         identifier: string,
@@ -64,5 +75,18 @@ export class MiphaPermission {
             }
         }
         return false;
+    }
+
+    public toConfig(): MiphaPermissionConfig {
+
+        const scopes: MiphaPermissionScopeConfig[] = [];
+        for (const scope of this._scopes) {
+            scopes.push(scope.toConfig());
+        }
+
+        return {
+            identifier: this._identifier,
+            scopes,
+        };
     }
 }

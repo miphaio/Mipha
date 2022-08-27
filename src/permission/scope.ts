@@ -5,10 +5,16 @@
  */
 
 import { ERROR_CODE, panic } from "../util/error";
+import { MiphaPermissionScopeConfig } from "./declare";
 import { ResourceIdentifierAssignedFormatRegExp, ResourceIdentifierRequiredFormatRegExp, ScopeIdentifierAssignedFormatRegExp, ScopeIdentifierRequiredFormatRegExp } from "./util/regular-expression";
 
 // Public
 export class MiphaPermissionScope {
+
+    public static fromConfig(config: MiphaPermissionScopeConfig): MiphaPermissionScope {
+
+        return this.fromScopeAndResource(config.scope, config.resource);
+    }
 
     public static fromScopeAndResource(
         scope: string,
@@ -74,5 +80,13 @@ export class MiphaPermissionScope {
         const wildcardResourceRegExp = new RegExp(`^${this._resource.replace('*', '.+')}$`);
 
         return wildcardScopeRegExp.test(scope) && wildcardResourceRegExp.test(resource);
+    }
+
+    public toConfig(): MiphaPermissionScopeConfig {
+
+        return {
+            scope: this._scope,
+            resource: this._resource,
+        };
     }
 }

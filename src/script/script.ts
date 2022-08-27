@@ -4,36 +4,52 @@
  * @description Script
  */
 
+import { MiphaScriptConfig } from "./declare";
+import { MiphaScriptMetadata } from "./metadata";
+
 // Public
 export class MiphaScript {
 
+    public static fromConfig(config: MiphaScriptConfig): MiphaScript {
+
+        return this.fromCode(
+            MiphaScriptMetadata.fromConfig(config.metadata),
+            config.scriptCode,
+        );
+    }
+
     public static fromCode(
+        metadata: MiphaScriptMetadata,
         scriptCode: string,
-        requirements: string[] = [],
     ): MiphaScript {
 
-        return new MiphaScript(scriptCode, requirements);
+        return new MiphaScript(metadata, scriptCode);
     }
 
+    private readonly _metadata: MiphaScriptMetadata;
     private readonly _scriptCode: string;
 
-    private readonly _requirements: Set<string>;
-
     private constructor(
+        metadata: MiphaScriptMetadata,
         scriptCode: string,
-        requirements: string[],
     ) {
 
+        this._metadata = metadata;
         this._scriptCode = scriptCode;
-
-        this._requirements = new Set<string>(requirements);
     }
 
+    public get metadata(): MiphaScriptMetadata {
+        return this._metadata;
+    }
     public get scriptCode(): string {
         return this._scriptCode;
     }
 
-    public get requirements(): Set<string> {
-        return this._requirements;
+    public toConfig(): MiphaScriptConfig {
+
+        return {
+            metadata: this._metadata.toConfig(),
+            scriptCode: this._scriptCode,
+        };
     }
 }
