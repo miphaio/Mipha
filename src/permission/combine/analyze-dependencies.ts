@@ -5,7 +5,7 @@
  */
 
 import { MiphaModule } from "../../module/module";
-import { MiphaRecipe } from "../../recipe/recipe";
+import { MiphaRecipeMetadata } from "../../recipe/metadata";
 import { ERROR_CODE, panic } from "../../util/error";
 import { MiphaPermission } from "../permission";
 import { combinePermissions } from "./combine-permissions";
@@ -14,7 +14,7 @@ import { combinePermissions } from "./combine-permissions";
 export type AnalyzeDependenciesRecipeResult = {
 
     readonly identifier: string;
-    readonly recipe: MiphaRecipe;
+    readonly recipeMetadata: MiphaRecipeMetadata;
     readonly permissions: Iterable<MiphaPermission>;
 };
 
@@ -36,8 +36,8 @@ export type AnalyzeDependenciesResult = {
 
 // Public
 export const analyzeDependencies = (
-    dependencies: string[],
-    recipes: MiphaRecipe[],
+    dependencies: Iterable<string>,
+    recipes: MiphaRecipeMetadata[],
     modules: MiphaModule[],
 ): AnalyzeDependenciesResult => {
 
@@ -47,17 +47,17 @@ export const analyzeDependencies = (
 
     dependencies: for (const dependency of dependencies) {
 
-        const recipe: MiphaRecipe | undefined =
-            recipes.find((value: MiphaRecipe) => value.identifier === dependency);
+        const recipe: MiphaRecipeMetadata | undefined =
+            recipes.find((value: MiphaRecipeMetadata) => value.identifier === dependency);
 
         if (typeof recipe !== 'undefined') {
 
             recipesResult.push({
                 identifier: dependency,
-                recipe,
-                permissions: combinePermissions(recipe.metadata.requiredPermissions),
+                recipeMetadata: recipe,
+                permissions: combinePermissions(recipe.requiredPermissions),
             });
-            overall.push(...recipe.metadata.requiredPermissions);
+            overall.push(...recipe.requiredPermissions);
 
             continue dependencies;
         }

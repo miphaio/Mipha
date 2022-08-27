@@ -8,7 +8,9 @@ import { MarkedResult } from "@sudoo/marked";
 import { MiphaExecuter } from "../executer/executer";
 import { MiphaMountedExecuter } from "../executer/mounted-executer";
 import { MiphaModule } from "../module/module";
+import { analyzeDependencies, AnalyzeDependenciesResult } from "../permission/combine/analyze-dependencies";
 import { MiphaPermission } from "../permission/permission";
+import { MiphaRecipeMetadata } from "../recipe/metadata";
 import { MiphaRecipe } from "../recipe/recipe";
 import { MiphaScript } from "../script/script";
 import { MiphaStorageProxy } from "../storage/proxy";
@@ -83,6 +85,19 @@ export class Mipha implements IMipha {
         return MiphaExecuter.fromModulesAndRecipes(
             this._modules,
             recipes,
+        );
+    }
+
+    public async analyzePermissionsForScript(
+        script: MiphaScript,
+    ): Promise<AnalyzeDependenciesResult> {
+
+        const recipeMetadataList: Iterable<MiphaRecipeMetadata> = await this._recipeManager.getAllRecipes();
+
+        return analyzeDependencies(
+            script.metadata.requirements,
+            [...recipeMetadataList],
+            [...this._modules],
         );
     }
 
