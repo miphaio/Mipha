@@ -5,7 +5,8 @@
  */
 
 import { MiphaStorageEngine } from "../../engine/storage/storage-engine";
-import { MiphaBlock, MIPHA_BLOCK_DIVERSE_TYPE } from "../../structure/export";
+import { MiphaBlock } from "../../structure/block/block";
+import { MIPHA_BLOCK_DIVERSE_TYPE } from "../../structure/diverse/diverse-type";
 import { StorageManagerSaveBlockResponse } from "./declare";
 
 // Public
