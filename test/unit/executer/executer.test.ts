@@ -93,7 +93,29 @@ describe('Given {MiphaExecuter} Class', (): void => {
         );
         const result: MarkedResult = await executer.mountAndExecute(getTenScript, [
             MiphaPermission.fromIdentifier('mock.static-value', [
-                MiphaPermissionScope.fromScopeAndResource('value', '10'),
+                MiphaPermissionScope.fromScopeAndResources('value', ['10']),
+            ]),
+        ]);
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.equal(10);
+    });
+
+    it('should be able to execute module mounted script with scoped permission - multiple scope', async (): Promise<void> => {
+
+        const staticValueModule = createMockStaticValueScopedModule();
+        const getTenScript: MiphaScript = MiphaScript.fromCode(
+            MiphaScriptMetadata.fromScratch(),
+            'import {getTen} from "mock.static-value"; export default getTen();',
+        );
+
+        const executer: MiphaExecuter = MiphaExecuter.fromModules(
+            [staticValueModule.module],
+        );
+        const result: MarkedResult = await executer.mountAndExecute(getTenScript, [
+            MiphaPermission.fromIdentifier('mock.static-value', [
+                MiphaPermissionScope.fromScopeAndResources('value', ['5', '10']),
             ]),
         ]);
 
@@ -115,7 +137,7 @@ describe('Given {MiphaExecuter} Class', (): void => {
         );
         const result: MarkedResult = await executer.mountAndExecute(getTenScript, [
             MiphaPermission.fromIdentifier('mock.static-value', [
-                MiphaPermissionScope.fromScopeAndResource('v*lue', '*'),
+                MiphaPermissionScope.fromScopeAndResources('v*lue', ['*']),
             ]),
         ]);
 
@@ -137,7 +159,7 @@ describe('Given {MiphaExecuter} Class', (): void => {
         );
         const result: MarkedResult = await executer.mountAndExecute(getTenScript, [
             MiphaPermission.fromIdentifier('mock.static-value', [
-                MiphaPermissionScope.fromScopeAndResource('v*lue', '*'),
+                MiphaPermissionScope.fromScopeAndResources('v*lue', ['*']),
             ]),
         ]);
 

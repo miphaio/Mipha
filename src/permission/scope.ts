@@ -13,12 +13,12 @@ export class MiphaPermissionScope {
 
     public static fromConfig(config: MiphaPermissionScopeConfig): MiphaPermissionScope {
 
-        return this.fromScopeAndResource(config.scope, config.resource);
+        return this.fromScopeAndResources(config.scope, config.resources);
     }
 
-    public static fromScopeAndResource(
+    public static fromScopeAndResources(
         scope: string,
-        resource: string,
+        resources: string[],
     ): MiphaPermissionScope {
 
         if (!ScopeIdentifierAssignedFormatRegExp.test(scope)) {
@@ -28,33 +28,35 @@ export class MiphaPermissionScope {
             );
         }
 
-        if (!ResourceIdentifierAssignedFormatRegExp.test(resource)) {
-            throw panic.code(
-                ERROR_CODE.INVALID_ASSIGNED_PERMISSION_RESOURCE_FORMAT_1,
-                resource,
-            );
+        for (const resource of resources) {
+            if (!ResourceIdentifierAssignedFormatRegExp.test(resource)) {
+                throw panic.code(
+                    ERROR_CODE.INVALID_ASSIGNED_PERMISSION_RESOURCE_FORMAT_1,
+                    resource,
+                );
+            }
         }
 
-        return new MiphaPermissionScope(scope, resource);
+        return new MiphaPermissionScope(scope, resources);
     }
 
     private readonly _scope: string;
-    private readonly _resource: string;
+    private readonly _resources: string[];
 
     private constructor(
         scope: string,
-        resource: string,
+        resources: string[],
     ) {
 
         this._scope = scope;
-        this._resource = resource;
+        this._resources = resources;
     }
 
     public get scope(): string {
         return this._scope;
     }
-    public get resource(): string {
-        return this._resource;
+    public get resources(): string[] {
+        return this._resources;
     }
 
     public canExecute(
@@ -76,17 +78,30 @@ export class MiphaPermissionScope {
             );
         }
 
-        const wildcardScopeRegExp = new RegExp(`^${this._scope.replace('*', '.+')}$`);
-        const wildcardResourceRegExp = new RegExp(`^${this._resource.replace('*', '.+')}$`);
+        const wildcardScopeRegExp =
+            new RegExp(`^${this._scope.replace('*', '.+')}$`);
 
-        return wildcardScopeRegExp.test(scope) && wildcardResourceRegExp.test(resource);
+        if (!wildcardScopeRegExp.test(scope)) {
+            return false;
+        }
+
+        for (const each of this._resources) {
+
+            const wildcardResourceRegExp: RegExp =
+                new RegExp(`^${each.replace('*', '.+')}$`);
+
+            if (wildcardResourceRegExp.test(resource)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public toConfig(): MiphaPermissionScopeConfig {
 
         return {
             scope: this._scope,
-            resource: this._resource,
+            resources: this._resources,
         };
     }
 }

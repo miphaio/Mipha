@@ -28,7 +28,7 @@ describe('Given (Permission) cases for (GetData) Integration test setup', (): vo
             script,
             [
                 MiphaPermission.fromIdentifier('integration.get-data.first', [
-                    MiphaPermissionScope.fromScopeAndResource('value', 'first'),
+                    MiphaPermissionScope.fromScopeAndResources('value', ['first']),
                 ]),
             ],
         );

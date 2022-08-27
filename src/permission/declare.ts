@@ -8,12 +8,12 @@
 export type MiphaPermissionConfig = {
 
     readonly identifier: string;
-    readonly scopes: MiphaPermissionScopeConfig[];
+    readonly scopes: Iterable<MiphaPermissionScopeConfig>;
 };
 
 // Public
 export type MiphaPermissionScopeConfig = {
 
     readonly scope: string;
-    readonly resource: string;
+    readonly resources: string[];
 };
