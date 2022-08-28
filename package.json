@@ -22,7 +22,7 @@
     "md5": "^2.3.0"
   },
   "devDependencies": {
-    "@sudoo/triforce": "^3.7.0",
+    "@sudoo/triforce": "^3.8.0",
     "@types/md5": "^2.3.2"
   },
   "nyc": {
