@@ -16,14 +16,12 @@
   },
   "homepage": "https://mipha.io",
   "dependencies": {
-    "@sudoo/marked": "^3.4.2",
+    "@sudoo/marked": "^3.16.2",
     "@sudoo/uuid": "^1.1.0",
-    "connor": "^2.7.0",
-    "md5": "^2.3.0"
+    "connor": "^2.7.0"
   },
   "devDependencies": {
-    "@sudoo/triforce": "^3.8.0",
-    "@types/md5": "^2.3.2"
+    "@sudoo/triforce": "^3.9.0"
   },
   "nyc": {
     "extension": [
