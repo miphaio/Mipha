@@ -5,3 +5,5 @@
  */
 
 export * from "./procedure/procedure";
+export * from "./task/task";
+
