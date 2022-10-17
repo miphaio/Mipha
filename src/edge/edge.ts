@@ -5,6 +5,7 @@
  */
 
 import { UUIDVersion4 } from "@sudoo/uuid";
+import { MIPHA_EDGE_RELATION } from "./relation/relation";
 
 export class MiphaEdge {
 
@@ -16,6 +17,11 @@ export class MiphaEdge {
     }
 
     private readonly _identifier: string;
+
+    private readonly _source: string;
+    private readonly _target: string;
+
+    private readonly _relation: MIPHA_EDGE_RELATION;
 
     private constructor(identifier: string) {
 
