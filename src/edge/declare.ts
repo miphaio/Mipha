@@ -4,9 +4,9 @@
  * @description Declare
  */
 
-import { MIPHA_EDGE_RELATION } from "./relation/relation";
+import { MIPHA_RELATION } from "../relation/relation";
 
-export type MiphaEdgeSerialized<Relation extends MIPHA_EDGE_RELATION> = {
+export type MiphaEdgeSerialized<Relation extends MIPHA_RELATION> = {
 
     readonly identifier: string;
 
