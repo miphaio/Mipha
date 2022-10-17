@@ -1,18 +1,18 @@
 /**
  * @author WMXPY
- * @namespace Event
- * @description Event
+ * @namespace Node
+ * @description Node
  */
 
 import { UUIDVersion4 } from "@sudoo/uuid";
 
-export class MiphaEvent {
+export class MiphaNode {
 
-    public static fromScratch(): MiphaEvent {
+    public static fromScratch(): MiphaNode {
 
         const identifier: string = UUIDVersion4.generateString();
 
-        return new MiphaEvent(identifier);
+        return new MiphaNode(identifier);
     }
 
     private readonly _identifier: string;

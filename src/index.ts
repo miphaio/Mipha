@@ -4,7 +4,6 @@
  * @description Index
  */
 
-export * from "./event/event";
-export * from "./procedure/procedure";
-export * from "./task/task";
+export * from "./edge/edge";
+export * from "./node/node";
 

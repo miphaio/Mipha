@@ -1,18 +1,18 @@
 /**
  * @author WMXPY
- * @namespace Task
- * @description Task
+ * @namespace Edge
+ * @description Edge
  */
 
 import { UUIDVersion4 } from "@sudoo/uuid";
 
-export class MiphaTask {
+export class MiphaEdge {
 
-    public static fromScratch(): MiphaTask {
+    public static fromScratch(): MiphaEdge {
 
         const identifier: string = UUIDVersion4.generateString();
 
-        return new MiphaTask(identifier);
+        return new MiphaEdge(identifier);
     }
 
     private readonly _identifier: string;
