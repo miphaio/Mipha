@@ -6,12 +6,13 @@
 
 import { MIPHA_RELATION } from "../relation/relation";
 
-export type MiphaEdgeSerialized<Relation extends MIPHA_RELATION> = {
+export type MiphaEdgeSerialized = {
 
     readonly identifier: string;
 
     readonly source: string;
     readonly target: string;
 
-    readonly relation: Relation;
+    readonly relation: MIPHA_RELATION;
+    readonly payload: string;
 };
