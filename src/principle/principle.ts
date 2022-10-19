@@ -1,18 +1,18 @@
 /**
  * @author WMXPY
- * @namespace Node
- * @description Node
+ * @namespace Principle
+ * @description Principle
  */
 
 import { UUIDVersion4 } from "@sudoo/uuid";
 
-export class MiphaNode {
+export class MiphaPrinciple {
 
-    public static fromScratch(): MiphaNode {
+    public static fromScratch(): MiphaPrinciple {
 
         const identifier: string = UUIDVersion4.generateString();
 
-        return new MiphaNode(identifier);
+        return new MiphaPrinciple(identifier);
     }
 
     private readonly _identifier: string;

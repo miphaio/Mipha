@@ -4,5 +4,5 @@
  * @description Index
  */
 
-export * from "./node/node";
+export * from "./principle/principle";
 
