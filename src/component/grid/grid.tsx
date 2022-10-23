@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace Grid
+ * @namespace Component_Grid
  * @description Grid
  */
 

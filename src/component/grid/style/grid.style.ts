@@ -1,5 +1,5 @@
 /**
  * @author WMXPY
- * @namespace Grid_Style
+ * @namespace Component_Grid_Style
  * @description Grid
  */
