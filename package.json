@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Mipha Is Powerful and Highly Accessible",
   "scripts": {
-    "test": "sudoo-build test",
+    "test": "sudoo-build --type typescript-react test",
     "storybook": "start-storybook -p 6006"
   },
   "repository": {
