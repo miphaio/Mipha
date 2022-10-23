@@ -4,6 +4,7 @@
   "description": "Mipha Is Powerful and Highly Accessible",
   "scripts": {
     "test": "sudoo-build --type typescript-react test",
+    "build": "sudoo-build --type typescript-react build",
     "storybook": "start-storybook -p 6006"
   },
   "repository": {
