@@ -2,11 +2,6 @@
   "name": "@mipha/core",
   "version": "1.0.0",
   "description": "Mipha Is Powerful and Highly Accessible",
-  "scripts": {
-    "test": "sudoo-build --type typescript-react test",
-    "build": "sudoo-build --type typescript-react build",
-    "storybook": "start-storybook -p 6006"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MiphaIO/Mipha.git"
@@ -21,19 +16,12 @@
   },
   "homepage": "https://mipha.io",
   "dependencies": {
-    "@sudoo/jss": "^1.7.1",
     "@sudoo/marked": "^3.16.2",
     "@sudoo/uuid": "^1.1.0",
     "connor": "^2.7.0"
   },
   "devDependencies": {
-    "@sudoo/react-force": "^1.10.1",
-    "@sudoo/react-force-dev": "^1.10.1",
-    "@sudoo/storybook-config": "^1.0.0",
-    "@sudoo/storybook-helper": "^1.1.0",
-    "@sudoo/triforce": "^3.9.0",
-    "@sudoo/triforce-storybook": "^1.2.0",
-    "ts-node": "^10.9.1"
+    "@sudoo/triforce": "^3.9.1"
   },
   "nyc": {
     "extension": [
