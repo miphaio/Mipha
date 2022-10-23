@@ -21,7 +21,12 @@
     "connor": "^2.7.0"
   },
   "devDependencies": {
-    "@sudoo/triforce": "^3.9.0"
+    "@sudoo/react-force": "^1.10.1",
+    "@sudoo/react-force-dev": "^1.10.1",
+    "@sudoo/storybook-config": "^1.0.0",
+    "@sudoo/storybook-helper": "^1.1.0",
+    "@sudoo/triforce": "^3.9.0",
+    "@sudoo/triforce-storybook": "^1.2.0"
   },
   "nyc": {
     "extension": [
