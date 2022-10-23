@@ -16,6 +16,7 @@
   },
   "homepage": "https://mipha.io",
   "dependencies": {
+    "@nlpjs/basic": "^4.23.5",
     "@sudoo/marked": "^3.16.2",
     "@sudoo/uuid": "^1.1.0",
     "connor": "^2.7.0"
