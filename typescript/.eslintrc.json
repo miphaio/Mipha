@@ -1,5 +1,7 @@
 {
     "extends": [
-        "@sudoo/eslint-config"
+        "@sudoo/eslint-config",
+        "@sudoo/eslint-config-react",
+        "@sudoo/eslint-config-react-a11y"
     ]
 }

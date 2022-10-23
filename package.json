@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Mipha Is Powerful and Highly Accessible",
   "scripts": {
+    "test": "sudoo-build test",
     "storybook": "start-storybook -p 6006"
   },
   "repository": {
@@ -29,7 +30,8 @@
     "@sudoo/storybook-config": "^1.0.0",
     "@sudoo/storybook-helper": "^1.1.0",
     "@sudoo/triforce": "^3.9.0",
-    "@sudoo/triforce-storybook": "^1.2.0"
+    "@sudoo/triforce-storybook": "^1.2.0",
+    "ts-node": "^10.9.1"
   },
   "nyc": {
     "extension": [
