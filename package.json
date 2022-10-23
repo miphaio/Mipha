@@ -6,6 +6,9 @@
     "type": "git",
     "url": "git+https://github.com/MiphaIO/Mipha.git"
   },
+  "scripts": {
+    "storybook": "start-storybook -p 6006"
+  },
   "keywords": [
     "RPC"
   ],
