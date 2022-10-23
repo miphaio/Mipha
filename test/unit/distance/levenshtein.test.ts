@@ -23,4 +23,45 @@ describe('Given [Levenshtein] Distance Helper Methods', (): void => {
 
         expect(distance).to.be.equal(0);
     });
+
+    it('should be able to calculate distance for same string', (): void => {
+
+        const original: string = 'hello world';
+        const target: string = 'hello world';
+
+        const distance: number = levenshteinDistance(original, target);
+
+        expect(distance).to.be.equal(0);
+    });
+
+    it('should be able to calculate distance for string with difference size', (): void => {
+
+        const original: string = 'hello';
+        const target: string = 'hello world!';
+
+        const distance: number = levenshteinDistance(original, target);
+
+        expect(distance).to.be.equal(7);
+    });
+
+    it('should be able to calculate distance for string with difference size due to center missing', (): void => {
+
+        const original: string = 'hello beautiful world';
+        const target: string = 'hello world!';
+
+        const distance: number = levenshteinDistance(original, target);
+
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        expect(distance).to.be.equal(11);
+    });
+
+    it('should be able to calculate distance for string with very difference string', (): void => {
+
+        const original: string = 'hello world';
+        const target: string = 'star wars';
+
+        const distance: number = levenshteinDistance(original, target);
+
+        expect(distance).to.be.equal(8);
+    });
 });
